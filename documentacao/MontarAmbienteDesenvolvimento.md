@@ -267,6 +267,13 @@ VALUES
 
 ```
 
+## Configuração JPAModel
+Botão direito mouse no projeto, navegue na opção run as -> maven build ...
+Em Goals digite clean install em seguida run
+Toda configruação será iniciada, o processo pode levar alguns minutos. Será criada no diretório target/metamodel algumas classes, as mesmas devem ser mapeadas no projeto conforme passos abaixo:
+Botão direito mouse no projeto -> Java Build Path -> Add Folder -> Adicione o diretório criado (target/metamodel)
+
+
 > **Nota:** 
 
 > - Um usuário com função de Administrador tem permissão de editar o cadastro de usuários do sistema e de acessar as funcionalidades disponíveis.
