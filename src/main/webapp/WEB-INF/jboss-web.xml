@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
 	<security-domain>OuvidoriaSecurityDomain</security-domain>
-	<context-root>GOG</context-root>
+	<context-root>Ouvidoria</context-root>
 </jboss-web>
