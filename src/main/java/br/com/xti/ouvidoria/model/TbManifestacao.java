@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -113,7 +115,7 @@ public class TbManifestacao implements Serializable {
     private String dsLocalidade;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1)
+    @Lob
     @Column(name = "dsTextoManifestacao")
     private String dsTextoManifestacao;
     @Basic(optional = false)
@@ -228,23 +230,14 @@ public class TbManifestacao implements Serializable {
     private Collection<TbComunicacaoExterna> tbComunicacaoExternaCollection = new ArrayList<>();
     @OneToMany(mappedBy = "idManifestacao")
     private Collection<TbEncaminhamento> tbEncaminhamentoCollection = new ArrayList<>();
-    @OneToMany
-    @JoinTable(
-    		name="tbManifestacao_tbClassificacao",
-    		joinColumns={@JoinColumn(name="TbManifestacao_idManifestacao", referencedColumnName="idManifestacao")},
-    		inverseJoinColumns={@JoinColumn(name="tbClassificacao_idClassificacao", referencedColumnName="idClassificacao")})
+    @ManyToMany
+    @JoinTable(name = "tbManifestacao_tbClassificacao", joinColumns = @JoinColumn(name = "idManifestacao"), inverseJoinColumns = @JoinColumn(name = "idClassificacao"))  
     private Collection<TbClassificacao> tbClassificacaoCollection = new ArrayList<>();
-    @OneToMany
-    @JoinTable(
-    		name="tbManifestacao_tbSubClassificacao",
-    		joinColumns={@JoinColumn(name="TbManifestacao_idManifestacao", referencedColumnName="idManifestacao")},
-    		inverseJoinColumns={@JoinColumn(name="tbSubClassificacao_idSubClassificacao", referencedColumnName="idSubClassificacao")})
+    @ManyToMany
+    @JoinTable(name = "tbManifestacao_tbSubClassificacao", joinColumns = @JoinColumn(name = "idManifestacao"), inverseJoinColumns = @JoinColumn(name = "idSubClassificacao"))
     private Collection<TbSubClassificacao> tbSubClassificacaoCollection = new ArrayList<>();
-    @OneToMany
-    @JoinTable(
-    		name="[TbManifestacao_UnidadeAreaSolucionadora]",
-    		joinColumns={@JoinColumn(name="idManifestacao", referencedColumnName="idManifestacao")},
-    		inverseJoinColumns={@JoinColumn(name="idUnidade", referencedColumnName="idUnidade")})
+    @ManyToMany
+    @JoinTable(name = "tbManifestacao_UnidadeAreaSolucionadora", joinColumns = @JoinColumn(name = "idManifestacao"), inverseJoinColumns = @JoinColumn(name = "idUnidade"))  
     private Collection<TbUnidade> tbUnidadeAreaSolucionadoraCollection = new ArrayList<>();
     
 

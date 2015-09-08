@@ -168,10 +168,11 @@ public abstract class AbstractManifestationController {
         }
         
         
-        // Monta as abas das Unidades
+        // Monta as abas das Unidades TbEncaminhamento.tbTramiteCollection
         if(!securityService.isManifestante()) {
         	TbUnidade unidadeUsuarioLogado = securityService.getUser().getIdUnidade();
         	for (TbEncaminhamento enc : encaminhamentoDAO.getPorManifestacao(manifestacao)) {
+        	    enc.setTbTramiteCollection(this.tramiteDAO.getPorEncaminhamento(enc));
 				// Se o usuário for Interlocutor ou Operador só irá mostrar os
 				// trâmites enviados ou recebidos pela sua área. A menos que
 				// exista um trâmite de outra área marcado como público
@@ -189,7 +190,12 @@ public abstract class AbstractManifestationController {
 				ManifestacaoTabView tabView = new ManifestacaoTabView();
 				tabView.setIndex(++index);
 				tabView.setTitulo(tabTitle);
-				tabView.setConteudo(tramiteDAO.getPorEncaminhamento(enc));
+				List<TbTramite> listTramite = (List<TbTramite>) tramiteDAO.getPorEncaminhamento(enc);
+				for (TbTramite tbTramite : listTramite) {
+                    tbTramite.setTbTramitexAnexoCollection(this.tramiteDAO.getTramitexAnexoPorTramite(tbTramite.getIdTramite()));
+                }
+				tabView.setConteudo(listTramite);
+				
 				tabView.setEncaminhamento(enc);
 				tabView.setUnidadeEnviou(departmentSent);
 				tabView.setUnidadeRecebeu(departmentReceived);
@@ -204,7 +210,9 @@ public abstract class AbstractManifestationController {
 		if(tramiteObj instanceof TbTramite) {
 			if(securityService.isInterlocutor() || securityService.isOperador()) {
 				TbTramite tramite = (TbTramite) tramiteObj;
+				tramite.setIdEncaminhamento(this.encaminhamentoDAO.getEncaminhamentoPorTramite(tramite.getIdTramite()));
 				TbEncaminhamento enc = tramite.getIdEncaminhamento();
+				
 				TbUnidade unidade = securityService.getUser().getIdUnidade();
 				
 				if(unidade.equals(enc.getIdUnidadeEnviou()) || unidade.equals(enc.getIdUnidadeRecebeu())) {

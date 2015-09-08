@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -43,8 +44,8 @@ public class TbFiltroPersonalizado implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "nmFiltroPersonalizado")
     private String nmFiltroPersonalizado;
-    @Size(min= 1)
     @Column(name = "dsParticao")
+    @Lob
     private String dsParticao;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne(optional = false)

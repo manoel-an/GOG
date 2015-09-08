@@ -33,4 +33,15 @@ public class UnidadeDAO extends AbstractDAO<TbUnidade> {
         }
         return retorno;
     }
+       public Collection<TbUnidade> getPorClassificacao(Integer idClassificacao) {
+           Collection<TbUnidade> retorno = null;
+           try {
+               HashMap<String, Integer> map = new HashMap<String, Integer>();
+               map.put("idClassificacao", idClassificacao);
+               retorno = selectList("SELECT u FROM TbClassificacao c INNER JOIN c.tbUnidadeCollection u where c.idClassificacao = :idClassificacao", map);
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+           return retorno;
+       }       
 }

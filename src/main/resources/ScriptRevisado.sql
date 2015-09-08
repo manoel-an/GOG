@@ -5972,7 +5972,7 @@ INSERT INTO TbPreferenciaSistema
     senhaEmail, sslEmail, encerrarTramiteEncaminhada, retornarTramiteOuvidoria, ctlPrazoManifSoluc,
     RespostasImediatas, prazoEntrada, prazoAreaSolucionadora, prazoRespostaCidadao)
 VALUES 
-    ('Ouvidoria MinC', 'naoresponda.ouvidoria@cultura.gov.br', '10.0.0.54', 25, 'ouvidoria@cultura.gov.br',
+    ('Ouvidoria AGR', 'naoresponda@agr.go.gov.br', 'smtp.gmail.com', 465, 'sistemas.agr.go@gmail.com',
     '', '2', '1', '1', '1', 
     '1', 1, 28, 1);
 

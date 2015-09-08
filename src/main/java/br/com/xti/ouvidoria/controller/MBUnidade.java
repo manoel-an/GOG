@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import br.com.xti.ouvidoria.dao.ClassificacaoDAO;
+import br.com.xti.ouvidoria.dao.EncaminhamentoDAO;
 import br.com.xti.ouvidoria.dao.UnidadeDAO;
 import br.com.xti.ouvidoria.helper.ValidacaoHelper;
 import br.com.xti.ouvidoria.model.TbUnidade;
@@ -29,11 +30,18 @@ public class MBUnidade implements Serializable {
     @EJB
     private ClassificacaoDAO classificacaoDAO;
     
+    @EJB
+    private EncaminhamentoDAO encaminhamentoDAO;
+    
     private TbUnidade unidade = new TbUnidade();
     private TbUnidade unidadeNovo = new TbUnidade();
     
     public List<TbUnidade> getTodos() {
     	List<TbUnidade> list = dao.findAll();
+    	for (TbUnidade tbUnidade : list) {
+            tbUnidade.setTbClassificacaoCollection(this.classificacaoDAO.getClassificacoesPorUnidade(tbUnidade.getIdUnidade()));
+            tbUnidade.setTbEncaminhamentoCollection(this.encaminhamentoDAO.getEncaminhamentosPorUnidade(tbUnidade.getIdUnidade()));
+        }
     	Collections.sort(list);
         return list;
     }

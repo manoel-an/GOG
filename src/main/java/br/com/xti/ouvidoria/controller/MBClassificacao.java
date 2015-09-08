@@ -14,6 +14,7 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.model.DualListModel;
 
 import br.com.xti.ouvidoria.dao.ClassificacaoDAO;
+import br.com.xti.ouvidoria.dao.ManifestacaoDAO;
 import br.com.xti.ouvidoria.dao.SubClassificacaoDAO;
 import br.com.xti.ouvidoria.dao.UnidadeDAO;
 import br.com.xti.ouvidoria.model.TbClassificacao;
@@ -32,6 +33,8 @@ public class MBClassificacao implements Serializable {
     @EJB private ClassificacaoDAO dao;
     @EJB private SubClassificacaoDAO subClassificacaoDAO;
     @EJB private UnidadeDAO unidadeDAO;
+    @EJB private ManifestacaoDAO manifestacaoDAO;
+    @EJB private ClassificacaoDAO classificacaoDAO;
     
     private TbClassificacao classificacao = new TbClassificacao();
     private TbClassificacao classificacaoNovo = new TbClassificacao();
@@ -73,6 +76,11 @@ public class MBClassificacao implements Serializable {
 
     public List<TbClassificacao> getTodos() {
     	List<TbClassificacao> list = dao.findAll();
+    	for (TbClassificacao tbClassificacao : list) {
+            tbClassificacao.setTbUnidadeCollection(this.unidadeDAO.getPorClassificacao(tbClassificacao.getIdClassificacao()));
+            tbClassificacao.setTbSubClassificacaoCollection(this.subClassificacaoDAO.getPorClassificacao(tbClassificacao.getIdClassificacao()));
+            tbClassificacao.setTbManifestacaoCollection(this.manifestacaoDAO.getPorClassificacao(tbClassificacao.getIdClassificacao()));
+        }
     	Collections.sort(list);
         return list;
     }
@@ -99,6 +107,7 @@ public class MBClassificacao implements Serializable {
                 
                 // Adiciona a clasificação nas Unidades escolhidas, se necessário
                 for (TbUnidade u : listaUnidades.getTarget()) {
+                    u.setTbClassificacaoCollection(this.classificacaoDAO.getClassificacoesPorUnidade(u.getIdUnidade()));
 					if(!(u.getTbClassificacaoCollection().contains(getClassificacao()))) {
 						u.getTbClassificacaoCollection().add(getClassificacao());
 						unidadeDAO.edit(u);
@@ -106,6 +115,7 @@ public class MBClassificacao implements Serializable {
 				}
                 // Remove a classificação das demais unidades (não escolhidas)
                 for (TbUnidade u : listaUnidades.getSource()) {
+                    u.setTbClassificacaoCollection(this.classificacaoDAO.getClassificacoesPorUnidade(u.getIdUnidade()));
                 	if(u.getTbClassificacaoCollection().contains(getClassificacao())) {
                 		u.getTbClassificacaoCollection().remove(getClassificacao());
                 		unidadeDAO.edit(u);
@@ -114,6 +124,7 @@ public class MBClassificacao implements Serializable {
 
                 for (TbSubClassificacao sub : classificacao.getTbSubClassificacaoCollection()) {
                     TbSubClassificacao tbSub = subClassificacaoDAO.find(sub.getIdSubClassificacao());
+                    tbSub.setTbClassificacaoCollection(this.classificacaoDAO.getClassificacoesPorSubClassificacao(tbSub.getIdSubClassificacao()));
                     tbSub.getTbClassificacaoCollection().remove(classificacao);
                     subClassificacaoDAO.edit(tbSub);
                 }
@@ -121,6 +132,7 @@ public class MBClassificacao implements Serializable {
                 classificacao.setTbSubClassificacaoCollection(listaSubclassificacao.getTarget());
                 for (TbSubClassificacao sub : classificacao.getTbSubClassificacaoCollection()) {
                     TbSubClassificacao tbSub = subClassificacaoDAO.find(sub.getIdSubClassificacao());
+                    tbSub.setTbClassificacaoCollection(this.classificacaoDAO.getClassificacoesPorSubClassificacao(tbSub.getIdSubClassificacao()));
                     tbSub.getTbClassificacaoCollection().add(classificacao);
                     subClassificacaoDAO.edit(tbSub);
                 }

@@ -91,17 +91,10 @@ public class TbUnidade implements Serializable, Comparable<TbUnidade> {
     private Collection<TbEncaminhamento> tbEncaminhamentoCollection  = new ArrayList<>();
     
     @OneToMany
-    @JoinTable(
-    		name="[TbManifestacao_UnidadeAreaSolucionadora]",
-    		joinColumns={@JoinColumn(name="idUnidade", referencedColumnName="idUnidade")},
-			inverseJoinColumns={@JoinColumn(name="idManifestacao", referencedColumnName="idManifestacao")})
+    @JoinTable(name = "tbUnidadeSolucionadora_TbManifestacao", joinColumns = @JoinColumn(name = "idUnidade"), inverseJoinColumns = @JoinColumn(name = "idManifestacao"))      
     private Collection<TbManifestacao> tbManifestacaoCollection = new ArrayList<>();
     
     @OneToMany
-    @JoinTable(
-    		name="[tbClassificacao_tbUnidade]",
-			joinColumns={@JoinColumn(name="tbUnidadeCollection_idUnidade", referencedColumnName="idUnidade")},
-			inverseJoinColumns={@JoinColumn(name="TbClassificacao_idClassificacao", referencedColumnName="idClassificacao")})
     private Collection<TbClassificacao> tbClassificacaoCollection = new ArrayList<>();
     
     public TbUnidade() {

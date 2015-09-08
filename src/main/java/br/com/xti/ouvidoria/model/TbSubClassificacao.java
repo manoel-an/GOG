@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -46,17 +47,17 @@ public class TbSubClassificacao implements Serializable, Comparable<TbSubClassif
     @Size(min = 1, max = 180)
     @Column(name = "dsSubClassificacao")
     private String dsSubClassificacao;
-    @OneToMany
+    @ManyToMany
     @JoinTable(
     		name="tbClassificacao_tbSubClassificacao",
-    		joinColumns={@JoinColumn(name="tbSubClassificacaoCollection_idSubClassificacao", referencedColumnName="idSubClassificacao")},
-    		inverseJoinColumns={@JoinColumn(name="TbClassificacao_idClassificacao", referencedColumnName="idClassificacao")})
+    		joinColumns={@JoinColumn(name="idSubClassificacao", referencedColumnName="idSubClassificacao")},
+    		inverseJoinColumns={@JoinColumn(name="idClassificacao", referencedColumnName="idClassificacao")})
     private Collection<TbClassificacao> tbClassificacaoCollection = new ArrayList<>();
     @OneToMany
     @JoinTable(
     		name="tbManifestacao_tbSubClassificacao",
-    		joinColumns={@JoinColumn(name="tbSubClassificacao_idSubClassificacao", referencedColumnName="idSubClassificacao")},
-    		inverseJoinColumns={@JoinColumn(name="TbManifestacao_idManifestacao", referencedColumnName="idManifestacao")})
+    		joinColumns={@JoinColumn(name="idSubClassificacao", referencedColumnName="idSubClassificacao")},
+    		inverseJoinColumns={@JoinColumn(name="idManifestacao", referencedColumnName="idManifestacao")})
     private Collection<TbManifestacao> tbManifestacaoCollection = new ArrayList<>();
     
 
