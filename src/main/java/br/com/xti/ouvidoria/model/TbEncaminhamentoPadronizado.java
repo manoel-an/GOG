@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -39,11 +40,11 @@ public class TbEncaminhamentoPadronizado implements Serializable, Comparable<TbE
     @Basic(optional = false)
     @Column(name = "idEncaminhamentoPadronizado")
     private Integer idEncaminhamentoPadronizado;
-    @Size(max = 50)
     @Column(name = "dsTitulo")
     private String dsTitulo;
     @Size(min = 1)
     @Column(name = "dsConteudo")
+    @Lob
     private String dsConteudo;
     @Column(name = "dtCadastro")
     @Temporal(TemporalType.TIMESTAMP)

@@ -555,6 +555,7 @@ public class MBListarManifestacoes implements Serializable {
     }
 
     public Date getPrazoAtendimento(TbManifestacao manifestacao) {
+    	manifestacao.setTbEncaminhamentoCollection(this.encaminhamentoDAO.getPorManifestacao(manifestacao));
         for (TbEncaminhamento enc : manifestacao.getTbEncaminhamentoCollection()) {
             enc.setIdManifestacao(manifestacao);
         }

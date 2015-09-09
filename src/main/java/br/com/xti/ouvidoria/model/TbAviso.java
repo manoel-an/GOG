@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -51,13 +52,14 @@ public class TbAviso implements Serializable {
     private Date dtFimAviso;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 255)
     @Column(name = "dsTitulo")
     private String dsTitulo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1)
     @Column(name = "dsConteudo")
+    @Lob
     private String dsConteudo;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne
