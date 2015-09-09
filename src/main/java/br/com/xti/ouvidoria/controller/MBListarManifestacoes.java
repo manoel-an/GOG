@@ -788,7 +788,7 @@ public class MBListarManifestacoes implements Serializable {
         StringBuilder nomeOperadores = new StringBuilder();
         TbUnidade unidadeInterlocutor = securityService.getUser().getIdUnidade();
         Set<TbUsuario> operadores = new TreeSet<>();
-
+        man.setTbEncaminhamentoCollection(this.encaminhamentoDAO.getPorManifestacao(man));
         for (TbEncaminhamento e : man.getTbEncaminhamentoCollection()) {
             if (e.getIdUnidadeRecebeu().equals(unidadeInterlocutor)) {
                 e.setTbTramiteCollection(this.tramiteDAO.getPorEncaminhamento(e));
