@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -48,8 +47,7 @@ public class TbRespostaManifestacao implements Serializable, Comparable<TbRespos
     private String dsTituloResposta;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "dsResposta")
-    @Lob
+    @Column(name = "dsResposta", columnDefinition="text")
     private String dsResposta;
     @Column(name = "dtCadastroRespostaManifestacao")
     @Temporal(TemporalType.TIMESTAMP)

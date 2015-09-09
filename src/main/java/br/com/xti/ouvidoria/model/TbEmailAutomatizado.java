@@ -12,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -49,8 +48,7 @@ public class TbEmailAutomatizado implements Serializable {
     private String nmTituloEmail;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "dsEmail", nullable = false)
-    @Lob
+    @Column(name = "dsEmail", nullable = false, columnDefinition = "text")
     private String dsEmail;
 
     public TbEmailAutomatizado() {

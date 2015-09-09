@@ -14,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -115,8 +114,7 @@ public class TbManifestacao implements Serializable {
     private String dsLocalidade;
     @Basic(optional = false)
     @NotNull
-    @Lob
-    @Column(name = "dsTextoManifestacao")
+    @Column(columnDefinition = "text", name = "dsTextoManifestacao")
     private String dsTextoManifestacao;
     @Basic(optional = false)
     @NotNull
