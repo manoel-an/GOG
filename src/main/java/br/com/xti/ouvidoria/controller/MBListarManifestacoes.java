@@ -218,7 +218,7 @@ public class MBListarManifestacoes implements Serializable {
     public void getEmAndamento(ActionEvent actionEvent) {
         filtroEscolhido = new TbFiltroPersonalizado();
         FiltroPersonalizado filtro = new FiltroPersonalizado();
-        filtro.setMetodoBusca("and");
+        filtro.setMetodoBusca("or");
         // -- ADMIN ou OUVIDOR
         if (securityService.isAdministrador() || securityService.isOuvidor()) {
             filtro.setEncStatus(StatusEncaminhamentoEnum.ENCAMINHADA.getId());
@@ -248,12 +248,13 @@ public class MBListarManifestacoes implements Serializable {
             case INTERLOCUTOR: // remover as manifestações que não foram
                                // encaminhadas para um operador.
                 TbUnidade unidadeInterlocutor = securityService.getUser().getIdUnidade();
-
                 ListIterator<TbManifestacao> listIterator = list.listIterator();
                 for (; listIterator.hasNext();) {
                     boolean deletarEnviou = Boolean.FALSE;
                     boolean deletarRecebeu = Boolean.FALSE;
-                    enc: for (TbEncaminhamento e : listIterator.next().getTbEncaminhamentoCollection()) {
+                    TbManifestacao current = listIterator.next();
+                    current.setTbEncaminhamentoCollection(encaminhamentoDAO.getPorManifestacao(current));
+                    enc: for (TbEncaminhamento e : current.getTbEncaminhamentoCollection()) {
                         if (e.getIdUnidadeEnviou().equals(unidadeInterlocutor)) {
                             if (StatusEncaminhamentoEnum.RETORNADA.getId().equals(e.getStEncaminhamento())) {
                                 deletarEnviou = Boolean.TRUE;
@@ -261,6 +262,7 @@ public class MBListarManifestacoes implements Serializable {
                                 break enc;
                             }
                         } else if (e.getIdUnidadeRecebeu().equals(unidadeInterlocutor)) {
+                        	e.setTbTramiteCollection(tramiteDAO.getPorEncaminhamento(e));
                             for (TbTramite t : e.getTbTramiteCollection()) {
                                 if (t.getIdUsuarioReceptor() != null
                                         && FuncaoUsuarioEnum.OPERADOR.getId().equals(
@@ -312,8 +314,11 @@ public class MBListarManifestacoes implements Serializable {
 
                 ListIterator<TbManifestacao> listIterator = list.listIterator();
                 for (; listIterator.hasNext();) {
-                    enc: for (TbEncaminhamento e : listIterator.next().getTbEncaminhamentoCollection()) {
+                	TbManifestacao current = listIterator.next();
+                	current.setTbEncaminhamentoCollection(encaminhamentoDAO.getPorManifestacao(current));
+                    enc: for (TbEncaminhamento e : current.getTbEncaminhamentoCollection()) {
                         if (e.getIdUnidadeRecebeu().equals(unidadeInterlocutor)) {
+                        	e.setTbTramiteCollection(tramiteDAO.getPorEncaminhamento(e));
                             boolean deletar = Boolean.TRUE;
                             // Recupera o último trâmite da ouvidria para a área
                             Date dtUltimoTramiteDaOuvidoria = null;
@@ -409,8 +414,11 @@ public class MBListarManifestacoes implements Serializable {
 
                 ListIterator<TbManifestacao> listIterator = list.listIterator();
                 for (; listIterator.hasNext();) {
-                    enc: for (TbEncaminhamento e : listIterator.next().getTbEncaminhamentoCollection()) {
+                	TbManifestacao current = listIterator.next();
+                	current.setTbEncaminhamentoCollection(encaminhamentoDAO.getPorManifestacao(current));
+                    enc: for (TbEncaminhamento e : current.getTbEncaminhamentoCollection()) {
                         if (e.getIdUnidadeRecebeu().equals(unidadeOperador)) {
+                        	e.setTbTramiteCollection(tramiteDAO.getPorEncaminhamento(e));
                             for (TbTramite t : e.getTbTramiteCollection()) {
                                 if (t.getIdUsuarioReceptor() != null
                                         && t.getIdUsuarioReceptor().equals(securityService.getUser())
