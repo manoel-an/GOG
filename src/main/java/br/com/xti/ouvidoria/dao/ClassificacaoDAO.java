@@ -35,7 +35,7 @@ public class ClassificacaoDAO extends AbstractDAO<TbClassificacao> {
     public List<TbClassificacao> getClassificacoesPorManifestacao(Integer idManifestacao) {
         List<TbClassificacao> res = null;
         try {
-            String select = "select c from TbManifestacao m INNER JOIN m.tbClassificacaoCollection c where m.idManifestacao = m.idManifestacao = :idManifestacao";
+            String select = "select c from TbManifestacao m INNER JOIN m.tbClassificacaoCollection c where m.idManifestacao = :idManifestacao";
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("idManifestacao", idManifestacao);
             res = selectList(select, map);
