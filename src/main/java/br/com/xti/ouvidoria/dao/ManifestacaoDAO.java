@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -92,9 +90,8 @@ public class ManifestacaoDAO extends AbstractDAO<TbManifestacao> {
             map.put("nrManifestacao", numeroManifestacao);
             return getObject("findByNrManifestacao", map);
         } catch (Exception ex) {
-            Logger.getLogger(ManifestacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        	return null;        
         }
-        return null;
     }
 
     public TbManifestacao getManifestacaoPorNumeroSenha(int numeroManifestacao, String senha) throws Exception {
