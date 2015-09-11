@@ -1502,6 +1502,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
 
         // Envia E-mail para os interlocutores
         if (UnidadeEnum.OUVIDORIA.getId() != unidade.getIdUnidade()) {
+        	unidade.setTbUsuarioCollection(usuarioDAO.findByUnidade(unidade.getIdUnidade()));
             Collection<TbUsuario> usuariosUnidade = unidade.getTbUsuarioCollection();
             for (TbUsuario usuario : usuariosUnidade) {
                 if (FuncaoUsuarioEnum.INTERLOCUTOR.getId().equals(usuario.getTpFuncao())
