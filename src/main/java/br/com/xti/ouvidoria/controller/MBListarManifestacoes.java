@@ -221,9 +221,8 @@ public class MBListarManifestacoes implements Serializable {
         filtro.setMetodoBusca("and");
         // -- ADMIN ou OUVIDOR
         if (securityService.isAdministrador() || securityService.isOuvidor()) {
-            filtro.setEncStatus(StatusEncaminhamentoEnum.ENCAMINHADA.getId());
             filtro.addManIdStatus(StatusManifestacaoEnum.EM_ANDAMENTO.getId());
-            // filtro.addManIdStatus(StatusManifestacaoEnum.SOLICITADA_INFORMACAO.getId());
+            //filtro.addManIdStatus(StatusManifestacaoEnum.SOLICITADA_INFORMACAO.getId());
         } else if (securityService.isInterlocutor()) {
             filtro = FiltroHelper.getFiltrosPadrao(securityService.getUser());
         }
