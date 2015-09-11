@@ -5965,7 +5965,7 @@ INSERT INTO tbMunicipio (idMunicipio, idUF, nmMunicipio) VALUES (5565, 7, 'Bras�
 INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'Sequencial da Manifestação', '1');
 INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'Ano atual', '2014');
 INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'Diretório para onde serão enviados os arquivos anexados', '/var/arquivos/');
-INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'URL base do Sistema', 'http://ouvidoria.ouvidoria.gov.br');
+INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'URL base do Sistema', 'http://10.243.1.29:8088/Ouvidoria);
 
 INSERT INTO TbPreferenciaSistema
     (nomeOuvidoria, emailOuvidoria, hostEmail, portaEmail, usuarioEmail, 
