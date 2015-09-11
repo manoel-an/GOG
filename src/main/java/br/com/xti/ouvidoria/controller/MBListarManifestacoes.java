@@ -218,7 +218,7 @@ public class MBListarManifestacoes implements Serializable {
     public void getEmAndamento(ActionEvent actionEvent) {
         filtroEscolhido = new TbFiltroPersonalizado();
         FiltroPersonalizado filtro = new FiltroPersonalizado();
-        filtro.setMetodoBusca("or");
+        filtro.setMetodoBusca("and");
         // -- ADMIN ou OUVIDOR
         if (securityService.isAdministrador() || securityService.isOuvidor()) {
             filtro.setEncStatus(StatusEncaminhamentoEnum.ENCAMINHADA.getId());
@@ -677,13 +677,13 @@ public class MBListarManifestacoes implements Serializable {
     public String verificaAtrasoStyleClass(TbManifestacao manifestacao) {
         AtrasoManifestacaoEnum tipoAtraso = verificaAtraso(manifestacao);
         String styleClass = tipoAtraso.getStyleClass();
-        // As linhas abaixo são para que as linhas das manifestações em atraso
-        // fiquem piscando
-        // if ((securityService.isInterlocutor() ||
-        // securityService.isOperador()) && tipoAtraso !=
-        // AtrasoManifestacaoEnum.SEM_ATRASO) {
-        // styleClass = styleClass.concat(" " + styleClass + "2");
-        // }
+//         As linhas abaixo são para que as linhas das manifestações em atraso
+//         fiquem piscando
+         if ((securityService.isInterlocutor() ||
+         securityService.isOperador()) && tipoAtraso !=
+         AtrasoManifestacaoEnum.SEM_ATRASO) {
+         styleClass = styleClass.concat(" " + styleClass + "2");
+         }
         return styleClass;
     }
 
@@ -776,15 +776,16 @@ public class MBListarManifestacoes implements Serializable {
                     manifestacao.setTbEncaminhamentoCollection(encaminhamentos);
                     TbEncaminhamento tbEncaminhamento = ManifestacaoUtils
                             .getEncaminhamentoDoUsuarioLogado(manifestacao);
-
-                    Date dataEncaminhamento = tbEncaminhamento.getDtEnvioTramite();
-                    String statusTramite = tbEncaminhamento.getStEncaminhamento();
-
-                    diasTranscorridos = DataHelper.getDiferencaEntreDatasEmDias(dataAtual, dataEncaminhamento);
-
-                    if (prazoRespostaAOuvidoria > 0 && diasTranscorridos > prazoRespostaAOuvidoria
-                            && StatusEncaminhamentoEnum.ENCAMINHADA.getId().equals(statusTramite)) {
-                        return AtrasoManifestacaoEnum.ATRASO_RESPOSTA_OUVIDORIA;
+                    if(tbEncaminhamento != null){
+                    	Date dataEncaminhamento = tbEncaminhamento.getDtEnvioTramite();
+                    	String statusTramite = tbEncaminhamento.getStEncaminhamento();
+                    	
+                    	diasTranscorridos = DataHelper.getDiferencaEntreDatasEmDias(dataAtual, dataEncaminhamento);
+                    	
+                    	if (prazoRespostaAOuvidoria > 0 && diasTranscorridos > prazoRespostaAOuvidoria
+                    			&& StatusEncaminhamentoEnum.ENCAMINHADA.getId().equals(statusTramite)) {
+                    		return AtrasoManifestacaoEnum.ATRASO_RESPOSTA_OUVIDORIA;
+                    	}
                     }
                 }
             }
