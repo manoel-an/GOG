@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
-import br.com.xti.ouvidoria.model.TbClassificacao;
 import br.com.xti.ouvidoria.model.TbEncaminhamento;
 import br.com.xti.ouvidoria.model.TbManifestacao;
 import br.com.xti.ouvidoria.model.TbUnidade;

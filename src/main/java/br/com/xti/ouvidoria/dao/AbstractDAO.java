@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 import javax.validation.ConstraintViolationException;
 
@@ -32,7 +33,7 @@ public abstract class AbstractDAO<T> {
 	@Inject
 	private SecurityService securityService;
 
-    @PersistenceContext(unitName = "ouvidoriaPersistenceUnit")
+    @PersistenceContext(unitName = "ouvidoriaPersistenceUnit", type = PersistenceContextType.EXTENDED)
     private EntityManager em;
     private Class<T> entityClass;
 
