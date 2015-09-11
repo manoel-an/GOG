@@ -11,6 +11,8 @@ import static br.com.xti.ouvidoria.model.enums.FuncionalidadeEnum.REGISTRAR_MANI
 
 import java.security.acl.Group;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,7 @@ import org.jboss.security.auth.spi.UsernamePasswordLoginModule;
 
 import br.com.xti.ouvidoria.dao.ManifestacaoDAO;
 import br.com.xti.ouvidoria.dao.PerfilDAO;
+import br.com.xti.ouvidoria.dao.PerfilxFuncionalidadeDAO;
 import br.com.xti.ouvidoria.dao.UsuarioDAO;
 import br.com.xti.ouvidoria.helper.CdiHelper;
 import br.com.xti.ouvidoria.helper.EnumHelper;
@@ -59,6 +62,9 @@ public class OuvidoriaLoginModule extends UsernamePasswordLoginModule {
 	
 	@Inject
 	private PerfilDAO perfilDAO;
+	
+	@Inject
+	private PerfilxFuncionalidadeDAO perfilxFuncionalidadeDAO;
 	
 	@Inject
 	private HttpServletRequest request;
@@ -165,6 +171,11 @@ public class OuvidoriaLoginModule extends UsernamePasswordLoginModule {
 				// Adicionando as permissões vinculadas aos perfis do usuário
 				List<TbPerfil> activeProfiles = perfilDAO.getPerfisAtivos(user);
 				for (TbPerfil profile : activeProfiles) {
+					HashMap<String, TbPerfil> map = new HashMap<String, TbPerfil>(1);
+					map.put("perfil", profile);
+					Collection<TbPerfilxFuncionalidade> perfilxFuncionalidades = perfilxFuncionalidadeDAO
+							.selectList("select pf from TbPerfilxFuncionalidade pf where pf.idPerfil = :perfil", map);
+					profile.setTbPerfilxFuncionalidadeCollection(perfilxFuncionalidades);
 					for (TbPerfilxFuncionalidade func : profile.getTbPerfilxFuncionalidadeCollection()) {
 						int functionalityId = func.getIdFuncionalidade().getIdFuncionalidade(); 
 						FuncionalidadeEnum role = EnumHelper.getFuncionalidadeEnum(functionalityId);
