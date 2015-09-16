@@ -185,10 +185,16 @@ A configuração do Jboss é feita basicamente em um único arquivo de proprieda
                 </drivers>
 ```
 
+> **Criar o security domain - configuração de autenticação**
+```xml
+<security-domain name="OuvidoriaSecurityDomain">
+	<authentication>
+		<login-module code="br.com.xti.ouvidoria.security.OuvidoriaLoginModule" flag="required"/>
+	</authentication>
+</security-domain>
+```
 
-- <i class="icon-pencil"></i> Criar o driver referenciado no datasource: O driver para o Postgresql deve referenciar o módulo a ser carregado com o necessário arquivo '*.jar' de conexão.
-
-## Configuração e atualização dos jars (módulos) do JBOSS.
+## Configuração e atualização dos módulos (jars) do JBOSS.
 
 > **Criação do módulo para conexão com Banco de Dados Postgres**
 > - Crie uma estrutura de diretórios correspondente ao jar do driver do Postgres, a partir do diretório "modules" do Jboss. 
@@ -199,7 +205,7 @@ A configuração do Jboss é feita basicamente em um único arquivo de proprieda
 <?xml version="1.0" encoding="UTF-8"?>
   <module xmlns="urn:jboss:module:1.0" name="org.postgresql">
   <resources>
-    <resource-root path="postgresql-9.3-1102.jdbc4.jar"/>
+    <resource-root path="postgresql-9.4-1201.jdbc4.jar"/>
   </resources>
   <dependencies>
     <module name="javax.api"/>
@@ -238,17 +244,6 @@ A configuração do Jboss é feita basicamente em um único arquivo de proprieda
     </dependencies>
 </module>
 ```
-
-
-> **Criar o security domain - configuração de autenticação**
-```xml
-<security-domain name="OuvidoriaSecurityDomain">
-	<authentication>
-		<login-module code="br.com.xti.ouvidoria.security.OuvidoriaLoginModule" flag="required"/>
-	</authentication>
-</security-domain>
-```
-
 
 ## Executar carga inicial
 
