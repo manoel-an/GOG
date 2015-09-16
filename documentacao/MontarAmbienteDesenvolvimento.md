@@ -249,8 +249,6 @@ A configuração do Jboss é feita basicamente em um único arquivo de proprieda
 
 A carga inicial do sistema, com o povoamento dos dados das tabelas de domínio utilizadas no sistema, deve ser realizada com a execução do script disponibilizado no arquivo src/main/resources/ScriptRevisado.sql
 
-## Ajustar as configurações
-
 ### Este script contém a tabela de parâmetros essenciais da aplicação
 
 ```sql
