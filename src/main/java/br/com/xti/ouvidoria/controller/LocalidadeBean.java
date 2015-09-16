@@ -16,7 +16,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
-import br.com.xti.ouvidoria.dao.MunicipioDAO;
 import br.com.xti.ouvidoria.dao.PaisDAO;
 import br.com.xti.ouvidoria.dao.UfDAO;
 import br.com.xti.ouvidoria.model.TbMunicipio;
@@ -41,7 +40,6 @@ public class LocalidadeBean implements Serializable {
     
     @EJB private UfDAO ufDAO;
     @EJB private PaisDAO paisDAO;
-    @EJB private MunicipioDAO municipioDAO;
 
     private ArrayList<TbPais> paises = new ArrayList<>();
     
@@ -133,16 +131,7 @@ public class LocalidadeBean implements Serializable {
         if (idEstado != null) {
             TbUF uf = estadoCache.get(idEstado);
             if (uf != null) {
-            	HashMap<String, Object> map = new HashMap<String, Object>(1);
-            	map.put("uf", uf);
-            	try {
-					Collection<TbMunicipio> municipios = 
-							municipioDAO.selectList("select t from TbMunicipio t where t.idUF = :uf", map);
-							return municipios;
-				} catch (Exception e) {
-					e.printStackTrace();
-					return null;
-				}
+                return uf.getTbMunicipioCollection();
             }
         }
         return new ArrayList<TbMunicipio>();

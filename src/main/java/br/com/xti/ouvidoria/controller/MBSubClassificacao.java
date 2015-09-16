@@ -15,7 +15,6 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.model.DualListModel;
 
 import br.com.xti.ouvidoria.dao.ClassificacaoDAO;
-import br.com.xti.ouvidoria.dao.ManifestacaoDAO;
 import br.com.xti.ouvidoria.dao.SubClassificacaoDAO;
 import br.com.xti.ouvidoria.model.TbClassificacao;
 import br.com.xti.ouvidoria.model.TbSubClassificacao;
@@ -33,8 +32,6 @@ public class MBSubClassificacao implements Serializable {
     private SubClassificacaoDAO dao;
     @EJB
     private ClassificacaoDAO classificacaoDAO;
-    @EJB
-    private ManifestacaoDAO manifestacaoDAO;    
     private TbSubClassificacao subclassificacao = new TbSubClassificacao();
     private TbSubClassificacao subclassificacaoNovo = new TbSubClassificacao();
     private Integer idClassificacao;
@@ -67,10 +64,6 @@ public class MBSubClassificacao implements Serializable {
 
     public List<TbSubClassificacao> getTodos() {
     	List<TbSubClassificacao> list = dao.findAll();
-    	for (TbSubClassificacao tbSubClassificacao : list) {
-            tbSubClassificacao.setTbClassificacaoCollection(this.classificacaoDAO.getClassificacoesPorSubClassificacao(tbSubClassificacao.getIdSubClassificacao()));
-            tbSubClassificacao.setTbManifestacaoCollection(this.manifestacaoDAO.getPorSubClassificacao(tbSubClassificacao.getIdSubClassificacao()));
-        }
     	Collections.sort(list);
         return list;
     }
