@@ -122,6 +122,7 @@ Path: /GOG/src/main/resources/META-INF/persistence.xml
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.enable_lazy_load_no_trans" value="true" />
+			<property name="jboss.as.jpa.providerModule" value="org.hibernate" />
 		</properties>
 	</persistence-unit>
 </persistence>
@@ -184,8 +185,16 @@ A configuração do Jboss é feita basicamente em um único arquivo de proprieda
                 </drivers>
 ```
 
+> **Criar o security domain - configuração de autenticação**
+```xml
+<security-domain name="OuvidoriaSecurityDomain">
+	<authentication>
+		<login-module code="br.com.xti.ouvidoria.security.OuvidoriaLoginModule" flag="required"/>
+	</authentication>
+</security-domain>
+```
 
-- <i class="icon-pencil"></i> Criar o driver referenciado no datasource: O driver para o Postgresql deve referenciar o módulo a ser carregado com o necessário arquivo '*.jar' de conexão.
+## Configuração e atualização dos módulos (jars) do JBOSS.
 
 > **Criação do módulo para conexão com Banco de Dados Postgres**
 > - Crie uma estrutura de diretórios correspondente ao jar do driver do Postgres, a partir do diretório "modules" do Jboss. 
@@ -196,7 +205,7 @@ A configuração do Jboss é feita basicamente em um único arquivo de proprieda
 <?xml version="1.0" encoding="UTF-8"?>
   <module xmlns="urn:jboss:module:1.0" name="org.postgresql">
   <resources>
-    <resource-root path="postgresql-9.3-1102.jdbc4.jar"/>
+    <resource-root path="postgresql-9.4-1201.jdbc4.jar"/>
   </resources>
   <dependencies>
     <module name="javax.api"/>
@@ -205,36 +214,43 @@ A configuração do Jboss é feita basicamente em um único arquivo de proprieda
 </module>
 ```
 
-- <i class="icon-pencil"></i> Criar o security domain - configuração de autenticação
-```xml
-<security-domain name="OuvidoriaSecurityDomain">
-	<authentication>
-		<login-module code="br.com.xti.ouvidoria.security.OuvidoriaLoginModule" flag="required"/>
-	</authentication>
-</security-domain>
-```
+> **Upgrade das versões dos jars nos módulos do hibernate e javassist**
+> - Versões utilizadas: **Hibernate 4.2.20.Final** e **Javassist 3.20.0-GA**
+> - Para cada um desses diretórios já existentes no JBOSS:
+>   - jboss-7.1.1/modules/org/hibernate/envers/main
+>   - jboss-7.1.1/modules/org/hibernate/main
+>   - jboss-7.1.1/modules/org/javassist/main
+>      - Delete os arquivos **.index**.
+>      - Substitua os jars existentes pelas versões atualizadas.
+>      - Modifique os nomes dos jars no arquivo **module.xml**.
+>      - Todos os arquivos module.xml serão modificados apenas na tag **resources**.
 
+> - Exemplo, o diretório **jboss-7.1.1/modules/org/javassist/main** conterá o jar atualizando e o arquivo.xml com o nome do jar atualizado da seguinte forma: 
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module xmlns="urn:jboss:module:1.1" name="org.javassist">
+    <properties>
+        <property name="jboss.api" value="private"/>
+    </properties>
+
+    <resources>
+        <resource-root path="javassist-3.20.0-GA.jar"/>
+    </resources>
+    <!-- Nomes atualizados aqui /\ -->
+
+    <dependencies>
+    </dependencies>
+</module>
+```
 
 ## Executar carga inicial
 
-A carga inicial do sistema, com o povoamento dos dados das tabelas de domínio utilizadas no sistema, deve ser realizada com a execução do script disponibilizado no arquivo src/main/resources/ScriptCargaDominio.sql
+A carga inicial do sistema, com o povoamento dos dados das tabelas de domínio utilizadas no sistema, deve ser realizada com a execução do script disponibilizado no arquivo src/main/resources/ScriptRevisado.sql
 
+### Este script contém a tabela de parâmetros essenciais da aplicação
 
-## Ajustar as configurações
-### Criar as views sql utilizadas pela aplicação
-
-* Deletar as tabelas criadas na execução da DLL durante o primeiro deploy
-```sql
-DROP TABLE vwestatisticasmanifestacao;
-DROP TABLE vwultimotramite;
-```
-- Executar o script disponibilizado nos arquivos listados a seguir, para criação das views que serão utilizadas:
-  - src/main/resources/CREATE VwEstatisticasManifestacao.sql 
-  - src/main/resources/CREATE vwUltimoTramite.sql
-
-
-### Ajustar a tabela de parâmetros da aplicação
-A tabela 'TbPreferenciaSistema' deve ser ajustada para configuração de alguns parâmetros da aplicação. 
 ```sql
 INSERT INTO TbPreferenciaSistema
 	(idPreferenciaSistema, nomeOuvidoria, emailOuvidoria, hostEmail, portaEmail, usuarioEmail, 
@@ -245,12 +261,17 @@ VALUES
 	'', '2', '1', '1', '1', 
 	'1', 1, 28, 1);
 ```
+```sql
+INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'Sequencial da Manifestação', '1');
+INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'Ano atual', '2014');
+INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'Diretório para onde serão enviados os arquivos anexados', '/var/arquivos/');
+INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'URL base do Sistema', 'http://10.243.1.29:8088/Ouvidoria');
+```
+
 
 A tabela 'TbPreferenciaSistema' também pode ser editada internamente no sistema, utilizando-se de um usuário cadastrado como "Administrador" e acessando o menu "Sistema" - "Preferências do Sistema".
 
-### Realizar a configuração/criação de usuários do sistema
-A tabela 'tbUsuario' deve ser carregada com um usuário com função de Administrador. 
-Esta configuração é oferecida no script de carga de dados iniciais (disponibilizado no arquivo src/main/resources/ScriptCargaDominio.sql), pelo seguinte trecho:
+### Contém a configuração/criação de usuários do sistema:
 
 ```sql
 --tbUsuario
