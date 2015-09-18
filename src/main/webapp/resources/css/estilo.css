@@ -276,12 +276,11 @@ html,body {
 
 .rodape {
 	color: white;
-	background-color: #00401B;
+	background-color: #000033;
 	width: auto;
 	height: 250px;
 	margin: 0 auto;
 	padding: 20px;
-	background: url("../img/black_pattern.gif");
 }
 
 .geralRodape {
@@ -414,8 +413,7 @@ html,body {
 }
 
 .endereco {
-	background-color: #00401B;
-	background: url("../img/black_pattern.gif");
+	background: #000033;
 	font-family: 'Open Sans', serif;
 	font-size: 14px;
 	color: white;
@@ -451,7 +449,7 @@ html,body {
 }
 
 .conteudoLogin {
-	background-color: #00401B;
+	background-color: #000033;
 	height: 230px;
 	width: 380px;
 }
@@ -482,7 +480,7 @@ html,body {
 
 .conteudoLogin2 {
 	font-family: 'Open Sans', serif;
-	background-color: #02712B;
+	background-color: #000033;
 	color: #FFFFFF;
 	height: 230px;
 	margin: 0 auto;
@@ -491,7 +489,7 @@ html,body {
 
 .conteudoLogin3 {
 	font-family: 'Open Sans', serif;
-	background-color: #02712B;
+	background-color: #000033;
 	color: #FFFFFF;
 	height: 280px;
 	margin: 0 auto;
@@ -515,7 +513,7 @@ html,body {
 
 .conteudoLogin4 {
 	font-family: 'Open Sans', serif;
-	background-color: #02712B;
+	background-color: #000033;
 	color: #FFFFFF;
 	height: 280px;
 	margin: 0 auto;
@@ -632,7 +630,7 @@ html,body {
 }
 
 .panelLogin {
-	background-color: #02712B;
+	background-color: #000033;
 	color: #FFFFFF;
 	height: 176px;
 	margin: 0 auto;
@@ -691,6 +689,7 @@ html,body {
 	height: 25px;
 	position: absolute;
 	width: 360px;
+	background-color: #000033;
 }
 
 .mensagem4 {
@@ -819,7 +818,7 @@ html,body {
 .notch {
 	border-left: 10px solid transparent;
 	border-right: 10px solid transparent;
-	border-top: 10px solid #02712B;
+	border-top: 10px solid #000033;
 	left: 20px;
 	margin-bottom: 10px;
 	margin-left: 20px;
@@ -849,7 +848,7 @@ html,body {
 }
 
 .topoLoginBox {
-	background-color: #00401B;
+	background-color: #000033;
 	height: 10px;
 	position: absolute;
 	width: 380px;
@@ -892,7 +891,7 @@ ui-corner-all {
 }
 	
 .btnResponderQuestionario span {
-	background-color: #00500f;
+	background-color: #000033;
 	color: #fff;
 	padding: 10px !important;
 }

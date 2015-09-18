@@ -32,13 +32,10 @@
 
 <body>
 	<div class="global">
-		<!-- BARRA DO GOVERNO -->
-		<div id="barra-brasil"></div>
-		
 		<div class="bgSistemaOuvidoria">
 			<div class="cabecalho2">
 				<div class="logo-externa">
-					<img src="${context}/img/logo-ouvidoria.png" />
+					<img src="${context}/img/ouvidoria-logo-sb-big.png"/>
 				</div>
 			</div>
 			<!-- conteúdo Login -->
@@ -104,16 +101,6 @@
 								informações, especialmente aquelas que demandam maior urgência.
 							</p>
 						</div>
-						<div class="socials-rede">
-							<a href="https://www.facebook.com/MinisterioDaCultura" target="blank"><span class="icon-facebook"></span></a>
-							<a href="https://twitter.com/culturagovbr" target="blank"><span class="icon-twitter"></span></a>
-							<a href="https://www.youtube.com/ministeriodacultura/" target="blank"><span class="icon-youtube"></span></a>
-							<a href="http://www.flickr.com/photos/ministeriodacultura" target="blank"><span class="icon-flickr"></span></a>
-						</div>
-					</div>
-					<div class="perguntas-frequentes">
-						<span class="question"></span>
-						<a href="http://www.cultura.gov.br/perguntas-frequentes" target="_blank">Perguntas frequentes</a>
 					</div>
 				</div>
 			</form>
