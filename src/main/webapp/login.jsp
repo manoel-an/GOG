@@ -35,7 +35,7 @@
 		<div class="bgSistemaOuvidoria">
 			<div class="cabecalho2">
 				<div class="logo-externa">
-					<img src="${context}/img/ouvidoria-logo-sb-big.png"/>
+					<img src="${context}/img/logo-ouvidoria-baloes.png"/>
 				</div>
 			</div>
 			<!-- conteúdo Login -->
@@ -110,15 +110,10 @@
 				<div class="box1">
 					<h3>Sobre a Ouvidoria</h3>
 					<p>
-						A Ouvidoria do Ministério da Cultura é uma unidade
-						diretamente ligada ao Gabinete do dirigente máximo da instituição.
-					</p>
-
-					<p>
-						Além de ser um canal de comunicação com o cidadão e
-						instrumento de participação e exercício de cidadania, a Ouvidoria
-						é uma modalidade de controle social, de defesa de direitos e
-						também uma importante ferramenta qualificadora da gestão pública.
+						A implantação da Ouvidoria na AGR se deu por meio da Lei 13.569 de 27 de dezembro de 1999. 
+						Buscou-se, com sua criação, garantir aos usuários dos serviços públicos no Estado de Goiás um canal
+						de comunicação onde possam registrar suas manifestações (reclamações, denúncias, elogios, sugestões etc),
+						e providenciar soluções para os conflitos entre os usuários e concessionárias ou permissionários.
 					</p>
 
 					<p>Participe! A qualidade de nossos serviços depende de sua participação.</p>
@@ -160,9 +155,9 @@
 			</div>
 		</div>
 		<div class="endereco">
-			Copyright © 2013-2015 CGTI - Coordenação Geral de Tecnologia da Informação
-			- Ministério da Cultura. Todos os Direitos Reservados.
-			<a href="http://www.cultura.gov.br/" target="_blank">MinC</a>
+			Coordenação de Informática
+			- Agência Goiana de Regulação. Todos os Direitos Reservados.
+			<a href="http://www.agr.go.gov.br/" target="_blank">AGR</a>
 		</div>
 	</div>
 	

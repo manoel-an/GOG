@@ -37,7 +37,7 @@ html,body {
 }
 
 .bgSistemaOuvidoria {
-	background-repeat: no-repeat;
+	background-color: white;
 	background-position: 50% 0%;
 	height: auto;
 	height: 570px;
@@ -47,7 +47,7 @@ html,body {
 .cabecalho {
 	height: 150px;
 	background: url("../resources/img/topoOuvidoriaInterno.png");
-	background-repeat: no-repeat;
+	background-color: white;
 	background-position: 190px;
 }
 
