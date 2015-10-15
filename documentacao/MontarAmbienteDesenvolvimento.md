@@ -265,7 +265,7 @@ VALUES
 INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'Sequencial da Manifestação', '1');
 INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'Ano atual', '2014');
 INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'Diretório para onde serão enviados os arquivos anexados', '/var/arquivos/');
-INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'URL base do Sistema', 'http://10.243.1.29:8088/Ouvidoria');
+INSERT INTO tbparametro (nmparametro, vlrparametro) VALUES ( 'URL base do Sistema', 'http://10.243.1.29:8088/ouvidoria');
 ```
 
 
