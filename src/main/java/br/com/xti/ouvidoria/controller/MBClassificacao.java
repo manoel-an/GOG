@@ -98,19 +98,19 @@ public class MBClassificacao implements Serializable {
                 classificacao.setTbUnidadeCollection(listaUnidades.getTarget());
                 
                 // Adiciona a clasificação nas Unidades escolhidas, se necessário
-                for (TbUnidade u : listaUnidades.getTarget()) {
-					if(!(u.getTbClassificacaoCollection().contains(getClassificacao()))) {
-						u.getTbClassificacaoCollection().add(getClassificacao());
-						unidadeDAO.edit(u);
-					}
-				}
-                // Remove a classificação das demais unidades (não escolhidas)
-                for (TbUnidade u : listaUnidades.getSource()) {
-                	if(u.getTbClassificacaoCollection().contains(getClassificacao())) {
-                		u.getTbClassificacaoCollection().remove(getClassificacao());
-                		unidadeDAO.edit(u);
-                	}
-                }
+//                for (TbUnidade u : listaUnidades.getTarget()) {
+//					if(!(u.getTbClassificacaoCollection().contains(getClassificacao()))) {
+//						u.getTbClassificacaoCollection().add(getClassificacao());
+//						unidadeDAO.edit(u);
+//					}
+//				}
+//                // Remove a classificação das demais unidades (não escolhidas)
+//                for (TbUnidade u : listaUnidades.getSource()) {
+//                	if(u.getTbClassificacaoCollection().contains(getClassificacao())) {
+//                		u.getTbClassificacaoCollection().remove(getClassificacao());
+//                		unidadeDAO.edit(u);
+//                	}
+//                }
 
                 for (TbSubClassificacao sub : classificacao.getTbSubClassificacaoCollection()) {
                     TbSubClassificacao tbSub = subClassificacaoDAO.find(sub.getIdSubClassificacao());
