@@ -123,33 +123,35 @@
 					<ul>
 						<li>
 							<img src="${context}/resources/img/setaHome.png" />
-							<a href="http://www.cgu.gov.br/assuntos/ouvidoria">Ouvidoria Geral da União (OGU)</a>
+							<a href="http://www.cge.go.gov.br/ouvidoria/">Ouvidoria Geral do Estado de Goiás</a>
 						</li>
 						<br />
 						<li>
 							<img src="${context}/resources/img/setaHome.png" />
-							<a href="http://pnc.culturadigital.br/">Plano Nacional de Cultura</a>
+							<a href="http://www.transparencia.go.gov.br/">Goiás Transparente</a>
 						</li>
 						<br />
 						<li>
 							<img src="${context}/resources/img/setaHome.png" />
-							<a href="http://www.cultura.gov.br/snc">Sistema Nacional de Cultura</a>
+							<a href="http://vaptvupt.goias.gov.br/vvv/index">Vapt Vupt Digital</a>
 						</li>
 						<br />
 						<li>
 							<img src="${context}/resources/img/setaHome.png" />
-							<a href="http://novosalic.cultura.gov.br/">Salic WEB</a>
+							<a href="http://www.saneago.com.br/lai/ouvidoria/">Ouvidoria da Saneago</a>
 						</li>
 						<br />
 						<li>
 							<img src="${context}/resources/img/setaHome.png" />
-							<a href="http://www.cultura.gov.br/valecultura">Vale Cultura</a>
+							<a href="http://www.celg.com.br/paginas/clientes/centralAtendimento.aspx">Central de Atendimento CELG</a>
 						</li>
 						<br />
+						<!-- 
 						<li>
 							<img src="${context}/resources/img/setaHome.png" />
 							<a href="${context}/pages/externo/listarAnexos.xhtml">Relatórios da Ouvidoria</a>
 						</li>
+						 -->
 					</ul>
 				</div>
 			</div>
