@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -94,11 +95,7 @@ public class TbUnidade implements Serializable, Comparable<TbUnidade> {
     @JoinTable(name = "tbUnidadeSolucionadora_TbManifestacao", joinColumns = @JoinColumn(name = "idUnidade"), inverseJoinColumns = @JoinColumn(name = "idManifestacao"))      
     private Collection<TbManifestacao> tbManifestacaoCollection = new ArrayList<>();
     
-    @OneToMany
-//    @JoinTable(
-//            name="tbUnidade_TbClassificacao",
-//            joinColumns={@JoinColumn(name="tbUnidadeCollection_idUnidade", referencedColumnName="idUnidade")},
-//            inverseJoinColumns={@JoinColumn(name="TbClassificacao_idClassificacao", referencedColumnName="idClassificacao")})    
+    @ManyToMany(mappedBy = "tbUnidadeCollection")
     private Collection<TbClassificacao> tbClassificacaoCollection = new ArrayList<>();
     
     public TbUnidade() {
