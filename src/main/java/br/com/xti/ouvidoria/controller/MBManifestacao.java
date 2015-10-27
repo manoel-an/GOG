@@ -1733,6 +1733,8 @@ public class MBManifestacao extends AbstractManifestationController implements S
 
     public Boolean desabilitaUsuarioTramite() {
     	boolean desabilitar = true;
+    	if(idUnidadeTramite == UnidadeEnum.OUVIDORIA.getId())
+    		return desabilitar;
     	if(tabViewSelecionada != null) {
     		Integer idUnidadeEnviou = tabViewSelecionada.getUnidadeEnviou().getIdUnidade();
     		desabilitar = idUnidadeTramite.equals(idUnidadeEnviou);
