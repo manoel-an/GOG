@@ -331,9 +331,6 @@
 									<h:outputText value="#{mBManifestacao.manifestacao.nrProcesso}" />
 								</p:column>
 
-								<p:column headerText="Número Pronac" style="width: 150px">
-									<h:outputText value="#{mBManifestacao.manifestacao.nrPronac}" />
-								</p:column>
 							</p:dataTable>
 
 							<p:dataTable id="dtbOutrosDados4" var="outrosDados4"
@@ -359,7 +356,7 @@
 									<h:outputText value="#{mBManifestacao.manifestacao.nrCelular}" />
 								</p:column>
 							</p:dataTable>
-							
+							<!-- 
 							<p:dataTable id="dtbOutrosDadosInterlocutor1" var="outrosDadosInterlocutor1"
 								value="OutrosDadosInterlocutor1"
 								rendered="#{security.interlocutor || security.operador}">
@@ -367,6 +364,7 @@
 									<h:outputText value="#{mBManifestacao.manifestacao.nrPronac}" />
 								</p:column>
 							</p:dataTable>
+							 -->
 						</h:panelGrid>
 					</p:tab>
 				</p:accordionPanel>
