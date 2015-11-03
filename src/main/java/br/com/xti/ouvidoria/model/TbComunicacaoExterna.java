@@ -50,7 +50,7 @@ public class TbComunicacaoExterna implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dtComunicacao;
     
-    @Column(name = "dsComunicacao")
+    @Column(name = "dsComunicacao", columnDefinition = "text")
     private String dsComunicacao;
     
     @OneToMany(mappedBy = "idComunicacaoExterna", cascade=CascadeType.MERGE, fetch = FetchType.EAGER)

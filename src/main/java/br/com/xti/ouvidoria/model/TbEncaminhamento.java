@@ -56,7 +56,7 @@ public class TbEncaminhamento implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dtRespostaTramite;
     
-    @Column(name = "dsDescricao")
+    @Column(name = "dsDescricao", columnDefinition = "text")
     private String dsDescricao;
     
     @Column(name = "stEncaminhamento")
