@@ -362,8 +362,7 @@
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
                         <p:column style="font-weight: bold;">Nº Processo</p:column>  
                         <p:column style="font-weight: bold;">
-                        	<p:inputText id="nrProcesso" value="#{mBManifestacaoCadastrar.manifestacao.nrProcesso}" maxlength="20" title="Informe o número do Processo" style="width: 250px;">
-                        		<f:validator binding="#{numeroProcessoValidator}" />
+                        	<p:inputText id="nrProcesso" value="#{mBManifestacaoCadastrar.manifestacao.nrProcesso}" maxlength="30" title="Informe o número do Processo" style="width: 250px;">
                         	</p:inputText>
                         </p:column>
                     </p:row>

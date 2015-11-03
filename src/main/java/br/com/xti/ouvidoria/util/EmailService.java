@@ -10,7 +10,9 @@ import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 
+import br.com.xti.ouvidoria.controller.DominioCDIBean;
 import br.com.xti.ouvidoria.dao.PreferenciaSistemaDAO;
+import br.com.xti.ouvidoria.helper.CdiHelper;
 import br.com.xti.ouvidoria.helper.ValidacaoHelper;
 import br.com.xti.ouvidoria.model.TbManifestacao;
 import br.com.xti.ouvidoria.model.TbPreferenciaSistema;
@@ -105,8 +107,10 @@ public class EmailService {
 	 * @throws EmailException
 	 */
     public void enviaEmailNotificacaoNovaMensagem(TbManifestacao manifestacao) throws EmailException {
+    	DominioCDIBean dominioBean = CdiHelper.getFacadeWithJNDI(DominioCDIBean.class);
 		String nomeRemetente = manifestacao.getNmPessoa();
 		Integer numeroManifestacao = manifestacao.getNrManifestacao();
+		String linkManisfestacao = dominioBean.getUrlBase() + "/pages/manifestacao/administrar.xhtml?num="+manifestacao.getNrManifestacao()+"&id="+manifestacao.getIdManifestacao();
 		
     	if(ValidacaoHelper.isNotEmpty(nomeRemetente)) {
     		nomeRemetente = " Sr(a). " + nomeRemetente;
@@ -122,7 +126,7 @@ public class EmailService {
         .append("</span></center>")
         .append("<br/>")
         .append("<p>Prezado%s,</p>")
-        .append("<p>A manifestação de número %s tem um novo comentário. Acesse o sistema para verificar a mensagem.</p>")
+        .append("<p>A manifestação de número %s tem um novo comentário. Clique <a href='%s' target='_blank'>aqui</a> para acessar o sistema e verificar a mensagem.</p>")
         .append("<br/>")
         .append("<center><span style='color: #000033; font-weight: bold; font-size: 11px;'>")
         .append("Mensagem enviada automaticamente pelo sistema de Ouvidoria da AGR.")
@@ -139,7 +143,7 @@ public class EmailService {
         	Email email = new Email();
         	email.addDestinatario(nomeRemetente, emailRemetente);
         	email.setAssunto("[AGR Ouvidoria] Nova mensagem na Manifestação: " + numeroManifestacao);
-        	email.setTextoHtml(String.format(emailTextoHtml.toString(), nomeRemetente, numeroManifestacao));
+        	email.setTextoHtml(String.format(emailTextoHtml.toString(), nomeRemetente, numeroManifestacao, linkManisfestacao));
         	email.setTextoSemFormatacao(String.format(emailTexto.toString(), nomeRemetente, numeroManifestacao));
         	envia(email);
         }
