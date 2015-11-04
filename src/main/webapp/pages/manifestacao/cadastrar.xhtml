@@ -360,9 +360,17 @@
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                        <p:column style="font-weight: bold;">Nº Protocolo Concessionária</p:column>  
+                        <p:column style="font-weight: bold;">
+                        	<p:inputText id="nrPronac" value="#{mBManifestacaoCadastrar.manifestacao.nrPronac}" maxlength="50" title="Informe o número do Protocolo" style="width: 250px;">
+                        	</p:inputText>
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
                         <p:column style="font-weight: bold;">Nº Processo</p:column>  
                         <p:column style="font-weight: bold;">
-                        	<p:inputText id="nrProcesso" value="#{mBManifestacaoCadastrar.manifestacao.nrProcesso}" maxlength="30" title="Informe o número do Processo" style="width: 250px;">
+                        	<p:inputText id="nrProcesso" value="#{mBManifestacaoCadastrar.manifestacao.nrProcesso}" maxlength="50" title="Informe o número do Processo" style="width: 250px;">
                         	</p:inputText>
                         </p:column>
                     </p:row>

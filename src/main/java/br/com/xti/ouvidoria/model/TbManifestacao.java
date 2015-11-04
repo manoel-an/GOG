@@ -165,10 +165,10 @@ public class TbManifestacao implements Serializable {
     @Size(max = 20)
     @Column(name = "nrCpfCnpj")
     private String nrCpfCnpj;
-    @Size(max = 20)
+    @Size(max = 60)
     @Column(name = "nrPronac")
     private String nrPronac;
-    @Size(max = 20)
+    @Size(max = 60)
     @Column(name = "nrProcesso")
     private String nrProcesso;
     @Size(max = 1)

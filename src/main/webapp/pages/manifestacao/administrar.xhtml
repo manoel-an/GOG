@@ -356,15 +356,15 @@
 									<h:outputText value="#{mBManifestacao.manifestacao.nrCelular}" />
 								</p:column>
 							</p:dataTable>
-							<!-- 
+
 							<p:dataTable id="dtbOutrosDadosInterlocutor1" var="outrosDadosInterlocutor1"
 								value="OutrosDadosInterlocutor1"
-								rendered="#{security.interlocutor || security.operador}">
-								<p:column headerText="Número Pronac" style="width: 150px">
+								rendered="#{not empty mBManifestacao.manifestacao.nrPronac}">
+								<p:column headerText="Nº Protocolo Concessionária" style="width: 150px">
 									<h:outputText value="#{mBManifestacao.manifestacao.nrPronac}" />
 								</p:column>
 							</p:dataTable>
-							 -->
+
 						</h:panelGrid>
 					</p:tab>
 				</p:accordionPanel>
