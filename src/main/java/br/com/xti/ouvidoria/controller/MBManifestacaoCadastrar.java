@@ -545,9 +545,7 @@ public class MBManifestacaoCadastrar implements Serializable {
     	.append("Caso queira informar um endereço de e-mail para o recebimento da sua ")
     	.append("resposta, não o faça no corpo da mensagem, indique-o no espaço a ele ")
     	.append("reservado. Tenha certeza de que isso não comprometerá seu anonimato. ")
-    	.append("Caso contrário, pedimos que após 30 dias, contados a partir do ")
-    	.append("encaminhamento desta manifestação, você verifique as providências tomadas, ")
-    	.append("acessando o nosso site por meio do login e senha que você receberá ao final desta seção.");
+    	.append("Caso NÃO queira informar um e-mail, anote o número da Manifestação e após 15 dias, contados a partir do encaminhamento desta manifestação, ligue no 0800 704 3200 da AGR para verificar as providências tomadas.");
     	
     	MSG_MANIFESTACAO_ANONIMA = sb.toString();
     }

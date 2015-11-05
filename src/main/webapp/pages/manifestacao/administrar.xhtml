@@ -18,6 +18,7 @@
 		<f:metadata>
 		    <f:viewParam name="num" value="#{mBManifestacao.manifestationNumber}" />
 		    <f:viewParam name="id" value="#{mBManifestacao.manifestationId}" />
+		    <f:viewParam name="pass" value="#{mBManifestacao.manifestationPass}"/>
 	        <f:event type="preRenderView" listener="#{mBManifestacao.loadManifestation}" />
 		</f:metadata>
 		
@@ -143,10 +144,12 @@
 						<span style="margin-top: 6px; float: left;">
 							<h:outputText value="#{mBManifestacao.manifestacao.nrManifestacao}" />
 						</span>
-						<p:commandButton onclick="dlgNewPassword.show();" 
+						<!-- 
+						 	<p:commandButton onclick="dlgNewPassword.show();" 
 							value="Gerar Nova Senha"
 							rendered="#{security.administrador || security.ouvidor}"
 							style="float: right; background: #000033; color: #FFF;" />
+						 -->
 					</p:column>
 					<p:column headerText="Tipo de Manifestação">
 						<p:selectOneMenu

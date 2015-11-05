@@ -74,6 +74,7 @@ public abstract class AbstractManifestationController {
 	// Suporte para multi abas
 	protected Integer manifestationId;
 	protected Integer manifestationNumber;
+	protected String manifestationPass;
 	
 	// Abas Trâmites
 	protected ManifestacaoTabView tabViewSelecionada;
@@ -110,10 +111,8 @@ public abstract class AbstractManifestationController {
 					redirectToHomePage = true;
 				} else {
 					// Se for usuário não logado verifica se informou o id da manifestação
-					if(securityService.getUser() == null && !manifestacao.getIdManifestacao().equals(manifestationId)) {
-						if(!manifestacao.equals(oldManifestation)) {
-							redirectToHomePage = true;
-						}
+					if(securityService.getUser() == null && !manifestacao.getDsSenha().equals(manifestationPass)) {
+						redirectToHomePage = true;
 					}
 				}
 			}
@@ -463,6 +462,14 @@ public abstract class AbstractManifestationController {
 
 	public void setManifestationId(Integer manifestationId) {
 		this.manifestationId = manifestationId;
+	}
+
+	public String getManifestationPass() {
+		return manifestationPass;
+	}
+
+	public void setManifestationPass(String manifestationPass) {
+		this.manifestationPass = manifestationPass;
 	}
 
 	public List<TbUnidade> getUnidades() {

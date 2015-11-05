@@ -67,6 +67,7 @@ public class PalavrasChavesHelper {
                     	if(!isEmailInterno) {
                     		params = params.concat("&id=").concat(manifestacao.getIdManifestacao().toString()); 
                     	}
+                    	params = params.concat("&pass=").concat(manifestacao.getDsSenha());
                     	
                     	t = substituirPorValor(t, "%"+palavra+"%", 
             				String.format("<a href='%s/pages/manifestacao/administrar.xhtml?num=%s'>Acesse sua manifestação</a>", 
