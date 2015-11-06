@@ -368,7 +368,18 @@
 								</p:column>
 							</p:dataTable>
 
+							<h:panelGrid columns="2" style="width:100%;">
+								<p:dataList style="width: 50%;" value="#{mBManifestacao.manifestacao.tbClassificacaoCollection}" var="manifestacao" rendered="#{not empty mBManifestacao.manifestacao.tbClassificacaoCollection}">
+									<f:facet name="header">Classificações</f:facet>
+									<span style="padding-right:30px;">#{manifestacao.dsClassificacao}</span>
+								</p:dataList>
+								<p:dataList style="width: 50%;" value="#{mBManifestacao.manifestacao.tbSubClassificacaoCollection}" var="sub" rendered="#{not empty mBManifestacao.manifestacao.tbSubClassificacaoCollection}">
+									<f:facet name="header">Sub-Classificações</f:facet>
+									<span style="padding-right:30px;">#{sub.dsSubClassificacao}</span>
+								</p:dataList>
+							</h:panelGrid>
 						</h:panelGrid>
+						
 					</p:tab>
 				</p:accordionPanel>
 				
