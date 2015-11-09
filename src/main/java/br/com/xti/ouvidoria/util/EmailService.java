@@ -110,7 +110,7 @@ public class EmailService {
     	DominioCDIBean dominioBean = CdiHelper.getFacadeWithJNDI(DominioCDIBean.class);
 		String nomeRemetente = manifestacao.getNmPessoa();
 		Integer numeroManifestacao = manifestacao.getNrManifestacao();
-		String linkManisfestacao = dominioBean.getUrlBase() + "/pages/manifestacao/administrar.xhtml?num="+manifestacao.getNrManifestacao()+"&id="+manifestacao.getIdManifestacao();
+		String linkManisfestacao = dominioBean.getUrlBase() + "/pages/manifestacao/administrar.xhtml?num="+manifestacao.getNrManifestacao()+"&id="+manifestacao.getIdManifestacao()+"&pass="+manifestacao.getDsSenha();
 		
     	if(ValidacaoHelper.isNotEmpty(nomeRemetente)) {
     		nomeRemetente = " Sr(a). " + nomeRemetente;
