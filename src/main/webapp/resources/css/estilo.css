@@ -127,6 +127,7 @@ html,body {
 	font-size: 18px;
 	position: absolute;
 	top: 500px;
+	left: 350px;
 }
 
 .perguntas-frequentes a {
@@ -135,7 +136,7 @@ html,body {
 }
 
 .perguntas-frequentes a:HOVER {
-	color: #000000;
+	color: #000033;
 	text-decoration: none;
 }
 
@@ -145,7 +146,7 @@ html,body {
 }
 
 .perguntas-frequentes a:VISITED {
-	color: #333333;
+	color: #000000;
 	text-decoration: none;
 }
 

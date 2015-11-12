@@ -102,6 +102,10 @@
 							</p>
 						</div>
 					</div>
+					<div class="perguntas-frequentes">
+						<span class="question"></span>
+						<a href="http://www.agr.go.gov.br/pagina/ver/6901/ouvidor" target="_blank">Mais Informações</a>
+					</div>
 				</div>
 			</form>
 		</div>
