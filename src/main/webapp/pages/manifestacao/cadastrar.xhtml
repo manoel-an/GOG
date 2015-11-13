@@ -49,7 +49,7 @@
                 <p:panelGrid style="vertical-align: central">
                     <p:row>
                         <p:column>
-                            <h:outputText value="Prezado(a), sua manifestação foi gravada e enviada com sucesso a Agência Goiana de Regulação." />
+                            <h:outputText value="Prezado(a) #{mBManifestacaoCadastrar.manifestacao.nmPessoa}, sua manifestação foi gravada e enviada com sucesso a Agência Goiana de Regulação." />
                             <p:spacer width="100%" height="20px"/>
                             <h:outputText styleClass="bold" value="Número da Manifestação: #{mBManifestacaoCadastrar.manifestacao.nrManifestacao}" />
                             <p:spacer width="100%" height="20px"/>
@@ -75,9 +75,9 @@
                     <p:row>
                         <p:column colspan="2" styleClass="nota">
 							<ul>
-								<li>Por favor, complete o formulário de abertura de ocorrência abaixo.</li>
-								<li>Você receberá um e-mail com o número da sua ocorrência.</li>
-								<li>Use o número para obter atualizações da sua ocorrência.</li>
+								<li>Por favor, complete o formulário de abertura de manifestação abaixo.</li>
+								<li>Você receberá um e-mail com o número da sua manifestação.</li>
+								<li>Use o número para obter atualizações da sua manifestação.</li>
 								<li>Os campos obrigatórios estão marcados com *</li>
 							</ul>
                         </p:column>
@@ -236,9 +236,9 @@
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
-                        <p:column style="font-weight: bold;">Telefone 1: </p:column>  
+                        <p:column style="font-weight: bold;">Telefone 1: *</p:column>  
                         <p:column style="font-weight: bold;">
-							<p:inputMask id="nrTelefone" value="#{mBManifestacaoCadastrar.manifestacao.nrTelefone}" mask="(99)99999999?9"  maxlength="13" title="Informe um Telefone para contato" style="width: 250px" />  
+							<p:inputMask required="true" requiredMessage="Informe pelo menos um telefone para contato" id="nrTelefone" value="#{mBManifestacaoCadastrar.manifestacao.nrTelefone}" mask="(99)99999999?9"  maxlength="13" title="Informe um Telefone para contato" style="width: 250px" />  
 							<p:watermark for="nrTelefone" value="(99)99999999" />  
                         </p:column>
                     </p:row>
@@ -360,7 +360,7 @@
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
-                        <p:column style="font-weight: bold;">Nº Protocolo Concessionária</p:column>  
+                        <p:column style="font-weight: bold;">Nº Protocolo Prestadora de Serviço: </p:column>  
                         <p:column style="font-weight: bold;">
                         	<p:inputText id="nrPronac" value="#{mBManifestacaoCadastrar.manifestacao.nrPronac}" maxlength="50" title="Informe o número do Protocolo" style="width: 250px;">
                         	</p:inputText>
@@ -368,7 +368,7 @@
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
-                        <p:column style="font-weight: bold;">Nº Processo</p:column>  
+                        <p:column style="font-weight: bold;">Nº Processo: </p:column>  
                         <p:column style="font-weight: bold;">
                         	<p:inputText id="nrProcesso" value="#{mBManifestacaoCadastrar.manifestacao.nrProcesso}" maxlength="50" title="Informe o número do Processo" style="width: 250px;">
                         	</p:inputText>
@@ -376,25 +376,32 @@
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
-                        <p:column style="font-weight: bold;">CEP: </p:column>  
+                        <p:column style="font-weight: bold;">CEP: *</p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:inputMask value="#{mBManifestacaoCadastrar.manifestacao.nrCEP}" mask="99999-999" maxlength="9" style="width:250px;" title="Informe o seu CEP" >
+                            <p:inputMask required="true" requiredMessage="Informe um CEP" value="#{mBManifestacaoCadastrar.manifestacao.nrCEP}" mask="99999-999" maxlength="9" style="width:250px;" title="Informe o seu CEP" >
                                 <p:ajax event="blur" listener="#{mBManifestacaoCadastrar.ajustaCep()}" update="endereco,bairro,pais,slcEstado,localidade" />
                             </p:inputMask>
                         </p:column>
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
-                        <p:column style="font-weight: bold;">Endereço: </p:column>  
+                        <p:column style="font-weight: bold;">Endereço: *</p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:inputText id="endereco" value="#{mBManifestacaoCadastrar.manifestacao.enEndereco}" style="width:250px;" title="Informe seu Endereço" />
+                            <p:inputText required="true" requiredMessage="Informe o endereço" id="endereco" value="#{mBManifestacaoCadastrar.manifestacao.enEndereco}" style="width:250px;" title="Informe seu Endereço" />
                         </p:column>
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
-                        <p:column style="font-weight: bold;">Número: </p:column>  
+                        <p:column style="font-weight: bold;">Número: *</p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:inputText id="numero" value="#{mBManifestacaoCadastrar.manifestacao.nrEndereco}" style="width:50px;" title="Informe o número do endereço" converterMessage="Campo número só aceita digitos numéricos" />
+                            <p:inputText required="true" requiredMessage="Informe o número" id="numero" value="#{mBManifestacaoCadastrar.manifestacao.nrEndereco}" style="width:50px;" title="Informe o número do endereço" converterMessage="Campo número só aceita digitos numéricos" />
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                        <p:column style="font-weight: bold;">Bairro: *</p:column>  
+                        <p:column style="font-weight: bold;">
+                            <p:inputText required="true" requiredMessage="Informe o bairro" id="bairro" value="#{mBManifestacaoCadastrar.manifestacao.dsBairro}" style="width:250px;" title="Informe o seu bairro" />
                         </p:column>
                     </p:row>
                     
@@ -406,18 +413,9 @@
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
-                        <p:column style="font-weight: bold;">Bairro:</p:column>  
-                        <p:column style="font-weight: bold;">
-                            <p:inputText id="bairro" value="#{mBManifestacaoCadastrar.manifestacao.dsBairro}" style="width:250px;" title="Informe o seu bairro" />
-                        </p:column>
-                    </p:row>
-                    
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
                         <p:column style="font-weight: bold;">País: <h:outputLabel value="*" rendered="#{mBManifestacaoCadastrar.campoObrigatorio}" /></p:column>  
                         <p:column style="font-weight: bold;">
                             <p:selectOneMenu id="pais" value="#{mBManifestacaoCadastrar.idPais}" style="width: 250px" required="#{mBManifestacaoCadastrar.campoObrigatorio}" requiredMessage="Informe um país">
-                                <f:selectItem itemLabel=" - Selecione -"
-                                              itemValue="" />
                                 <f:selectItems value="#{localidadeBean.paises}"
                                                var="pais"
                                                itemLabel="#{pais.nmPais}"
@@ -435,7 +433,8 @@
                                 id="slcEstado"
                                 style="width: 250px"
                                 value="#{mBManifestacaoCadastrar.idUf}"
-                                disabled="#{not mBManifestacaoCadastrar.habilitaEstado()}">
+                                required="true"
+                                requiredMessage="Selecione o estado">
                                 <f:selectItem itemLabel=" - Selecione -"
                                               itemValue="" />
                                 <f:selectItems value="#{localidadeBean.estados}"
@@ -452,7 +451,9 @@
                         <p:column style="font-weight: bold;">
                             <p:autoComplete id="localidade" minQueryLength="2" size="32"
                             	value="#{mBManifestacaoCadastrar.manifestacao.dsLocalidade}"
-                            	completeMethod="#{mBManifestacaoCadastrar.completaMunicipio}" />
+                            	completeMethod="#{mBManifestacaoCadastrar.completaMunicipio}"
+                            	required="true"
+                            	requiredMessage="Informe a cidade" />
                         </p:column>
                     </p:row>
                     

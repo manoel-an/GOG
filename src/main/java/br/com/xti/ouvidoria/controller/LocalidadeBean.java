@@ -75,8 +75,7 @@ public class LocalidadeBean implements Serializable {
                 }
             });
             
-
-            this.paises.remove(brasil);
+            this.paises.removeAll(paises);
             this.paises.add(0, brasil);
         } catch (Exception ex) {
             Logger.getLogger(LocalidadeBean.class.getName()).log(Level.SEVERE, null, ex);
