@@ -200,7 +200,7 @@
                             				mask="999.999.999-99" 
                             				maxlength="14"
                             				title="Informe um CPF"
-                            				required="#{mBManifestacaoCadastrar.campoObrigatorio}"
+                            				required="false"
                             				requiredMessage="Informe um CPF">
                                 <f:validator binding="#{cpfValidator}" />
                                 <p:ajax event="blur" process="@this"/>
@@ -470,7 +470,11 @@
                     </p:row>
                     
                     <p:row>
-                        <p:column style="font-weight: bold;">Texto da manifestação: *</p:column>  
+                        <p:column style="font-weight: bold;">Texto da manifestação: *
+                        	<br/><br/><br/>
+                        	<h:outputText style="font-size: 11px; font-weight: normal;" value="Digite na caixa ao lado o texto detalhado da sua manifestação."/>
+                        	<p:commandButton icon="ui-icon-lightbulb" process="@none" update="@none"/>
+                        </p:column>  
                         <p:column style="font-weight: bold;">
                             <p:editor value="#{mBManifestacaoCadastrar.manifestacao.dsTextoManifestacao}" 
                                       width="600" 

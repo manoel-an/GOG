@@ -10,8 +10,8 @@ package br.com.xti.ouvidoria.model.enums;
 public enum TipoManifestanteEnum {
 	
 	CIDADAO("1","Cidadão"),
-    SERVIDOR_MINC("2","Servidor AGR"),
-    SERVIDOR_UNIDADE_VINCULADA("3","Servidor Unidade Vinculada");
+    //SERVIDOR_MINC("2","Servidor AGR"),
+    SERVIDOR_UNIDADE_VINCULADA("3","Servidor outros orgãos do estado");
     
     private String id;
     private String descricao;
