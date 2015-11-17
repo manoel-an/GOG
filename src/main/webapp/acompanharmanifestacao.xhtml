@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+    	<h:outputStylesheet name="estilo.css" library="css" />
+		<h:outputStylesheet name="estiloGoogle.css" library="css" />
+		
+		<style type="text/css">
+			.conteudo {
+				width: 100%;
+				height: 420px;
+				margin: 0 auto;
+			}
+			
+			.wrapper {
+				margin: 0 auto;
+				width: 800px;
+			}
+			
+			.box {
+				font-family: 'Open Sans', serif;
+				text-align: center;
+				color: #FFFFFF;
+				height: 300px;
+				width: 390px;
+				background-color: #000033;
+				margin: 35px 5px 0px 5px;
+				float: left;
+			}
+			
+			.box h4 {
+				padding: 15px;
+			}
+			
+			.message {
+				font-size: 12px;
+				text-decoration: none;
+				margin-top: 10px;
+				color: #FFFF00;
+			}
+			
+			.message ul {
+				list-style-type: none;
+			}
+		</style>
+    </h:head>
+
+    <h:body>
+		<div class="global">
+			<div id="barraGoverno"></div>
+			<div class="bgCabecalho">
+				<div class="cabecalho">
+					<div class="logo">
+				    	<h:form>
+							<a href="#{request.contextPath}">
+								<h:graphicImage value="/img/logo-ouvidoria-baloes.png" height="120" />
+							</a>
+						</h:form>
+					</div>
+				</div>
+			</div>
+			
+			<div class="conteudo" style="background-color: white">
+				<div class="wrapper" >
+					<div class="box box-email" style="width: 600px; margin-left: 100px;">
+						<h:form id="frmSenhaConta" prependId="false">
+							<h3>Acompanhar Manifestação</h3>
+							<h4>Para acompanhar o andamento da sua manifestação informe nos campos abaixos o número da manifestação e a senha recebidos no momento do cadastro.</h4>
+							
+							<h:panelGrid columns="2" style="text-align: left; margin-left: 90px;">
+								<h:outputLabel for="email" value="Número: " style="font-family: sans-serif; font-size: 12px;" />
+								<p:inputText id="email"
+										required="true"
+										requiredMessage="Digite o número da manifestação"
+										style="font-family: sans-serif; font-size: 12px; width:300px;" size="50"
+										value="#{mBAcompanharManifestacao.numeroManifestacao}">
+								</p:inputText>
+								<h:outputLabel for="senha" value="Senha: " style="font-family: sans-serif; font-size: 12px;" />
+								<p:inputText id="senha" value="#{mBAcompanharManifestacao.senhaManifestacao}" required="true" requiredMessage="Digite a senha da manifestação" style="width:300px;"/>
+							</h:panelGrid>
+							<p:focus for="email" />
+							<br/>
+							<p:commandButton value="Enviar"
+									actionListener="#{mBAcompanharManifestacao.abrirManifestacao()}"
+									style="margin-top: 10px;"
+									update="frmSenhaConta"
+									ajax="false"/>
+									
+							<div class="message" style="color: red; font-weight: bold;">
+								<h:message id="msgEmail" for="email" />
+								<br/>
+								<h:message id="msgSenha" for="senha"/>
+							</div>
+						</h:form>
+					</div>
+					
+				</div>
+			</div>
+			
+			<div class="rodape">
+				<div class="geralRodape">
+					<div class="box1">
+						<h3>Sobre a Ouvidoria</h3>
+						<p>
+							A implantação da Ouvidoria na AGR se deu por meio da Lei 13.569 de 27 de dezembro de 1999. 
+							Buscou-se, com sua criação, garantir aos usuários dos serviços públicos no Estado de Goiás um canal
+							de comunicação onde possam registrar suas manifestações (reclamações, denúncias, elogios, sugestões etc),
+							e providenciar soluções para os conflitos entre os usuários e concessionárias ou permissionários.
+						</p>
+	
+						<p>Participe! A qualidade de nossos serviços depende de sua participação.</p>
+					</div>
+					<div class="box2">
+						<h3>Links Importantes</h3>
+						<ul>
+							<li>
+								<h:graphicImage library="img" name="setaHome.png" />
+								<a href="http://www.cge.go.gov.br/ouvidoria/">Ouvidoria Geral do Estado de Goiás</a>
+							</li>
+							<br />
+							<li>
+								<h:graphicImage library="img" name="setaHome.png" />
+								<a href="http://www.transparencia.go.gov.br/">Goiás Transparente</a>
+							</li>
+							<br />
+							<li>
+								<h:graphicImage library="img" name="setaHome.png" />
+								<a href="http://vaptvupt.goias.gov.br/vvv/index">Vapt Vupt Digital</a>
+							</li>
+							<br />
+							<li>
+								<h:graphicImage library="img" name="setaHome.png" />
+								<a href="http://www.saneago.com.br/lai/ouvidoria/">Ouvidoria da Saneago</a>
+							</li>
+							<br />
+							<li>
+								<h:graphicImage library="img" name="setaHome.png" />
+								<a href="http://www.celg.com.br/paginas/clientes/centralAtendimento.aspx">Central de Atendimento CELG</a>
+							</li>
+							<br />
+							<!-- 
+							<li>
+								<img src="${context}/resources/img/setaHome.png" />
+								<a href="${context}/pages/externo/listarAnexos.xhtml">Relatórios da Ouvidoria</a>
+							</li>
+							 -->
+						</ul>
+					</div>
+				</div>
+			</div>
+		<div class="endereco">
+			Coordenação de Informática
+			- Agência Goiana de Regulação. Todos os Direitos Reservados.
+			<a href="http://www.agr.go.gov.br/" target="_blank">AGR</a>
+		</div>
+		</div>
+	</h:body>
+</html>

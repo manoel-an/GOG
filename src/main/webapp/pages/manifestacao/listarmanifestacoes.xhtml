@@ -248,14 +248,14 @@
 								<p:rowToggler />
 							</p:column>
 
-							<p:column style="width: 5%;" headerText="Nº"
+							<p:column style="width: 4%;" headerText="Nº"
 								filterBy="#{manifestacao.nrManifestacao}"
 								filterMatchMode="contains"
 								sortBy="#{manifestacao.nrManifestacao}">
 								<h:outputText value="#{manifestacao.nrManifestacao}" />
 							</p:column>
 
-							<p:column style="width: 5%;" sortBy="#{manifestacao.dtUltimaAtualizacao}">
+							<p:column style="width: 4%;" sortBy="#{manifestacao.dtUltimaAtualizacao}">
 								<f:facet name="header">
 									<h:outputText value="Dt. Registro (R)" />
 									<br />
@@ -272,12 +272,18 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Manifestante" style="width: 20%;"
+							<p:column headerText="Nome do Manifestante" style="width: 20%;"
 								filterBy="#{manifestacao.nmPessoa}" filterMatchMode="contains"
 								sortBy="#{manifestacao.nmPessoa}">
 								<h:outputText 
 									value="#{manifestacao.nmPessoa}" 
 									rendered="#{mBListarManifestacoes.showSecretData(manifestacao)}" />
+							</p:column>
+							
+							<p:column headerText="Cadastrada por" style="width:30%;" rendered="#{security.administrador || security.ouvidor}"
+								filterBy="#{manifestacao.idUsuarioCriador.nmUsuario}" filterMatchMode="contains"
+								sortBy="#{manifestacao.idUsuarioCriador.nmUsuario}">
+								<h:outputText value="#{manifestacao.idUsuarioCriador != null ? manifestacao.idUsuarioCriador.nmUsuario : 'Usuário Externo'}"/>
 							</p:column>
 
 							<p:column headerText="Tipo" style="width: 10%;"
@@ -288,7 +294,7 @@
 									value="#{manifestacao.idTipoManifestacao.nmTipoManifestacao}" />
 							</p:column>
 
-							<p:column headerText="Prioridade" style="width: 10%;"
+							<p:column headerText="Prioridade" style="width: 5%;"
 								filterBy="#{manifestacao.idPrioridade.nmPrioridade}"
 								filterMatchMode="contains"
 								sortBy="#{manifestacao.idPrioridade.nmPrioridade}"
@@ -312,7 +318,7 @@
 									value="#{mBEnum.getStatusManifestacaoEnum(manifestacao.stStatusManifestacao).descricao}" />
 							</p:column>
 
-							<p:column headerText="Unidade(s)" style="width:20%;"
+							<p:column headerText="Unidade(s)" style="width:15%;"
 								filterBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}"
 								filterMatchMode="contains"
 								sortBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}"
@@ -321,7 +327,7 @@
 									value="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}" />
 							</p:column>
 
-							<p:column headerText="Prazo de Atendimento" style="width:20%;"
+							<p:column headerText="Prazo de Atendimento" style="width:15%;"
 								sortBy="#{mBListarManifestacoes.getPrazoAtendimento(manifestacao)}"
 								rendered="#{security.interlocutor || security.operador}">
 								<h:outputText value="#{mBListarManifestacoes.getPrazoAtendimento(manifestacao)}">

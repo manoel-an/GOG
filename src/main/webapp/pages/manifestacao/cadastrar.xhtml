@@ -49,13 +49,15 @@
                 <p:panelGrid style="vertical-align: central">
                     <p:row>
                         <p:column>
-                            <h:outputText value="Prezado(a) #{mBManifestacaoCadastrar.manifestacao.nmPessoa}, sua manifestação foi gravada e enviada com sucesso a Agência Goiana de Regulação." />
+                            <h:outputText value="Prezado(a) #{mBManifestacaoCadastrar.manifestacao.nmPessoa}, sua manifestação foi gravada e enviada com sucesso a Agência Goiana de Regulação. Anote os dados abaixo para consultas posteriores." />
                             <p:spacer width="100%" height="20px"/>
                             <h:outputText styleClass="bold" value="Número da Manifestação: #{mBManifestacaoCadastrar.manifestacao.nrManifestacao}" />
                             <p:spacer width="100%" height="20px"/>
-                            <h:outputText value="Para acompanhar o andamento de sua manifestação, você deverá acessá-la pelo link enviado para seu e-mail." />
+                            <h:outputText styleClass="bold" value="Senha de acesso: #{mBManifestacaoCadastrar.manifestacao.dsSenha}" />
+                            <p:spacer width="100%" height="20px"/>
+                            <h:outputText value="Para acompanhar o andamento de sua manifestação, você deverá acessá-la pelo link enviado para seu e-mail, ou pelo botão localizado na página inicial do sistema utilizando o número da manifestação e a senha." />
                             <br/>
-                            <h:outputText value=" Caso não tenha informado um e-mail, aguarde 15 dias e ligue para 0800 704 3200 com o número da sua manifestação em mãos." />
+                            <h:outputText value=" Caso deseje obter informações por telefone aguarde 15 dias e ligue para 0800 704 3200 com o número da sua manifestação em mãos." />
                             <p:spacer width="100%" height="20px"/>
                         </p:column>
                     </p:row>

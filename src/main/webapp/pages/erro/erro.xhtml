@@ -55,7 +55,11 @@
                                     <p><img src="#{facesContext.externalContext.requestContextPath}/img/alert.png"/></p>
                                     <h2 style="color: #FFBF00">Sessão Expirada.</h2>
                                 </p:outputPanel>
-                                <p:outputPanel rendered="#{param.type != '1' and param.type != '2'}">
+                                <p:outputPanel rendered="#{param.type == '3'}">
+                                    <p><img src="#{facesContext.externalContext.requestContextPath}/img/error.png"/></p>
+                                    <h2 style="color: white">Manifestação não encontrada</h2>
+                                </p:outputPanel>
+                                <p:outputPanel rendered="#{param.type != '1' and param.type != '2' and param.type != '3'}">
                                     <p><img src="#{facesContext.externalContext.requestContextPath}/img/error.png"/></p>
                                     <h2 style="color: white">Ocorreu um erro inesperado.</h2>
                                 </p:outputPanel>

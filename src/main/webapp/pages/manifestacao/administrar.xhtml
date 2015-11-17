@@ -151,6 +151,9 @@
 							style="float: right; background: #000033; color: #FFF;" />
 						 -->
 					</p:column>
+					<p:column headerText="Cadastrada por" style="width:17%;" rendered="#{security.administrador || security.ouvidor}">
+							<h:outputText value="#{mBManifestacao.manifestacao.idUsuarioCriador != null ? mBManifestacao.manifestacao.idUsuarioCriador.nmUsuario : 'Usuário Externo'}"/>
+					</p:column>
 					<p:column headerText="Tipo de Manifestação">
 						<p:selectOneMenu
 							id="slcTipoManifestacao" required="true" 

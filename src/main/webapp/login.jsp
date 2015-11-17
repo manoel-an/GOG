@@ -94,8 +94,13 @@
 								<img src="${context}/img/addManifestacao.png" />
 								<a href="${context}/pages/manifestacao/cadastrar.xhtml">Cadastrar Manifestação</a>
 							</div>
+							<br/>
+							<div class="botaoCadastro">
+								<img src="${context}/img/icon-search.png" />
+								<a href="${context}/acompanharmanifestacao.xhtml">Acompanhar Manifestação</a>
+							</div>
 							<br />
-							<p>
+							<p style="font-weight: bold; text-align: left; font-size: 16px; color: black;">
 								À Ouvidoria compete receber, examinar e encaminhar as manifestações.
 							</p>
 						</div>

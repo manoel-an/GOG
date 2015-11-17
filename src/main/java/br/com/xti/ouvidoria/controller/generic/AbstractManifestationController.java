@@ -134,7 +134,7 @@ public abstract class AbstractManifestationController {
 	
 	private void redirectToHomePage() {
 		try {
-			JSFUtils.redirect("/login");
+			JSFUtils.redirect("/pages/erro/erro?type=3");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
