@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="solicitacao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e5c5cb75-a262-4df4-b84f-31b253d89120">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="numeroManifestacao" class="java.lang.String"/>
+	<parameter name="logoAGR" class="java.lang.String"/>
+	<parameter name="dataManifestacao" class="java.util.Date"/>
+	<parameter name="atendente" class="java.lang.String"/>
+	<parameter name="ra" class="java.lang.String"/>
+	<parameter name="numeroConta" class="java.lang.String"/>
+	<parameter name="titularidade" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="234" y="1" width="317" height="49" uuid="c8f8d36f-4e32-464e-90c6-4f2ccb01086e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="16" isBold="true" isItalic="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<text><![CDATA[Solicitação de Ouvidoria - SO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="17" width="210" height="82" uuid="ab98d4b6-b945-4505-9f9e-99d5991e0afd"/>
+				<imageExpression><![CDATA[$P{logoAGR}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="234" y="53" width="317" height="33" uuid="62f36b64-8fff-4d47-a504-43221b957d4a"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="326" y="60" width="137" height="20" uuid="9306cf69-31aa-487e-9b6a-094f920157f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{numeroManifestacao}+"/2015"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="115" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="15" width="45" height="20" uuid="a1c5aac6-b152-4fbd-b404-b7c182750620"/>
+				<textElement>
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Goiânia, ]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="55" y="15" width="165" height="20" uuid="795953f0-7ff2-48ca-8159-52470a755f6c"/>
+				<textElement>
+					<font size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="48" width="541" height="67" uuid="63f0b759-88cb-4b58-baf3-1ef205420336"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Para sua apreciação, transcrevemos abaixo a reclamação do usuário/consumidor.
+
+Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sejam comunicadas no prazo máximo de 15 dias.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="222" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="15" width="117" height="20" uuid="0fae4370-d454-457c-9ea0-77641d6d815b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Data da Manifestação: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="35" width="117" height="20" uuid="c62a7532-71bd-4053-95ec-060202a0e64c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Concessionária: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="55" width="117" height="20" uuid="4d1bf40b-1258-4078-91d6-d3daaeb003c3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Nº RA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="75" width="117" height="20" uuid="c8065e61-7cd1-4bda-9aa5-bf008d9f394e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Nº da Conta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="15" width="63" height="20" uuid="786eb255-766b-4362-bc72-de79191f8424"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Atendente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="95" width="117" height="20" uuid="8c538543-6a8b-46de-b1e2-30921a2b8781"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Titularidade:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="127" y="15" width="107" height="20" uuid="75660d7c-654f-4fc0-ba88-773e01b4292c"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataManifestacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="15" width="162" height="20" uuid="d87a1965-9ce8-41fd-9bd5-f6a51115ec4a"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{atendente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="55" width="107" height="20" uuid="c78b8d0b-6b05-46e7-adda-367b3935a61e"/>
+				<textFieldExpression><![CDATA[$P{ra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="75" width="107" height="20" uuid="894301ea-22dc-4a25-8b60-7b0df9e1bb15"/>
+				<textFieldExpression><![CDATA[$P{numeroConta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="95" width="107" height="20" uuid="2533cbcb-0e58-4c03-b229-6a42588f48b7"/>
+				<textFieldExpression><![CDATA[$P{titularidade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

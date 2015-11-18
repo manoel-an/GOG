@@ -251,6 +251,10 @@
 									style="min-width: 450px">
 									<h:outputText value="#{mBManifestacao.manifestacao.enderecoCompleto}" />
 								</p:column>
+								
+								<p:column headerText="CEP" style="width: 200px">
+									<h:outputText value="#{mBManifestacao.manifestacao.nrCEP}" />
+								</p:column>
 
 								<p:column headerText="País" style="width: 100px">
 									<h:outputText
@@ -260,32 +264,6 @@
 								<p:column headerText="Cidade - Estado" style="width: 250px">
 									<h:outputText
 										value="#{mBManifestacao.manifestacao.dsLocalidade} - #{mBManifestacao.manifestacao.idUF.sgUF}" />
-								</p:column>
-							</p:dataTable>
-
-							<p:dataTable id="dtbOutrosDados1" var="outrosDados1"
-								value="OutrosDados1"
-								rendered="#{mBManifestacao.showSecretData()}">
-								<p:column headerText="CEP" style="width: 200px">
-									<h:outputText value="#{mBManifestacao.manifestacao.nrCEP}" />
-								</p:column>
-
-								<p:column headerText="FAX" style="width: 200px">
-									<h:outputText value="#{mBManifestacao.manifestacao.nrFAX}" />
-								</p:column>
-
-								<p:column headerText="Outros E-mails" style="width: 200px">
-									<h:outputText
-										value="#{mBManifestacao.manifestacao.eeEmailSecundario}" />
-								</p:column>
-
-								<p:column headerText="Faixa Etária" style="width: 200px">
-									<h:outputText
-										value="#{mBManifestacao.manifestacao.idFaixaEtaria.nmFaixaEtaria}" />
-								</p:column>
-								<p:column headerText="Grau de Instrução" style="width: 200px">
-									<h:outputText
-										value="#{mBManifestacao.manifestacao.idGrauInstrucao.nmGrauInstrucao}" />
 								</p:column>
 							</p:dataTable>
 
@@ -307,6 +285,11 @@
 									<h:outputText
 										value="#{mBManifestacao.manifestacao.idMeioResposta.nmMeioResposta}" />
 								</p:column>
+								
+								<p:column headerText="Outros E-mails" style="width: 200px">
+									<h:outputText
+										value="#{mBManifestacao.manifestacao.eeEmailSecundario}" />
+								</p:column>
 
 								<p:column headerText="Área de Entrada" style="width: 200px">
 									<h:outputText
@@ -317,6 +300,11 @@
 							<p:dataTable id="dtbOutrosDados3" var="outrosDados3"
 								value="OutrosDados3"
 								rendered="#{mBManifestacao.showSecretData()}">
+								
+								<p:column headerText="FAX" style="width: 200px">
+									<h:outputText value="#{mBManifestacao.manifestacao.nrFAX}" />
+								</p:column>
+								
 								<p:column headerText="Meio de Entrada" style="width: 200px">
 									<h:outputText
 										value="#{mBManifestacao.manifestacao.idMeioEntrada.nmMeioEntrada}" />
@@ -326,11 +314,6 @@
 									style="width: 200px">
 									<h:outputText
 										value="#{mBEnum.getBooleanEnum(mBManifestacao.manifestacao.siSigilo).descricao}" />
-								</p:column>
-
-								<p:column headerText="Raça" style="width: 100px">
-									<h:outputText
-										value="#{mBEnum.getTipoRacaEnum(mBManifestacao.manifestacao.tpRaca).descricao}" />
 								</p:column>
 
 								<p:column headerText="Número Processo" style="width: 150px">
@@ -364,9 +347,45 @@
 							</p:dataTable>
 
 							<p:dataTable id="dtbOutrosDadosInterlocutor1" var="outrosDadosInterlocutor1"
-								value="OutrosDadosInterlocutor1">
+								value="OutrosDadosInterlocutor1" style="text-align: center;">
 								<p:column headerText="Nº Protocolo Prestadora de Serviço" style="width: 150px">
 									<h:outputText value="#{mBManifestacao.manifestacao.nrPronac}" />
+								</p:column>
+							</p:dataTable>
+							
+							<p:dataTable id="dadosSaneamento" var="dadosSaneamento" value="dadosSaneamento" rendered="#{mBManifestacao.manifestacao.tipoSolicitacao == 'saneamento'}">
+								<f:facet name="header">Dados Saneamento</f:facet>
+								<p:column headerText="Nº RA">
+									<h:outputText value="#{mBManifestacao.manifestacao.ra}" />
+								</p:column>
+								<p:column headerText="Nº da Conta">
+									<h:outputText value="#{mBManifestacao.manifestacao.numeroConta}" />
+								</p:column>
+								<p:column headerText="Titularidade">
+									<h:outputText value="#{mBManifestacao.manifestacao.titularidade}" />
+								</p:column>
+							</p:dataTable>
+							
+							<p:dataTable id="dadosTransporte" var="dadosTransporte" value="dadosTransporte" rendered="#{mBManifestacao.manifestacao.tipoSolicitacao == 'transporte'}">
+								<f:facet name="header">Dados Transporte</f:facet>
+								<p:column headerText="Placa do Veículo">
+									<h:outputText value="#{mBManifestacao.manifestacao.placaVeiculo}" />
+								</p:column>
+								<p:column headerText="Nº Veículo">
+									<h:outputText value="#{mBManifestacao.manifestacao.numeroVeiculo}" />
+								</p:column>
+								<p:column headerText="Horário">
+									<h:outputText value="#{mBManifestacao.manifestacao.horario}" />
+								</p:column>
+								<p:column headerText="Motorista">
+									<h:outputText value="#{mBManifestacao.manifestacao.motorista}" />
+								</p:column>
+							</p:dataTable>
+							
+							<p:dataTable id="dadosEnergia" var="dadosEnergia" value="dadosEnergia" style="text-align: center;" rendered="#{mBManifestacao.manifestacao.tipoSolicitacao == 'energia'}">
+								<f:facet name="header">Dados Energia</f:facet>
+								<p:column headerText="Unidade Consumidora">
+									<h:outputText value="#{mBManifestacao.manifestacao.unidadeConsumidora}" />
 								</p:column>
 							</p:dataTable>
 
@@ -473,6 +492,13 @@
 									actionListener="#{mBManifestacao.preparaListaAreasSolucionadoras()}"
 									process="@this">
 									<p:resetInput target=":frmEncaminharManifestacao:pnlEncaminhamentoManifestacao" />
+								</p:commandButton>
+								<p:commandButton value="Imprimir Solicitação de Ouvidoria" 
+									ajax="false" 
+									actionListener="#{mBManifestacao.baixarSolicitacao()}" 
+									action="#{mBManifestacao.deletaArquivo()}"
+									disabled="#{mBManifestacao.desabilitaImprimirSolicitacao()}">
+									<p:fileDownload value="#{mBManifestacao.filePDF}"  />
 								</p:commandButton>
 							</p:outputPanel>
 						</p:column>

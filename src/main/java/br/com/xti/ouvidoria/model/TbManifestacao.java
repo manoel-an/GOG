@@ -83,10 +83,45 @@ public class TbManifestacao implements Serializable {
     @Size(max = 150)
     @Column(name = "nmPessoa")
     private String nmPessoa;
+    
+    @Column(length = 20)
+    private String tipoSolicitacao;
+    
+    @Column(length = 30)
+    @Size(max = 30)
+    private String ra;
+    
+    @Column(length = 30)
+    @Size(max = 30)
+    private String numeroConta;
+    
+    @Column(length = 60)
+    @Size(max = 60)
+    private String titularidade;
+    
+    @Column(length = 10)
+    @Size(max = 10)
+    private String placaVeiculo;
+    
+    @Column(length = 10)
+    @Size(max = 10)
+    private String numeroVeiculo;
+    
+    @Column(length = 60)
+    @Size(max = 60)
+    private String horario;
+    
+    @Column(length = 60)
+    @Size(max = 60)
+    private String motorista;
+    
+    @Column(length = 30)
+    @Size(max = 30)
+    private String unidadeConsumidora;
+    
     @Size(max = 200)
     @Column(name = "eeEmailSecundario")
     private String eeEmailSecundario;
-    @Basic(optional = false)
     @Size(min = 1, max = 2)
     @Column(name = "tpSexo")
     private String tpSexo;
@@ -130,7 +165,6 @@ public class TbManifestacao implements Serializable {
     @Column(name = "dtUltimaAtualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dtUltimaAtualizacao;
-    @Basic(optional = false)
     @Column(name = "tpRaca")
     private String tpRaca;
     @Size(max = 13)
@@ -309,7 +343,79 @@ public class TbManifestacao implements Serializable {
         this.nmPessoa = nmPessoa;
     }
 
-    public String getEeEmailSecundario() {
+    public String getTipoSolicitacao() {
+		return tipoSolicitacao;
+	}
+
+	public void setTipoSolicitacao(String tipoSolicitacao) {
+		this.tipoSolicitacao = tipoSolicitacao;
+	}
+
+	public String getRa() {
+		return ra;
+	}
+
+	public void setRa(String ra) {
+		this.ra = ra;
+	}
+
+	public String getNumeroConta() {
+		return numeroConta;
+	}
+
+	public void setNumeroConta(String numeroConta) {
+		this.numeroConta = numeroConta;
+	}
+
+	public String getTitularidade() {
+		return titularidade;
+	}
+
+	public void setTitularidade(String titularidade) {
+		this.titularidade = titularidade;
+	}
+
+	public String getPlacaVeiculo() {
+		return placaVeiculo;
+	}
+
+	public void setPlacaVeiculo(String placaVeiculo) {
+		this.placaVeiculo = placaVeiculo;
+	}
+
+	public String getNumeroVeiculo() {
+		return numeroVeiculo;
+	}
+
+	public void setNumeroVeiculo(String numeroVeiculo) {
+		this.numeroVeiculo = numeroVeiculo;
+	}
+
+	public String getHorario() {
+		return horario;
+	}
+
+	public void setHorario(String horario) {
+		this.horario = horario;
+	}
+
+	public String getMotorista() {
+		return motorista;
+	}
+
+	public void setMotorista(String motorista) {
+		this.motorista = motorista;
+	}
+
+	public String getUnidadeConsumidora() {
+		return unidadeConsumidora;
+	}
+
+	public void setUnidadeConsumidora(String unidadeConsumidora) {
+		this.unidadeConsumidora = unidadeConsumidora;
+	}
+
+	public String getEeEmailSecundario() {
         return eeEmailSecundario;
     }
 

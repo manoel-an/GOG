@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import br.com.agr.ouvidoria.report.GeradorRelatorio;
 import br.com.xti.ouvidoria.dao.AnexoDAO;
 import br.com.xti.ouvidoria.dao.ComunicacaoExternaDAO;
 import br.com.xti.ouvidoria.dao.EncaminhamentoDAO;
@@ -33,7 +34,7 @@ import br.com.xti.ouvidoria.model.enums.UnidadeEnum;
 import br.com.xti.ouvidoria.security.SecurityService;
 import br.com.xti.ouvidoria.util.JSFUtils;
 
-public abstract class AbstractManifestationController {
+public abstract class AbstractManifestationController extends GeradorRelatorio {
 
 	@Inject
 	protected SecurityService securityService;

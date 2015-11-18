@@ -25,6 +25,7 @@ import org.apache.commons.mail.EmailException;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
+import br.com.agr.ouvidoria.report.ReportLoader;
 import br.com.xti.ouvidoria.comparator.UnidadeSiglaComparator;
 import br.com.xti.ouvidoria.controller.generic.AbstractManifestationController;
 import br.com.xti.ouvidoria.dao.ClassificacaoDAO;
@@ -334,6 +335,22 @@ public class MBManifestacao extends AbstractManifestationController implements S
         arquivosEncaminhamento = new ArrayList<>();
         arquivosComunicacaoExterna = new ArrayList<>();
         questionario = new TbQuestionario();
+    }
+    
+    public void baixarSolicitacao(){
+    	System.out.println(manifestacao);
+    	adicionaParametroRelatorio("numeroManifestacao", String.valueOf(manifestacao.getNrManifestacao()));
+    	adicionaParametroRelatorio("dataManifestacao", manifestacao.getDtCadastro());
+    	adicionaParametroRelatorio("atendente", manifestacao.getIdUsuarioCriador() != null ? manifestacao.getIdUsuarioCriador().getNmUsuario() : "Criada Externamente" );
+    	adicionaParametroRelatorio("ra", manifestacao.getRa());
+    	adicionaParametroRelatorio("numeroConta", manifestacao.getNumeroConta());
+    	adicionaParametroRelatorio("titularidade", manifestacao.getTitularidade());
+    	adicionaParametroRelatorio("logoAGR", ReportLoader.class.getResource("").getPath() + "logoagr.jpg");
+    	try {
+			baixarPDF("solicitacao", null, "solicitacao");
+		} catch (InfrastructureException e) {
+			MensagemFaceUtil.erro("Erro!", e.getMessage());
+		}
     }
     
     public boolean showTakeUpManifestation() {
@@ -1796,6 +1813,25 @@ public class MBManifestacao extends AbstractManifestationController implements S
 		            } else if (StatusManifestacaoEnum.EM_ANALISE.getId().equals(manifestacao.getStStatusManifestacao()) && !isLoggedUserResponsibleForManifestation()) {
 		            	desabilitar = true;
 		            }
+		        } else {
+		        	desabilitar = true;
+		        }
+			}
+    	}
+		return desabilitar;
+    }
+    
+    public boolean desabilitaImprimirSolicitacao() {
+    	boolean desabilitar = false;
+    	
+    	if(!securityService.isInterlocutor()) {
+			if (ValidacaoHelper.isEmpty(idOrgaoDestino, idClassificacao, idPrioridade)) {
+				desabilitar = true;
+			} else {
+		        if (manifestacao.getIdUsuarioAnalisador() != null) {
+		            if (StatusManifestacaoEnum.NOVA.getId().equals(manifestacao.getStStatusManifestacao())) {
+		            	desabilitar = true;
+		            } 
 		        } else {
 		        	desabilitar = true;
 		        }
