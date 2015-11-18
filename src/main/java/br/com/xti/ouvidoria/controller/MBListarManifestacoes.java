@@ -591,13 +591,15 @@ public class MBListarManifestacoes implements Serializable {
 				&& !StatusManifestacaoEnum.SOLUCIONADA.getId().equals(manifestation.getStStatusManifestacao())) {
     		if(securityService.isInterlocutor() || securityService.isOperador()) {
     			Date dateLimitToAnswer = getPrazoAtendimento(manifestation);
-    			DateTimeZone BRAZIL = DateTimeZone.forID("America/Sao_Paulo");
-    			DateTime start = new LocalDate(dateLimitToAnswer.getTime(), BRAZIL).toDateTimeAtStartOfDay();
-    			DateTime end = new LocalDate(new Date().getTime(), BRAZIL).toDateTimeAtStartOfDay();
-    			Days days = Days.daysBetween(start, end);
-    			
-    			if(days.isGreaterThan(null)) {
-    				diasEmAtraso = days.getDays();
+    			if(dateLimitToAnswer != null){
+    				DateTimeZone BRAZIL = DateTimeZone.forID("America/Sao_Paulo");
+    				DateTime start = new LocalDate(dateLimitToAnswer.getTime(), BRAZIL).toDateTimeAtStartOfDay();
+    				DateTime end = new LocalDate(new Date().getTime(), BRAZIL).toDateTimeAtStartOfDay();
+    				Days days = Days.daysBetween(start, end);
+    				
+    				if(days.isGreaterThan(null)) {
+    					diasEmAtraso = days.getDays();
+    				}
     			}
     		} else {
     			Integer prazoEncaminhamento = manifestation.getIdTipoManifestacao().getPrazoEntrada();

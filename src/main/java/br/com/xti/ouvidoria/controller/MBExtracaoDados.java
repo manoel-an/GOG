@@ -230,7 +230,7 @@ public class MBExtracaoDados implements Serializable {
     public void consultarManifestacoes() {
         List<TbManifestacao> listaManifestacoes;
         FiltroPersonalizado filtro = new FiltroPersonalizado();
-        
+                
         if(regiao != null) {
             filtro.setManIdEstado(regiao.getIdUFs());
         }

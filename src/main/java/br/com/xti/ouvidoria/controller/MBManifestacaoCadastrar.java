@@ -46,6 +46,7 @@ import br.com.xti.ouvidoria.model.TbUF;
 import br.com.xti.ouvidoria.model.TbUsuario;
 import br.com.xti.ouvidoria.model.enums.AreaEntradaEnum;
 import br.com.xti.ouvidoria.model.enums.EmailAutomatizadoEnum;
+import br.com.xti.ouvidoria.model.enums.FuncaoUsuarioEnum;
 import br.com.xti.ouvidoria.model.enums.MeioEntradaEnum;
 import br.com.xti.ouvidoria.model.enums.MeioRespostaEnum;
 import br.com.xti.ouvidoria.model.enums.PrioridadeEnum;
@@ -423,7 +424,7 @@ public class MBManifestacaoCadastrar implements Serializable {
 	 */
 	public void preencherDadosUsuarioLogado() {
 		TbUsuario user = securityService.getUser();
-		if (user != null) {
+		if (user != null && user.getTpFuncao().equals(FuncaoUsuarioEnum.MANIFESTANTE.getId())) {
 			manifestacao.setNmPessoa(user.getNmUsuario());
 			manifestacao.setEeEmailUsuario(user.getEeEmail());
 			manifestacao.setNrTelefone(user.getNumTelefone());
