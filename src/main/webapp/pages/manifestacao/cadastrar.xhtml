@@ -250,6 +250,13 @@
                     	</p:column>
                     </p:row>
                     
+                    <p:row rendered="#{not empty mBManifestacaoCadastrar.manifestacao.tipoSolicitacao and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'outros'}">
+                    	<p:column style="font-weight: bold;">Prestadora de Serviço: *</p:column>
+                    	<p:column>
+	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="font-weight: bold; width:250px;" required="true" requiredMessage="Informe o nome da prestadora de serviço"/>
+                    	</p:column>
+                    </p:row>
+                    
                     <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
                     	<p:column style="font-weight: bold;">N° RA: *</p:column>
                     	<p:column>

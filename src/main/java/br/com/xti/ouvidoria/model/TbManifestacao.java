@@ -87,6 +87,9 @@ public class TbManifestacao implements Serializable {
     @Column(length = 20)
     private String tipoSolicitacao;
     
+    @Column(length = 60)
+    private String prestadoraServico;
+    
     @Column(length = 30)
     @Size(max = 30)
     private String ra;
@@ -351,6 +354,14 @@ public class TbManifestacao implements Serializable {
 		this.tipoSolicitacao = tipoSolicitacao;
 	}
 
+	public String getPrestadoraServico() {
+		return prestadoraServico;
+	}
+
+	public void setPrestadoraServico(String prestadoraServico) {
+		this.prestadoraServico = prestadoraServico;
+	}
+
 	public String getRa() {
 		return ra;
 	}
@@ -453,9 +464,13 @@ public class TbManifestacao implements Serializable {
     
     public String getEnderecoCompleto() {
     	try {
-	    	StringBuilder sb = new StringBuilder(enEndereco).append(" ");
+	    	StringBuilder sb = new StringBuilder();
+	    	
+	    	if(ValidacaoHelper.isNotEmpty(enEndereco))
+	    		sb.append(enEndereco).append(" ");
+	    	
 	    	if(ValidacaoHelper.isNotEmpty(nrEndereco))
-	    		sb.append(nrEndereco);
+	    		sb.append("Nº "+ nrEndereco);
 	    	
 	    	if(ValidacaoHelper.isNotEmpty(dsComplemento))
 	    		sb.append(", ").append(dsComplemento);
@@ -463,10 +478,34 @@ public class TbManifestacao implements Serializable {
 	    	if(ValidacaoHelper.isNotEmpty(dsBairro))
 	    		sb.append(" - ").append(dsBairro);
 	    	
+	    	if(ValidacaoHelper.isNotEmpty(dsLocalidade))
+	    		sb.append(" - ").append(dsLocalidade);
+	    	
+	    	if(ValidacaoHelper.isNotEmpty(idUF))
+	    		sb.append("-").append(idUF.getSgUF());
+	    	
+	    	if(ValidacaoHelper.isNotEmpty(nrCEP))
+	    		sb.append("  ").append(nrCEP);
+	    	
 	    	return sb.toString();
     	} catch(Exception e) {
     		return "";
     	}
+    }
+    
+    public String getOutrosTelefones(){
+    	StringBuilder sb = new StringBuilder();
+    	
+    	if(ValidacaoHelper.isNotEmpty(nrTelefone2))
+    		sb.append(nrTelefone2).append(" ");
+    	
+    	if(ValidacaoHelper.isNotEmpty(nrCelular))
+    		sb.append(nrCelular).append(" ");
+    	
+    	if(ValidacaoHelper.isNotEmpty(nrFAX))
+    		sb.append(nrFAX).append(" ");
+    	
+    	return sb.toString();
     }
 
     public void setEnEndereco(String enEndereco) {

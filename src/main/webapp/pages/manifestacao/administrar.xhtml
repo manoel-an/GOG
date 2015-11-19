@@ -355,6 +355,9 @@
 							
 							<p:dataTable id="dadosSaneamento" var="dadosSaneamento" value="dadosSaneamento" rendered="#{mBManifestacao.manifestacao.tipoSolicitacao == 'saneamento'}">
 								<f:facet name="header">Dados Saneamento</f:facet>
+								<p:column headerText="Prestadora do Serviço">
+									<h:outputText value="#{mBManifestacao.manifestacao.prestadoraServico}" />
+								</p:column>
 								<p:column headerText="Nº RA">
 									<h:outputText value="#{mBManifestacao.manifestacao.ra}" />
 								</p:column>
@@ -368,6 +371,9 @@
 							
 							<p:dataTable id="dadosTransporte" var="dadosTransporte" value="dadosTransporte" rendered="#{mBManifestacao.manifestacao.tipoSolicitacao == 'transporte'}">
 								<f:facet name="header">Dados Transporte</f:facet>
+								<p:column headerText="Prestadora do Serviço">
+									<h:outputText value="#{mBManifestacao.manifestacao.prestadoraServico}" />
+								</p:column>
 								<p:column headerText="Placa do Veículo">
 									<h:outputText value="#{mBManifestacao.manifestacao.placaVeiculo}" />
 								</p:column>
@@ -384,6 +390,9 @@
 							
 							<p:dataTable id="dadosEnergia" var="dadosEnergia" value="dadosEnergia" style="text-align: center;" rendered="#{mBManifestacao.manifestacao.tipoSolicitacao == 'energia'}">
 								<f:facet name="header">Dados Energia</f:facet>
+								<p:column headerText="Prestadora do Serviço">
+									<h:outputText value="#{mBManifestacao.manifestacao.prestadoraServico}" />
+								</p:column>
 								<p:column headerText="Unidade Consumidora">
 									<h:outputText value="#{mBManifestacao.manifestacao.unidadeConsumidora}" />
 								</p:column>

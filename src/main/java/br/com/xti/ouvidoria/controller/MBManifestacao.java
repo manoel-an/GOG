@@ -31,6 +31,7 @@ import br.com.xti.ouvidoria.controller.generic.AbstractManifestationController;
 import br.com.xti.ouvidoria.dao.ClassificacaoDAO;
 import br.com.xti.ouvidoria.dao.EmailAutomatizadoDAO;
 import br.com.xti.ouvidoria.dao.EncaminhamentoPadronizadoDAO;
+import br.com.xti.ouvidoria.dao.ManifestacaoDAO;
 import br.com.xti.ouvidoria.dao.ParametroDAO;
 import br.com.xti.ouvidoria.dao.PreferenciaSistemaDAO;
 import br.com.xti.ouvidoria.dao.QuestionarioDAO;
@@ -119,6 +120,9 @@ public class MBManifestacao extends AbstractManifestationController implements S
 	
 	@EJB
 	private RespostaManifestacaoDAO respostaManifestacaoDAO;
+	
+	@EJB
+	private ManifestacaoDAO manifestacaoDAO;
 	
 	
 	private static final String MENSAGEM_ATRASO_UNIDADE = 
@@ -338,22 +342,61 @@ public class MBManifestacao extends AbstractManifestationController implements S
     }
     
     public void baixarSolicitacao(){
-    	System.out.println(manifestacao);
+    	//dados comuns
     	adicionaParametroRelatorio("numeroManifestacao", String.valueOf(manifestacao.getNrManifestacao()));
     	adicionaParametroRelatorio("dataManifestacao", manifestacao.getDtCadastro());
     	adicionaParametroRelatorio("atendente", manifestacao.getIdUsuarioCriador() != null ? manifestacao.getIdUsuarioCriador().getNmUsuario() : "Criada Externamente" );
+    	adicionaParametroRelatorio("prestadoraServico", manifestacao.getPrestadoraServico());
+    	adicionaParametroRelatorio("tipoSolicitacao", manifestacao.getTipoSolicitacao());
+    	adicionaParametroRelatorio("nomeManifestante", manifestacao.getNmPessoa());
+    	adicionaParametroRelatorio("telefoneUm", manifestacao.getNrTelefone());
+    	adicionaParametroRelatorio("endereco", manifestacao.getEnderecoCompleto());
+    	adicionaParametroRelatorio("outrosTelefones", manifestacao.getOutrosTelefones());
+    	adicionaParametroRelatorio("tipoManifestacao", manifestacao.getIdTipoManifestacao().getNmTipoManifestacao());
+    	adicionaParametroRelatorio("classificacao", getClassificaoESubClassificacao());
+    	adicionaParametroRelatorio("texto", manifestacao.getDsTextoManifestacaoFormatado());
+    	
+    	//saneamento
     	adicionaParametroRelatorio("ra", manifestacao.getRa());
     	adicionaParametroRelatorio("numeroConta", manifestacao.getNumeroConta());
     	adicionaParametroRelatorio("titularidade", manifestacao.getTitularidade());
+    	
+    	//transporte
+    	adicionaParametroRelatorio("placaVeiculo", manifestacao.getPlacaVeiculo());
+    	adicionaParametroRelatorio("numeroVeiculo", manifestacao.getNumeroVeiculo());
+    	adicionaParametroRelatorio("horario", manifestacao.getHorario());
+    	adicionaParametroRelatorio("motorista", manifestacao.getMotorista());
+    	
+    	//energia
+    	adicionaParametroRelatorio("unidadeConsumidora", manifestacao.getUnidadeConsumidora());
+    	
     	adicionaParametroRelatorio("logoAGR", ReportLoader.class.getResource("").getPath() + "logoagr.jpg");
     	try {
 			baixarPDF("solicitacao", null, "solicitacao");
+			manifestacaoDAO.edit(manifestacao);
 		} catch (InfrastructureException e) {
 			MensagemFaceUtil.erro("Erro!", e.getMessage());
 		}
     }
     
-    public boolean showTakeUpManifestation() {
+    private String getClassificaoESubClassificacao() {
+		List<TbClassificacao> classificacao = (List<TbClassificacao>) manifestacao.getTbClassificacaoCollection();
+		List<TbSubClassificacao> tbSubClassificacoes = (List<TbSubClassificacao>) manifestacao.getTbSubClassificacaoCollection();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		if(!classificacao.isEmpty()){
+			sb.append(classificacao.get(0).getDsClassificacao());
+		}
+		
+		if(!tbSubClassificacoes.isEmpty()){
+			sb.append(" - ").append(tbSubClassificacoes.get(0).getDsSubClassificacao());
+		}
+		
+		return sb.toString();
+	}
+
+	public boolean showTakeUpManifestation() {
 		return (isManifestacaoNova() || hasUsuarioAnalisador())
 				&& (!isManifestacaoEmAnalise())
 				&& (securityService.isOuvidor() || securityService.isAdministrador());
