@@ -369,8 +369,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	//energia
     	adicionaParametroRelatorio("unidadeConsumidora", manifestacao.getUnidadeConsumidora());
     	
-    	ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-    	adicionaParametroRelatorio("logoAGR", classLoader.getResource("logoagr.jpg").getPath());
+    	adicionaParametroRelatorio("logoAGR", "logoagr.jpg");
     	try {
 			baixarPDF("solicitacao", null, "solicitacao");
 			manifestacaoDAO.edit(manifestacao);

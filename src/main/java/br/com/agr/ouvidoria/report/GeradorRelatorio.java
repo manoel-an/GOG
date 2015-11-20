@@ -3,6 +3,7 @@ package br.com.agr.ouvidoria.report;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,12 +41,12 @@ public class GeradorRelatorio {
     public void baixarPDF(String nomeArquivoJasper, List<?> objetos, String nomeRelatorio) throws InfrastructureException {
         JRBeanCollectionDataSource jrds = new JRBeanCollectionDataSource(objetos);
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        File arquivoIReport = new File(classLoader.getResource(nomeArquivoJasper + ".jasper").getPath());
+        InputStream inputStream = classLoader.getResourceAsStream(nomeArquivoJasper + ".jasper");
         JasperReport jasperReport = null;
         JasperPrint printer = null;
         File pdfFile = null;
         try {
-            jasperReport = (JasperReport) JRLoader.loadObject(arquivoIReport);
+            jasperReport = (JasperReport) JRLoader.loadObject(inputStream);
             printer = JasperFillManager.fillReport(jasperReport, getParametros(),
                     (objetos == null ? new JREmptyDataSource() : jrds));
             setNomeInicialRelatorio(Long.toString(new Date().getTime())
@@ -73,12 +74,12 @@ public class GeradorRelatorio {
     public void imprimirPDF(String nomeArquivoJasper, List<?> objetos, String nomeRelatorio) throws InfrastructureException {
         JRBeanCollectionDataSource jrds = new JRBeanCollectionDataSource(objetos);
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        File arquivoIReport = new File(classLoader.getResource(nomeArquivoJasper + ".jasper").getPath());
+        InputStream inputStream = classLoader.getResourceAsStream(nomeArquivoJasper + ".jasper");
         JasperReport jasperReport = null;
         JasperPrint printer = null;
         File pdfFile = null;
         try {
-            jasperReport = (JasperReport) JRLoader.loadObject(arquivoIReport);
+            jasperReport = (JasperReport) JRLoader.loadObject(inputStream);
             printer = JasperFillManager.fillReport(jasperReport, getParametros(),
                     (objetos == null ? new JREmptyDataSource() : jrds));
             setNomeInicialRelatorio(Long.toString(new Date().getTime())
