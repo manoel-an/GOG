@@ -39,8 +39,8 @@ public class GeradorRelatorio {
 
     public void baixarPDF(String nomeArquivoJasper, List<?> objetos, String nomeRelatorio) throws InfrastructureException {
         JRBeanCollectionDataSource jrds = new JRBeanCollectionDataSource(objetos);
-        File arquivoIReport = new File(ReportLoader.class.getResource("").getPath() + nomeArquivoJasper
-                + ".jasper");
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        File arquivoIReport = new File(classLoader.getResource(nomeArquivoJasper + ".jasper").getPath());
         JasperReport jasperReport = null;
         JasperPrint printer = null;
         File pdfFile = null;
@@ -50,7 +50,7 @@ public class GeradorRelatorio {
                     (objetos == null ? new JREmptyDataSource() : jrds));
             setNomeInicialRelatorio(Long.toString(new Date().getTime())
                     + ".pdf");
-            pdfFile = new File(ReportLoader.class.getResource("").getPath() + getNomeInicialRelatorio());
+            pdfFile = new File(classLoader.getResource("").getPath() + getNomeInicialRelatorio());
             setNomeFinalRelatorio(nomeRelatorio);
             if (pdfFile.exists()) {
                 try {
@@ -72,8 +72,8 @@ public class GeradorRelatorio {
 
     public void imprimirPDF(String nomeArquivoJasper, List<?> objetos, String nomeRelatorio) throws InfrastructureException {
         JRBeanCollectionDataSource jrds = new JRBeanCollectionDataSource(objetos);
-        File arquivoIReport = new File(ReportLoader.class.getResource("").getPath() + nomeArquivoJasper
-                + ".jasper");
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        File arquivoIReport = new File(classLoader.getResource(nomeArquivoJasper + ".jasper").getPath());
         JasperReport jasperReport = null;
         JasperPrint printer = null;
         File pdfFile = null;
@@ -83,7 +83,7 @@ public class GeradorRelatorio {
                     (objetos == null ? new JREmptyDataSource() : jrds));
             setNomeInicialRelatorio(Long.toString(new Date().getTime())
                     + ".pdf");
-            pdfFile = new File(ReportLoader.class.getResource("").getPath() + getNomeInicialRelatorio());
+            pdfFile = new File(classLoader.getResource("").getPath() + getNomeInicialRelatorio());
             setNomeFinalRelatorio(nomeRelatorio);
             JRPdfExporter jrpdfexporter = new JRPdfExporter();
             jrpdfexporter.setParameter(JRExporterParameter.JASPER_PRINT, printer);
@@ -119,7 +119,8 @@ public class GeradorRelatorio {
     }
 
     public StreamedContent getFilePDF() {
-        tempFile = new File(ReportLoader.class.getResource("").getPath() + getNomeInicialRelatorio());
+    	ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        tempFile = new File(classLoader.getResource("").getPath() + getNomeInicialRelatorio());
         try {
             file = new DefaultStreamedContent(new FileInputStream(tempFile), "application/pdf", getNomeFinalRelatorio()
                     + ".pdf");

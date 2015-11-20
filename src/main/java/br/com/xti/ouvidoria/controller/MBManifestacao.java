@@ -25,7 +25,6 @@ import org.apache.commons.mail.EmailException;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
-import br.com.agr.ouvidoria.report.ReportLoader;
 import br.com.xti.ouvidoria.comparator.UnidadeSiglaComparator;
 import br.com.xti.ouvidoria.controller.generic.AbstractManifestationController;
 import br.com.xti.ouvidoria.dao.ClassificacaoDAO;
@@ -370,7 +369,8 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	//energia
     	adicionaParametroRelatorio("unidadeConsumidora", manifestacao.getUnidadeConsumidora());
     	
-    	adicionaParametroRelatorio("logoAGR", ReportLoader.class.getResource("").getPath() + "logoagr.jpg");
+    	ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+    	adicionaParametroRelatorio("logoAGR", classLoader.getResource("logoagr.jpg").getPath());
     	try {
 			baixarPDF("solicitacao", null, "solicitacao");
 			manifestacaoDAO.edit(manifestacao);
@@ -1868,7 +1868,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	boolean desabilitar = false;
     	
     	if(!securityService.isInterlocutor()) {
-			if (ValidacaoHelper.isEmpty(idOrgaoDestino, idClassificacao, idPrioridade)) {
+			if (ValidacaoHelper.isEmpty(idClassificacao, idPrioridade)) {
 				desabilitar = true;
 			} else {
 		        if (manifestacao.getIdUsuarioAnalisador() != null) {
