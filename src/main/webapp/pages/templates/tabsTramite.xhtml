@@ -173,7 +173,7 @@
 					<p:fileDownload value="#{bean.filePDF}"/>
 				</p:commandButton>
 				<p:commandButton 
-					rendered="#{tabItem.index == 0}" 
+					rendered="#{tabItem.index == 0 and not empty tabItem.conteudo}" 
 					ajax="false" 
 					actionListener="#{bean.imprimirDialogoManifestante(tabItem)}"
 					value="Imprimir Diálogo" 

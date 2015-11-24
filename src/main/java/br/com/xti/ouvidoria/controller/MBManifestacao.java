@@ -930,6 +930,9 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	}
     	Collections.sort(classificacoes);
     	classificacoesCompleta = new ArrayList<TbClassificacao>(classificacoes);
+    	idClassificacao = new ArrayList<String>(0);
+    	idSubClassificacao = new ArrayList<String>(0);
+    	subClassificacoes = new ArrayList<TbSubClassificacao>(0);
     }
     
     public void ajustaSubClassificacoes() {

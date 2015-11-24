@@ -432,12 +432,12 @@
 								var="item" itemLabel="#{item.sgUnidade} - #{item.nmUnidade}"
 								itemValue="#{item.idUnidade}" />
 							<p:ajax
-								update="slcClassificacao,:frmAdministrarManifestacao:dtbAdministracao"
+								update="teste1, teste2, slcClassificacao,:frmAdministrarManifestacao:dtbAdministracao"
 								event="change" listener="#{mBManifestacao.ajustaClassificacao}" />
 						</p:selectManyMenu>
 					</p:column>
 
-					<p:column>
+					<p:column id="teste1">
 						<f:facet name="header">
 							Classificação*
 							<p:spacer width="10" />
@@ -462,7 +462,7 @@
 						</p:selectManyMenu>
 					</p:column>
 
-					<p:column>
+					<p:column id="teste2">
 						<f:facet name="header">
 							Subclassificação
 							<p:spacer width="10" />

@@ -145,7 +145,7 @@ Sistema de Ouvidoria]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="32" y="0" width="65" height="19" uuid="5ded75a0-83ad-40f2-aca3-e6325a59fd2b"/>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dtComunicacao}]]></textFieldExpression>
