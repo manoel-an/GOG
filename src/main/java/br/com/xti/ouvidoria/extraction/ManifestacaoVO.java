@@ -182,4 +182,8 @@ public class ManifestacaoVO {
     public String getTexto() {
     	return Jsoup.parse(manifestacao.getDsTextoManifestacao()).text();
     }
+    
+    public String getCadastradaPor(){
+    	return manifestacao.getIdUsuarioCriador() != null ? manifestacao.getIdUsuarioCriador().getNmUsuario() : "Usuário Externo";
+    }
 }
