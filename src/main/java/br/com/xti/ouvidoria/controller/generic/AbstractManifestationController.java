@@ -154,6 +154,18 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 		baixarPDF("dialogomanifestacao", (List<TbTramite>) encaminhamento.getConteudo(), "tramites");
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void imprimirDialogoManifestante(ManifestacaoTabView encaminhamento) throws InfrastructureException {
+		List<TbComunicacaoExterna> comunicacoes = (List<TbComunicacaoExterna>) encaminhamento.getConteudo();
+		adicionaParametroRelatorio("numeroManifestacao", manifestacao.getNrManifestacao());
+		adicionaParametroRelatorio("logoAGR", "logoagr.jpg");
+		adicionaParametroRelatorio("dataInicioDialogo", comunicacoes.get(0).getDtComunicacao());
+		adicionaParametroRelatorio("origemTramite", comunicacoes.get(0).getIdUsuario() == null ? "Manifestante" : "Ouvidoria");
+		adicionaParametroRelatorio("destinoTramite", comunicacoes.get(0).getIdUsuario() != null ? "Manifestante" : "Ouvidoria");
+		adicionaParametroRelatorio("nomeManifestante", manifestacao.getNmPessoa());
+		baixarPDF("dialogomanifestante", comunicacoes, "tramites");
+	}
+	
 	public void mountTabs() {
         int index = 0;
         setTabs(new ArrayList<ManifestacaoTabView>());

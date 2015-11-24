@@ -8,12 +8,10 @@
 	<parameter name="dataInicioDialogo" class="java.util.Date"/>
 	<parameter name="origemTramite" class="java.lang.String"/>
 	<parameter name="destinoTramite" class="java.lang.String"/>
-	<field name="idTramite" class="java.lang.Integer"/>
-	<field name="dsDescricao" class="java.lang.String"/>
-	<field name="idUsuarioReceptor.nmUsuario" class="java.lang.String"/>
-	<field name="dtTramite" class="java.util.Date"/>
-	<field name="idUsuarioEmissor.nmUsuario" class="java.lang.String"/>
-	<field name="idUnidadeEnvio.nmUnidade" class="java.lang.String"/>
+	<parameter name="nomeManifestante" class="java.lang.String"/>
+	<field name="dtComunicacao" class="java.util.Date"/>
+	<field name="dsComunicacao" class="java.lang.String"/>
+	<field name="idUsuario.nmUsuario" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -79,7 +77,7 @@ Sistema de Ouvidoria]]></text>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="98" splitType="Stretch">
+		<band height="118" splitType="Stretch">
 			<staticText>
 				<reportElement x="10" y="1" width="105" height="20" uuid="06aa8b1b-338d-434e-87f4-22f5e6f9920b"/>
 				<text><![CDATA[Trâmite iniciado em: ]]></text>
@@ -114,62 +112,73 @@ Sistema de Ouvidoria]]></text>
 				<text><![CDATA[De:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="248" y="61" width="100" height="20" uuid="a254722a-870e-483d-b4e6-120ce6041e48"/>
+				<reportElement x="248" y="81" width="100" height="20" uuid="a254722a-870e-483d-b4e6-120ce6041e48"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Mensagens]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="10" y="61" width="105" height="20" uuid="2fb0dee5-e7b0-4666-a942-baa2b6008356"/>
+				<text><![CDATA[Manifestante:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="115" y="61" width="233" height="20" uuid="f50c2f66-ec74-4871-87bf-ba28a75e9ac0"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomeManifestante}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="63" splitType="Stretch">
 			<line>
-				<reportElement positionType="Float" x="8" y="62" width="543" height="1" uuid="5f541cac-c9b5-4dc3-894f-8388c4399bb1"/>
+				<reportElement positionType="Float" x="10" y="62" width="543" height="1" uuid="dd060870-f63b-46dd-a77c-fdf08b4b06f7"/>
 			</line>
-			<textField>
-				<reportElement x="8" y="19" width="543" height="20" uuid="10ed1c98-2c61-4e9c-ba29-e6021cf4da52"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font isBold="true" pdfFontName="Helvetica-Bold"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<b>"+$F{idUsuarioEmissor.nmUsuario}+ "</b> disse para <b>" + $F{idUnidadeEnvio.nmUnidade}+ "</b>" + ($F{idUsuarioReceptor.nmUsuario} != null ? " ("+$F{idUsuarioReceptor.nmUsuario}+") " : " ") + ":"]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement stretchType="RelativeToTallestObject" x="8" y="39" width="543" height="20" isPrintWhenDetailOverflows="true" uuid="6be86cc4-75dd-4c61-9719-cdd0881de9f6"/>
-				<box bottomPadding="0">
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle" markup="html"/>
-				<textFieldExpression><![CDATA[$F{dsDescricao}]]></textFieldExpression>
-			</textField>
-			<textField pattern="HH:mm">
-				<reportElement x="114" y="0" width="71" height="20" uuid="68934905-824c-4851-a30b-edf576541214"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true" pdfFontName="Helvetica-Bold"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{dtTramite}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="100" y="0" width="14" height="20" uuid="13994b52-5b27-43af-bc81-5fd9648caa4d"/>
+				<reportElement x="97" y="0" width="14" height="20" uuid="25605db7-4656-44b7-8df3-ea14b2ee971c"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[ás]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="30" y="0" width="70" height="19" uuid="708f29f9-d251-45ce-8e5c-5dd72149a26a"/>
+				<reportElement x="32" y="0" width="65" height="19" uuid="5ded75a0-83ad-40f2-aca3-e6325a59fd2b"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{dtTramite}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dtComunicacao}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="8" y="0" width="22" height="20" uuid="b259c4d0-6c8c-4e0c-bb91-45ab489332f4"/>
+				<reportElement x="10" y="0" width="22" height="20" uuid="c238563f-9834-4bd4-b405-1d96df9f54c5"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Em:]]></text>
 			</staticText>
+			<textField pattern="HH:mm">
+				<reportElement x="111" y="0" width="71" height="20" uuid="c5ca36fb-1ae9-4dd9-a233-8aab11c78ad1"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtComunicacao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement stretchType="RelativeToTallestObject" x="10" y="39" width="543" height="20" isPrintWhenDetailOverflows="true" uuid="97dbad8b-9edd-4a54-a24b-3c97dcf5970c"/>
+				<box bottomPadding="0">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="html"/>
+				<textFieldExpression><![CDATA[$F{dsComunicacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="19" width="543" height="20" uuid="1faa461a-fce9-49de-8212-ca4f923a6178"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>"+($F{idUsuario.nmUsuario} == null ? "Manifestante" : "Ouvidoria ("+$F{idUsuario.nmUsuario}+")")+ "</b> disse para <b>" + ($F{idUsuario.nmUsuario} != null ? "Manifestante" : "Ouvidoria")+ "</b>:" ]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
