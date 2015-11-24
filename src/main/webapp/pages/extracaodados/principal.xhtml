@@ -248,11 +248,11 @@
                 <!-- AMARELO - style="color: #e1cf07;" -->
                 <!-- LARANJA - style="color: #ff8b00;" -->
                 <!-- VERMELHO - style="color: #fe0000;" -->
-                <p:column style="width: 10%;" headerText="Nº" filterBy="#{manifestacao.nrManifestacao}" filterMatchMode="contains" sortBy="#{manifestacao.nrManifestacao}">
+                <p:column style="width: 8%;" headerText="Nº" filterBy="#{manifestacao.nrManifestacao}" filterMatchMode="contains" sortBy="#{manifestacao.nrManifestacao}">
                     <h:outputText value="#{manifestacao.nrManifestacao}"/>
                 </p:column>
 
-                <p:column style="width: 10%;">
+                <p:column style="width: 8%;">
                     <f:facet name="header">
                         <h:outputText value="Dt. Registro (R)"/><br />
                         <h:outputText value="Dt. Atualização (A)" style="white-space: nowrap"/>
@@ -267,6 +267,10 @@
                         <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
                     </h:outputText>
                 </p:column>
+                
+                <p:column headerText="Cadastrada por" style="width: 20%;" sortBy="#{manifestacao.idUsuarioCriador.nmUsuario}" filterBy="#{manifestacao.idUsuarioCriador.nmUsuario}" filterMatchMode="contains">
+                	<h:outputText value="#{not empty manifestacao.idUsuarioCriador ? manifestacao.idUsuarioCriador.nmUsuario : 'Usuário Externo'}" />
+                </p:column>
 
                 <p:column headerText="Manifestante" style="width: 23%;" filterBy="#{manifestacao.nmPessoa}" filterMatchMode="contains" sortBy="#{manifestacao.nmPessoa}">
                     <h:outputText value="#{manifestacao.nmPessoa}" />
@@ -276,7 +280,7 @@
                     <h:outputText value="#{manifestacao.idTipoManifestacao.nmTipoManifestacao}"/>
                 </p:column>
 
-                <p:column headerText="Prioridade" style="width: 10%;" filterBy="#{manifestacao.idPrioridade.nmPrioridade}" filterMatchMode="contains" sortBy="#{manifestacao.idPrioridade.nmPrioridade}">
+                <p:column headerText="Prioridade" style="width: 8%;" filterBy="#{manifestacao.idPrioridade.nmPrioridade}" filterMatchMode="contains" sortBy="#{manifestacao.idPrioridade.nmPrioridade}">
                     <h:outputText value="#{manifestacao.idPrioridade.nmPrioridade}"/>
                 </p:column>
 
@@ -284,7 +288,7 @@
                     <h:outputText value="#{mBEnum.getStatusManifestacaoEnum(manifestacao.stStatusManifestacao).descricao}"/>
                 </p:column>
 
-                <p:column headerText="Unidade(s)"  style="width: 20%;" filterBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}" filterMatchMode="contains" sortBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}">
+                <p:column headerText="Unidade(s)"  style="width: 15%;" filterBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}" filterMatchMode="contains" sortBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}">
                     <h:outputText value="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}"/>
                 </p:column>
                 
@@ -293,7 +297,7 @@
 				</p:column>
                 
                 <p:column headerText="Ver">
-					<div style="width: 50px; display: inline-block;">
+					<div style="width: 40px; display: inline-block;">
 						<p:commandButton id="cbViewManifestacao" icon="ui-icon-search"
 							title="Visualizar"
 							action="/pages/manifestacao/administrar.xhtml"

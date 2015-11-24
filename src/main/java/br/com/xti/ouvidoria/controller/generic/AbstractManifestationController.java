@@ -2,6 +2,7 @@ package br.com.xti.ouvidoria.controller.generic;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import br.com.xti.ouvidoria.dao.ManifestacaoDAO;
 import br.com.xti.ouvidoria.dao.PrioridadeDAO;
 import br.com.xti.ouvidoria.dao.TramiteDAO;
 import br.com.xti.ouvidoria.dao.UnidadeDAO;
+import br.com.xti.ouvidoria.exception.InfrastructureException;
 import br.com.xti.ouvidoria.filtropersonalizado.FiltroPersonalizado;
 import br.com.xti.ouvidoria.helper.EnumHelper;
 import br.com.xti.ouvidoria.helper.FiltroHelper;
@@ -139,6 +141,17 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void imprimirDialogoEncaminhamento(ManifestacaoTabView encaminhamento) throws InfrastructureException{
+		adicionaParametroRelatorio("numeroManifestacao", encaminhamento.getEncaminhamento().getIdManifestacao().getNrManifestacao());
+		adicionaParametroRelatorio("logoAGR", "logoagr.jpg");
+		adicionaParametroRelatorio("dataInicioDialogo", encaminhamento.getEncaminhamento().getDtCriacaoEncaminhamento());
+		adicionaParametroRelatorio("origemTramite", encaminhamento.getEncaminhamento().getIdUnidadeEnviou().getNmUnidade());
+		adicionaParametroRelatorio("destinoTramite", encaminhamento.getEncaminhamento().getIdUnidadeRecebeu().getNmUnidade());
+		Collections.reverse((List<TbTramite>) encaminhamento.getConteudo());
+		baixarPDF("dialogomanifestacao", (List<TbTramite>) encaminhamento.getConteudo(), "tramites");
 	}
 	
 	public void mountTabs() {

@@ -13,8 +13,13 @@
 			widgetVar="tbvEncaminhamentos" value="#{bean.tabs}"
 			var="tabItem" cache="false"
 			activeIndex="-1">
-			<p:tab title="#{tabItem.titulo}">
-				<!-- INICIO - PAINEL - COMUNICACAO EXTERNA -->
+			<p:tab style="vertical-align: middle;">
+				<f:facet name="title">
+					<h:panelGroup style="vertical-align: middle;">
+						<h:outputText value="#{tabItem.titulo}" />
+					</h:panelGroup>
+				</f:facet>
+				
 				<p:panel id="tabPanelComunicacaoExterna" rendered="#{tabItem.index == 0}">
 					<p:panelGrid style="width: 100%; margin-bottom: 10px"
 						rendered="#{security.administrador || security.ouvidor || security.manifestante}">
@@ -157,6 +162,16 @@
 					</h:panelGrid>
 					<!-- FIM - PAINEL - ENCAMINHAMENTOS -->
 				</p:panel>
+				<p:commandButton 
+					rendered="#{tabItem.index != 0}" 
+					ajax="false" 
+					actionListener="#{bean.imprimirDialogoEncaminhamento(tabItem)}"
+					value="Imprimir Diálogo" 
+					icon="ui-icon-print"
+					action="#{bean.deletaArquivo()}"
+					style="margin-top: -20px; color: black;">
+					<p:fileDownload value="#{bean.filePDF}"/>
+				</p:commandButton>
 			</p:tab>
 		</p:accordionPanel>
 	</h:form>

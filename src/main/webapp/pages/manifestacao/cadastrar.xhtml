@@ -149,7 +149,7 @@
                                                itemLabel="#{areaEntrada.nmAreaEntrada}"
                                                itemValue="#{areaEntrada}" 
                                                />
-
+								 <p:ajax event="change" process="@this"/>
                             </p:selectOneMenu>
                         </p:column>
                     </p:row> 
@@ -169,6 +169,7 @@
                                                itemLabel="#{meioEntrada.nmMeioEntrada}"
                                                itemValue="#{meioEntrada}" 
                                                />
+                                <p:ajax event="change" process="@this"/>
                             </p:selectOneMenu>
                         </p:column>
                     </p:row>
@@ -178,6 +179,7 @@
                         <p:column style="font-weight: bold;">
                             <p:selectOneRadio id="rdTipoManifestante" value="#{mBManifestacaoCadastrar.manifestacao.tpManifestante}" required="true" requiredMessage="Informe o tipo de manifestante">
                             	<f:selectItems value="#{mBEnum.tipoManifestanteEnums}" var="tipoManifestante" itemLabel="#{tipoManifestante.descricao}" itemValue="#{tipoManifestante.id}" />
+                            	<p:ajax event="change" process="@this"/>
                             </p:selectOneRadio>
                         </p:column>
                     </p:row>
@@ -220,6 +222,7 @@
                             				mask="99.999.999/9999-99"
                             				maxlength="19"
                             				title="Informe o CNPJ" >
+                            	 <p:ajax event="blur" process="@this"/>				
                             </p:inputMask>
                             <p:watermark for="nrCnpj" value="99.999.999/9999-99" />  
                         </p:column>
@@ -233,7 +236,9 @@
 								style="width:250px;"
 								title="Informe o seu Nome"
 								required="true" 
-								requiredMessage="Informe o seu Nome" />
+								requiredMessage="Informe o seu Nome">
+								<p:ajax event="blur" process="@this"/>
+							</p:inputText>
 						</p:column>
                     </p:row>
                     
@@ -436,6 +441,7 @@
                                                itemLabel="#{meioResposta.nmMeioResposta}"
                                                itemValue="#{meioResposta}" 
                                                />
+                                <p:ajax event="change" process="@this"/>
                             </p:selectOneMenu>
                         </p:column>
                     </p:row>

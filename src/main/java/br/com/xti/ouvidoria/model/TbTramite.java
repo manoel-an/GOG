@@ -48,7 +48,7 @@ public class TbTramite implements Serializable {
     @Column(name = "idTramite")
     private Integer idTramite;
     
-    @Column(name = "dsDescricao")
+    @Column(name = "dsDescricao", columnDefinition = "text")
     private String dsDescricao;
     
     @Column(name = "dtTramite")

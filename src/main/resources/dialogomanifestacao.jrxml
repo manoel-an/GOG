@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dialogomanifestacao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a9ebccaf-9a63-4118-b9ef-02b284bce460">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="numeroManifestacao" class="java.lang.Integer"/>
+	<parameter name="logoAGR" class="java.lang.String"/>
+	<parameter name="dataInicioDialogo" class="java.util.Date"/>
+	<parameter name="origemTramite" class="java.lang.String"/>
+	<parameter name="destinoTramite" class="java.lang.String"/>
+	<field name="idTramite" class="java.lang.Integer"/>
+	<field name="dsDescricao" class="java.lang.String"/>
+	<field name="idUsuarioReceptor.nmUsuario" class="java.lang.String"/>
+	<field name="dtTramite" class="java.util.Date"/>
+	<field name="idUsuarioEmissor.nmUsuario" class="java.lang.String"/>
+	<field name="idUnidadeEnvio.nmUnidade" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="115" splitType="Stretch">
+			<textField>
+				<reportElement x="297" y="68" width="190" height="20" uuid="91cd73a0-fcf2-42a7-a1f8-452fe347abc1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Manifestação Nº "+$P{numeroManifestacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="234" y="10" width="317" height="49" uuid="23da9775-5cc9-4493-be5e-d989f593c23d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="16" isBold="true" isItalic="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<text><![CDATA[Trâmite de Manifestação
+Sistema de Ouvidoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="62" width="317" height="33" uuid="4ce51294-c136-4416-85c3-85e0820d2866"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="26" width="210" height="82" uuid="b909a4d5-e4ae-4bd8-bfa5-270414a8eeb0"/>
+				<imageExpression><![CDATA[$P{logoAGR}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="31" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="55" y="0" width="165" height="20" uuid="28fc38e6-a5b6-48c9-a65e-0849035b2455"/>
+				<textElement>
+					<font size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="0" width="45" height="20" uuid="a7d5acee-202f-46f7-ae61-bc98b61c0bdd"/>
+				<textElement>
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Goiânia, ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="98" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="1" width="105" height="20" uuid="06aa8b1b-338d-434e-87f4-22f5e6f9920b"/>
+				<text><![CDATA[Trâmite iniciado em: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="115" y="1" width="233" height="20" uuid="e31619ab-3c46-4228-baf1-e07685e47ec6"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataInicioDialogo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="115" y="21" width="233" height="20" uuid="f779fa9d-2dc6-42e6-a9a3-f159acadd86f"/>
+				<textElement>
+					<font isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{origemTramite}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="115" y="41" width="233" height="20" uuid="5899e752-6c87-4003-970b-02c340e36daa"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{destinoTramite}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="41" width="105" height="20" uuid="12cc2a01-b2ce-49a2-8af9-bc6ef875cac4"/>
+				<text><![CDATA[Para:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="21" width="105" height="20" uuid="cf49122a-bc46-4728-a445-31f26130d0e9"/>
+				<text><![CDATA[De:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="248" y="61" width="100" height="20" uuid="a254722a-870e-483d-b4e6-120ce6041e48"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Mensagens]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="63" splitType="Stretch">
+			<line>
+				<reportElement positionType="Float" x="8" y="62" width="543" height="1" uuid="5f541cac-c9b5-4dc3-894f-8388c4399bb1"/>
+			</line>
+			<textField>
+				<reportElement x="8" y="19" width="543" height="20" uuid="10ed1c98-2c61-4e9c-ba29-e6021cf4da52"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>"+$F{idUsuarioEmissor.nmUsuario}+ "</b> disse para <b>" + $F{idUnidadeEnvio.nmUnidade}+ "</b>" + ($F{idUsuarioReceptor.nmUsuario} != null ? " ("+$F{idUsuarioReceptor.nmUsuario}+") " : " ") + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement stretchType="RelativeToTallestObject" x="8" y="39" width="543" height="20" isPrintWhenDetailOverflows="true" uuid="6be86cc4-75dd-4c61-9719-cdd0881de9f6"/>
+				<box bottomPadding="0">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="html"/>
+				<textFieldExpression><![CDATA[$F{dsDescricao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="98" y="0" width="33" height="20" uuid="68934905-824c-4851-a30b-edf576541214"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtTramite}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="84" y="0" width="14" height="20" uuid="13994b52-5b27-43af-bc81-5fd9648caa4d"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ás]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="30" y="0" width="54" height="19" uuid="708f29f9-d251-45ce-8e5c-5dd72149a26a"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtTramite}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="0" width="22" height="20" uuid="b259c4d0-6c8c-4e0c-bb91-45ab489332f4"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Em:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
