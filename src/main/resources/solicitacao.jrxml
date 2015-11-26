@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="solicitacao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e5c5cb75-a262-4df4-b84f-31b253d89120">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="170"/>
+	<property name="ireport.y" value="77"/>
 	<parameter name="numeroManifestacao" class="java.lang.String"/>
 	<parameter name="logoAGR" class="java.lang.String"/>
 	<parameter name="dataManifestacao" class="java.util.Date"/>
@@ -28,7 +28,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="100" splitType="Stretch">
+		<band height="491" splitType="Stretch">
 			<staticText>
 				<reportElement x="234" y="1" width="317" height="49" uuid="c8f8d36f-4e32-464e-90c6-4f2ccb01086e"/>
 				<box>
@@ -43,10 +43,16 @@
 				</textElement>
 				<text><![CDATA[Solicitação de Ouvidoria - SO]]></text>
 			</staticText>
+			<line>
+				<reportElement x="10" y="444" width="545" height="1" uuid="274d17fb-7188-417e-80ac-c5502272d40c"/>
+			</line>
 			<image>
 				<reportElement x="10" y="17" width="210" height="82" uuid="ab98d4b6-b945-4505-9f9e-99d5991e0afd"/>
 				<imageExpression><![CDATA[$P{logoAGR}]]></imageExpression>
 			</image>
+			<line>
+				<reportElement x="10" y="332" width="545" height="1" uuid="ffbda90b-76b0-4d17-a81e-91391409fc49"/>
+			</line>
 			<staticText>
 				<reportElement x="234" y="53" width="317" height="33" uuid="62f36b64-8fff-4d47-a504-43221b957d4a"/>
 				<box>
@@ -67,26 +73,22 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{numeroManifestacao}+"/2015"]]></textFieldExpression>
 			</textField>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="142" splitType="Stretch">
 			<staticText>
-				<reportElement x="10" y="9" width="45" height="20" uuid="a1c5aac6-b152-4fbd-b404-b7c182750620"/>
+				<reportElement x="9" y="109" width="46" height="20" uuid="a1c5aac6-b152-4fbd-b404-b7c182750620"/>
 				<textElement>
 					<font size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Goiânia, ]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="55" y="9" width="165" height="20" uuid="795953f0-7ff2-48ca-8159-52470a755f6c"/>
+				<reportElement x="55" y="109" width="165" height="20" uuid="795953f0-7ff2-48ca-8159-52470a755f6c"/>
 				<textElement>
 					<font size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="62" width="541" height="74" uuid="63f0b759-88cb-4b58-baf3-1ef205420336"/>
+				<reportElement x="9" y="162" width="542" height="74" uuid="63f0b759-88cb-4b58-baf3-1ef205420336"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
@@ -96,64 +98,60 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="35" y="36" width="491" height="20" uuid="75839ee1-30aa-4a72-b427-65e06efcf539"/>
+				<reportElement x="35" y="136" width="491" height="20" uuid="75839ee1-30aa-4a72-b427-65e06efcf539"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{prestadoraServico}]]></textFieldExpression>
 			</textField>
-		</band>
-	</pageHeader>
-	<columnHeader>
-		<band height="275" splitType="Stretch">
 			<staticText>
-				<reportElement x="10" y="24" width="86" height="20" uuid="0fae4370-d454-457c-9ea0-77641d6d815b"/>
+				<reportElement x="10" y="267" width="86" height="20" uuid="0fae4370-d454-457c-9ea0-77641d6d815b"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[Data:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="44" width="86" height="30" uuid="c62a7532-71bd-4053-95ec-060202a0e64c"/>
+				<reportElement x="10" y="287" width="86" height="30" uuid="c62a7532-71bd-4053-95ec-060202a0e64c"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[Prestadora do Serviço:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="4" width="126" height="20" uuid="786eb255-766b-4362-bc72-de79191f8424"/>
+				<reportElement x="9" y="247" width="126" height="20" uuid="786eb255-766b-4362-bc72-de79191f8424"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[Atendente:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="96" y="24" width="176" height="20" uuid="75660d7c-654f-4fc0-ba88-773e01b4292c"/>
+				<reportElement x="96" y="267" width="176" height="20" uuid="75660d7c-654f-4fc0-ba88-773e01b4292c"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{dataManifestacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="96" y="4" width="176" height="20" uuid="d87a1965-9ce8-41fd-9bd5-f6a51115ec4a"/>
+				<reportElement x="96" y="247" width="176" height="20" uuid="d87a1965-9ce8-41fd-9bd5-f6a51115ec4a"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{atendente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="96" y="44" width="176" height="30" uuid="61592c9f-e902-4f94-828b-d33bf155bba8"/>
+				<reportElement x="96" y="287" width="176" height="30" uuid="61592c9f-e902-4f94-828b-d33bf155bba8"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{prestadoraServico}]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement x="284" y="4" width="287" height="80" uuid="4a6542b9-90ce-4896-9cc8-f94632e035ca">
+				<reportElement x="280" y="247" width="287" height="80" uuid="2aff8cb8-05c7-409a-89ca-a15f884a2d93">
 					<printWhenExpression><![CDATA[$P{tipoSolicitacao}.equals("transporte")]]></printWhenExpression>
 				</reportElement>
 				<staticText>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="60" width="86" height="20" uuid="7f364662-dcdd-4738-a4f7-0d9330c20870">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="59" width="86" height="20" uuid="b7058b36-bba6-4ded-be99-e52be93f33b2">
 						<printWhenExpression><![CDATA[$P{motorista} != null && $P{motorista} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -162,7 +160,7 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 					<text><![CDATA[Motorista:]]></text>
 				</staticText>
 				<textField>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="20" width="201" height="20" uuid="b6794437-2090-40ff-8202-8e9d905a7bd6">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="20" width="201" height="20" uuid="514a3254-8485-4356-bb59-5c3632e24f7a">
 						<printWhenExpression><![CDATA[$P{numeroVeiculo} != null && $P{numeroVeiculo} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -171,16 +169,7 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 					<textFieldExpression><![CDATA[$P{numeroVeiculo}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="0" width="201" height="20" uuid="57e1eecd-599a-46da-8ddd-5440bb2448b6">
-						<printWhenExpression><![CDATA[$P{placaVeiculo} != null && $P{placaVeiculo} != ""]]></printWhenExpression>
-					</reportElement>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{placaVeiculo}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="60" width="201" height="20" uuid="46061eca-08cf-4fc4-9683-cf9782f3a9b2">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="85" y="59" width="201" height="20" uuid="47053bc9-c8b2-4974-abd9-5b953ef76248">
 						<printWhenExpression><![CDATA[$P{motorista} != null && $P{motorista} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -189,7 +178,7 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 					<textFieldExpression><![CDATA[$P{motorista}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="39" width="201" height="20" uuid="fbbdbf89-607a-4fe7-b115-4a19dbec967a">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="39" width="201" height="20" uuid="333a9e22-a4e8-4667-8a9b-2edbb1dfd3cc">
 						<printWhenExpression><![CDATA[$P{horario} != null && $P{horario} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -198,7 +187,7 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 					<textFieldExpression><![CDATA[$P{horario}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="19" width="86" height="21" uuid="e1b577d2-dd55-4857-a744-44de546753f2">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="20" width="86" height="21" uuid="0cd93144-a4d9-48c6-a112-4d4c46da94d9">
 						<printWhenExpression><![CDATA[$P{numeroVeiculo} != null && $P{numeroVeiculo} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -207,16 +196,7 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 					<text><![CDATA[Nº do veículo:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="86" height="19" uuid="b2616fc5-2d3b-44de-acb1-dfeb30b0af15">
-						<printWhenExpression><![CDATA[$P{placaVeiculo} != null && $P{placaVeiculo} != ""]]></printWhenExpression>
-					</reportElement>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="11"/>
-					</textElement>
-					<text><![CDATA[Placa do veículo:]]></text>
-				</staticText>
-				<staticText>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="39" width="86" height="20" uuid="c4eec84f-69c7-4d62-869d-37d8a330f9de">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="39" width="86" height="20" uuid="a1aa5c72-513e-4396-8e96-f25e2b4a8142">
 						<printWhenExpression><![CDATA[$P{horario} != null && $P{horario} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -225,12 +205,30 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 					<text><![CDATA[Horário:]]></text>
 				</staticText>
 			</frame>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="366" y="248" width="201" height="20" uuid="40fa64b4-6aa4-4ff7-8765-162ca40e8b74">
+					<printWhenExpression><![CDATA[$P{placaVeiculo} != null && $P{placaVeiculo} != ""]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{placaVeiculo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="280" y="247" width="86" height="21" uuid="68b647e3-c352-4af7-b4bd-4b9491c009d6">
+					<printWhenExpression><![CDATA[$P{placaVeiculo} != null && $P{placaVeiculo} != ""]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Placa do veículo:]]></text>
+			</staticText>
 			<frame>
-				<reportElement x="284" y="4" width="287" height="60" uuid="c47e1058-2f7d-47eb-a7b6-9c764af7d6dd">
+				<reportElement x="280" y="247" width="287" height="60" uuid="41b4a5d6-25c7-4c2b-b8d4-db26e918bf97">
 					<printWhenExpression><![CDATA[$P{tipoSolicitacao}.equals("saneamento")]]></printWhenExpression>
 				</reportElement>
 				<textField>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="0" width="201" height="20" uuid="c78b8d0b-6b05-46e7-adda-367b3935a61e">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="0" width="201" height="20" uuid="6ad73721-e354-4971-8368-8037a1154ec9">
 						<printWhenExpression><![CDATA[$P{ra} != null && $P{ra} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -239,7 +237,7 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 					<textFieldExpression><![CDATA[$P{ra}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="86" height="20" uuid="4d1bf40b-1258-4078-91d6-d3daaeb003c3">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="86" height="20" uuid="ce9e999d-e659-4711-adae-4fcc11fce9ef">
 						<printWhenExpression><![CDATA[$P{ra} != null && $P{ra} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -248,7 +246,7 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 					<text><![CDATA[Nº RA:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="40" width="86" height="20" uuid="8c538543-6a8b-46de-b1e2-30921a2b8781">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="40" width="86" height="20" uuid="28fcc0d8-3a5a-4e73-a40a-29cfd8872e2c">
 						<printWhenExpression><![CDATA[$P{titularidade} != null && $P{titularidade} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -257,7 +255,7 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 					<text><![CDATA[Titularidade:]]></text>
 				</staticText>
 				<textField>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="20" width="201" height="20" uuid="894301ea-22dc-4a25-8b60-7b0df9e1bb15">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="20" width="201" height="20" uuid="5962b86b-d15d-4eca-9bf5-30624d51621d">
 						<printWhenExpression><![CDATA[$P{numeroConta} != null && $P{numeroConta} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -266,7 +264,7 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 					<textFieldExpression><![CDATA[$P{numeroConta}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="20" width="86" height="20" uuid="c8065e61-7cd1-4bda-9aa5-bf008d9f394e">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="20" width="86" height="20" uuid="c3d4ca5a-8a11-46b2-bf87-7a68c595ff85">
 						<printWhenExpression><![CDATA[$P{numeroConta} != null && $P{numeroConta} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -275,7 +273,7 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 					<text><![CDATA[Nº da Conta:]]></text>
 				</staticText>
 				<textField>
-					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="40" width="201" height="20" uuid="2533cbcb-0e58-4c03-b229-6a42588f48b7">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="86" y="40" width="201" height="20" uuid="b7377bdf-4024-4f88-a060-823d30e7a065">
 						<printWhenExpression><![CDATA[$P{titularidade} != null && $P{titularidade} != ""]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -285,18 +283,18 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="284" y="4" width="262" height="20" uuid="19575190-86c4-4b8b-8d4a-9e1cee44c42d">
+				<reportElement x="280" y="248" width="286" height="20" uuid="9f78955a-ef56-41b9-980b-c1137d644150">
 					<printWhenExpression><![CDATA[$P{tipoSolicitacao}.equals("energia")]]></printWhenExpression>
 				</reportElement>
 				<staticText>
-					<reportElement x="0" y="0" width="115" height="20" uuid="d7070095-0076-4ce6-8ca8-97d3e9982108"/>
+					<reportElement x="0" y="0" width="115" height="20" uuid="01e9816b-60d4-41cf-a5cd-2c56e59bf8dd"/>
 					<textElement>
 						<font isBold="false"/>
 					</textElement>
 					<text><![CDATA[Unidade Consumidora: ]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="115" y="0" width="147" height="20" uuid="5ac12e23-a279-4323-83ee-579333e5b6c0"/>
+					<reportElement x="115" y="0" width="171" height="20" uuid="3c6da6d4-8ce3-4d36-986e-ee29f89837b1"/>
 					<textElement>
 						<font isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
 					</textElement>
@@ -304,94 +302,94 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 				</textField>
 			</frame>
 			<staticText>
-				<reportElement x="10" y="115" width="86" height="20" uuid="3d9f98d4-cd79-4e79-b65c-3e6a021674a8"/>
+				<reportElement x="9" y="360" width="86" height="20" uuid="3d9f98d4-cd79-4e79-b65c-3e6a021674a8"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Manifestante:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="96" y="115" width="176" height="20" uuid="96924803-5ef3-4775-aebb-54c276c41cc9"/>
+				<reportElement x="95" y="360" width="176" height="20" uuid="96924803-5ef3-4775-aebb-54c276c41cc9"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{nomeManifestante}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="9" y="135" width="87" height="20" uuid="a02f2277-cca8-41dc-8cb3-6e4f28ba291a"/>
+				<reportElement x="8" y="380" width="87" height="20" uuid="a02f2277-cca8-41dc-8cb3-6e4f28ba291a"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Contato:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="96" y="135" width="87" height="20" uuid="9f0d46a2-0918-4e7e-8a37-0f3d8d273eb9"/>
+				<reportElement x="95" y="380" width="87" height="20" uuid="9f0d46a2-0918-4e7e-8a37-0f3d8d273eb9"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{telefoneUm}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="155" width="86" height="20" uuid="c5c7f341-4bed-4178-94e2-198a18a007a1"/>
+				<reportElement x="9" y="400" width="87" height="20" uuid="c5c7f341-4bed-4178-94e2-198a18a007a1"/>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<text><![CDATA[Endereço:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="96" y="155" width="459" height="41" isPrintWhenDetailOverflows="true" uuid="bfc4cf25-e91e-4934-a4b6-257d8dec91b9"/>
+				<reportElement x="96" y="400" width="459" height="41" isPrintWhenDetailOverflows="true" uuid="bfc4cf25-e91e-4934-a4b6-257d8dec91b9"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{endereco}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="183" y="135" width="335" height="20" uuid="19bcbe6e-5669-4d71-9c06-964d598b5f18"/>
+				<reportElement x="180" y="380" width="374" height="20" uuid="19bcbe6e-5669-4d71-9c06-964d598b5f18"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{outrosTelefones}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="96" width="86" height="20" uuid="95a279dc-2600-4740-ab5e-e78712b34ce7"/>
+				<reportElement x="9" y="341" width="86" height="20" uuid="95a279dc-2600-4740-ab5e-e78712b34ce7"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Nº Manifestação:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="96" y="96" width="176" height="20" uuid="cb9cb0b4-c50e-47aa-b8b6-9d563262da54"/>
+				<reportElement x="95" y="341" width="176" height="20" uuid="cb9cb0b4-c50e-47aa-b8b6-9d563262da54"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{numeroManifestacao}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="10" y="196" width="545" height="1" uuid="274d17fb-7188-417e-80ac-c5502272d40c"/>
-			</line>
-			<line>
-				<reportElement x="9" y="89" width="545" height="1" uuid="ffbda90b-76b0-4d17-a81e-91391409fc49"/>
-			</line>
 			<textField>
-				<reportElement x="10" y="201" width="146" height="20" uuid="59a94613-064b-4232-a11a-5bf3a78c9e9b"/>
+				<reportElement x="9" y="447" width="146" height="20" uuid="59a94613-064b-4232-a11a-5bf3a78c9e9b"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{tipoManifestacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="10" y="225" width="399" height="20" uuid="8891904d-5f97-4448-8e6c-d0c38a21f1ff"/>
+				<reportElement x="9" y="467" width="399" height="20" uuid="8891904d-5f97-4448-8e6c-d0c38a21f1ff"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{classificacao}]]></textFieldExpression>
 			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="20">
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToTallestObject" x="10" y="250" width="545" height="20" isPrintWhenDetailOverflows="true" uuid="86a8b095-c428-4766-83fc-2f02e86bb3e6"/>
-				<textElement verticalAlignment="Middle" markup="html"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="10" y="0" width="545" height="20" isPrintWhenDetailOverflows="true" uuid="86a8b095-c428-4766-83fc-2f02e86bb3e6"/>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font pdfFontName="Helvetica" isPdfEmbedded="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{texto}]]></textFieldExpression>
 			</textField>
 		</band>
-	</columnHeader>
-	<columnFooter>
-		<band height="62" splitType="Stretch"/>
-	</columnFooter>
+	</detail>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="20">
+			<textField>
+				<reportElement x="454" y="0" width="100" height="20" uuid="ed0f82ce-c2bb-45d5-ab32-df8b138cde49"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

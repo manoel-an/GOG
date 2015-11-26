@@ -16,7 +16,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="115" splitType="Stretch">
+		<band height="141" splitType="Stretch">
 			<textField>
 				<reportElement x="297" y="68" width="190" height="20" uuid="91cd73a0-fcf2-42a7-a1f8-452fe347abc1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -56,28 +56,24 @@ Sistema de Ouvidoria]]></text>
 				<reportElement x="10" y="26" width="210" height="82" uuid="b909a4d5-e4ae-4bd8-bfa5-270414a8eeb0"/>
 				<imageExpression><![CDATA[$P{logoAGR}]]></imageExpression>
 			</image>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="31" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="55" y="0" width="165" height="20" uuid="28fc38e6-a5b6-48c9-a65e-0849035b2455"/>
+				<reportElement x="55" y="116" width="165" height="20" uuid="28fc38e6-a5b6-48c9-a65e-0849035b2455"/>
 				<textElement>
 					<font size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="0" width="45" height="20" uuid="a7d5acee-202f-46f7-ae61-bc98b61c0bdd"/>
+				<reportElement x="10" y="116" width="45" height="20" uuid="a7d5acee-202f-46f7-ae61-bc98b61c0bdd"/>
 				<textElement>
 					<font size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Goiânia, ]]></text>
 			</staticText>
 		</band>
-	</pageHeader>
+	</title>
 	<columnHeader>
-		<band height="118" splitType="Stretch">
+		<band height="109" splitType="Stretch">
 			<staticText>
 				<reportElement x="10" y="1" width="105" height="20" uuid="06aa8b1b-338d-434e-87f4-22f5e6f9920b"/>
 				<text><![CDATA[Trâmite iniciado em: ]]></text>
@@ -132,9 +128,9 @@ Sistema de Ouvidoria]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="63" splitType="Stretch">
+		<band height="61" splitType="Stretch">
 			<line>
-				<reportElement positionType="Float" x="10" y="62" width="543" height="1" uuid="dd060870-f63b-46dd-a77c-fdf08b4b06f7"/>
+				<reportElement positionType="Float" x="10" y="60" width="543" height="1" uuid="dd060870-f63b-46dd-a77c-fdf08b4b06f7"/>
 			</line>
 			<staticText>
 				<reportElement x="97" y="0" width="14" height="20" uuid="25605db7-4656-44b7-8df3-ea14b2ee971c"/>
@@ -170,24 +166,24 @@ Sistema de Ouvidoria]]></text>
 					<bottomPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle" markup="html"/>
-				<textFieldExpression><![CDATA[$F{dsComunicacao}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dsComunicacao}.replaceAll("13.3333px;", "8px;")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="10" y="19" width="543" height="20" uuid="1faa461a-fce9-49de-8212-ca4f923a6178"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<b>"+($F{idUsuario.nmUsuario} == null ? "Manifestante" : "Ouvidoria ("+$F{idUsuario.nmUsuario}+")")+ "</b> disse para <b>" + ($F{idUsuario.nmUsuario} != null ? "Manifestante" : "Ouvidoria")+ "</b>:" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<b>"+($F{idUsuario.nmUsuario} == null ? "Manifestante" : "Ouvidoria ("+$F{idUsuario.nmUsuario}+")")+ "</b> disse para <b>" + ($F{idUsuario.nmUsuario} != null ? "Manifestante" : "Ouvidoria")+ "</b>:"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="453" y="8" width="100" height="20" uuid="6b8e549d-c08e-4d71-a58f-9610f2ec49e2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

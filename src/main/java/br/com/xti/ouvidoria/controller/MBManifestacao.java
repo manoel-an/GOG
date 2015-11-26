@@ -22,6 +22,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.mail.EmailException;
+import org.jsoup.Jsoup;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -353,7 +354,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	adicionaParametroRelatorio("outrosTelefones", manifestacao.getOutrosTelefones());
     	adicionaParametroRelatorio("tipoManifestacao", manifestacao.getIdTipoManifestacao().getNmTipoManifestacao());
     	adicionaParametroRelatorio("classificacao", getClassificaoESubClassificacao());
-    	adicionaParametroRelatorio("texto", manifestacao.getDsTextoManifestacaoFormatado());
+    	adicionaParametroRelatorio("texto", Jsoup.parse(manifestacao.getDsTextoManifestacaoFormatado()).text());
     	
     	//saneamento
     	adicionaParametroRelatorio("ra", manifestacao.getRa());
@@ -365,7 +366,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	adicionaParametroRelatorio("numeroVeiculo", manifestacao.getNumeroVeiculo());
     	adicionaParametroRelatorio("horario", manifestacao.getHorario());
     	adicionaParametroRelatorio("motorista", manifestacao.getMotorista());
-    	
+
     	//energia
     	adicionaParametroRelatorio("unidadeConsumidora", manifestacao.getUnidadeConsumidora());
     	

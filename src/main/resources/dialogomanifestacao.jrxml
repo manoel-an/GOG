@@ -18,7 +18,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="115" splitType="Stretch">
+		<band height="148" splitType="Stretch">
 			<textField>
 				<reportElement x="297" y="68" width="190" height="20" uuid="91cd73a0-fcf2-42a7-a1f8-452fe347abc1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -58,28 +58,24 @@ Sistema de Ouvidoria]]></text>
 				<reportElement x="10" y="26" width="210" height="82" uuid="b909a4d5-e4ae-4bd8-bfa5-270414a8eeb0"/>
 				<imageExpression><![CDATA[$P{logoAGR}]]></imageExpression>
 			</image>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="31" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="55" y="0" width="165" height="20" uuid="28fc38e6-a5b6-48c9-a65e-0849035b2455"/>
+				<reportElement x="55" y="120" width="165" height="20" uuid="28fc38e6-a5b6-48c9-a65e-0849035b2455"/>
 				<textElement>
 					<font size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="0" width="45" height="20" uuid="a7d5acee-202f-46f7-ae61-bc98b61c0bdd"/>
+				<reportElement x="10" y="120" width="45" height="20" uuid="a7d5acee-202f-46f7-ae61-bc98b61c0bdd"/>
 				<textElement>
 					<font size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Goiânia, ]]></text>
 			</staticText>
 		</band>
-	</pageHeader>
+	</title>
 	<columnHeader>
-		<band height="98" splitType="Stretch">
+		<band height="88" splitType="Stretch">
 			<staticText>
 				<reportElement x="10" y="1" width="105" height="20" uuid="06aa8b1b-338d-434e-87f4-22f5e6f9920b"/>
 				<text><![CDATA[Trâmite iniciado em: ]]></text>
@@ -129,7 +125,7 @@ Sistema de Ouvidoria]]></text>
 			</line>
 			<textField>
 				<reportElement x="8" y="19" width="543" height="20" uuid="10ed1c98-2c61-4e9c-ba29-e6021cf4da52"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<b>"+$F{idUsuarioEmissor.nmUsuario}+ "</b> disse para <b>" + $F{idUnidadeEnvio.nmUnidade}+ "</b>" + ($F{idUsuarioReceptor.nmUsuario} != null ? " ("+$F{idUsuarioReceptor.nmUsuario}+") " : " ") + ":"]]></textFieldExpression>
@@ -140,7 +136,7 @@ Sistema de Ouvidoria]]></text>
 					<bottomPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle" markup="html"/>
-				<textFieldExpression><![CDATA[$F{dsDescricao}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dsDescricao}.replaceAll("13.3333px;", "8px;")]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH:mm">
 				<reportElement x="114" y="0" width="71" height="20" uuid="68934905-824c-4851-a30b-edf576541214"/>
@@ -172,13 +168,13 @@ Sistema de Ouvidoria]]></text>
 			</staticText>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="455" y="5" width="100" height="20" uuid="c9ebdc18-40b2-4fd1-a3cf-95f209799257"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
