@@ -2,7 +2,6 @@ package br.com.xti.ouvidoria.controller.generic;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -150,7 +149,6 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 		adicionaParametroRelatorio("dataInicioDialogo", encaminhamento.getEncaminhamento().getDtCriacaoEncaminhamento());
 		adicionaParametroRelatorio("origemTramite", encaminhamento.getEncaminhamento().getIdUnidadeEnviou().getNmUnidade());
 		adicionaParametroRelatorio("destinoTramite", encaminhamento.getEncaminhamento().getIdUnidadeRecebeu().getNmUnidade());
-		Collections.reverse((List<TbTramite>) encaminhamento.getConteudo());
 		baixarPDF("dialogomanifestacao", (List<TbTramite>) encaminhamento.getConteudo(), "tramites");
 	}
 	
