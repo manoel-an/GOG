@@ -8,9 +8,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbParametro.class)
 public abstract class TbParametro_ {
 
+	public static volatile SingularAttribute<TbParametro, String> vlrParametro;
 	public static volatile SingularAttribute<TbParametro, Integer> idParametro;
 	public static volatile SingularAttribute<TbParametro, String> nmParametro;
-	public static volatile SingularAttribute<TbParametro, String> vlrParametro;
 
 }
 

@@ -16,6 +16,7 @@
 	
 	<ui:define name="content">
 		<h:form id="form" style="max-width: 1216px; margin: 0 auto">
+			<p:growl id="growl" autoUpdate="true" closable="true" life="6000"/>
 			<p:panelGrid style="vertical-align: central; width: 100%">
 				<f:facet name="header">  
 					<p:row>  
@@ -87,14 +88,14 @@
                     </p:column>
                 </p:row>
                 <p:row>
-                    <p:column style="width: 20%">Unidade</p:column>
+                    <p:column style="width: 20%;"><p:outputLabel value="Unidade Responsável" for="unidade"/></p:column>
                     <p:column style="width: 80%">
-                    	<p:selectOneMenu value="#{mBExtracaoDados.idUnidade}" style="width: 300px;">
-                            <f:selectItem itemLabel="- Selecione -" itemValue="" />  
-                            <f:selectItems var="unidade" value="#{mBUnidade.todos}" itemValue="#{unidade.idUnidade}" itemLabel="#{unidade.nmUnidade}" />
-                            <p:ajax update="ddlOperador" 
-                                    event="change" />
-                        </p:selectOneMenu>
+                    	<p:selectOneMenu id="unidade" value="#{mBExtracaoDados.idUnidade}" style="width: 300px; border: 1px solid red;" required="true" requiredMessage="Selecione a unidade responsável pela resolução da manifestação">
+                    	    <f:selectItem itemLabel="- Selecione -" itemValue="" />  
+                	        <f:selectItems var="unidade" value="#{mBUnidade.todos}" itemValue="#{unidade.idUnidade}" itemLabel="#{unidade.nmUnidade}" />
+            	        	<p:ajax update="ddlOperador" 
+        	                    event="change" />
+    	                </p:selectOneMenu>
                     </p:column>
                 </p:row>
                 <p:row>
@@ -222,7 +223,9 @@
                         <p:panelGrid style="width: 100%">
                             <p:row>
                                 <p:column style="text-align: center; width: 100%" styleClass="ui-widget-header">
-                                    <p:commandButton value="Consultar" actionListener="#{mBExtracaoDados.consultarManifestacoes()}" update="tabelaManifestacoes" ajax="false" />
+                                    <p:commandButton value="Consultar" actionListener="#{mBExtracaoDados.consultarManifestacoes()}" ajax="false" immediate="true" />
+                                    <p:spacer width="20px"/>
+                                    <p:commandButton value="Checar Regularidade para Certidão" style="margin-left: 5px;" ajax="false" action="#{mBExtracaoDados.checarSituacaoParaCertidao()}"/>
                                     <p:spacer width="20px"/>
                                     <p:commandButton value="Extrair Excel" actionListener="#{mBExtracaoDados.download()}"  ajax="false" />
                                 </p:column>
@@ -231,6 +234,20 @@
                     </p:column>
                 </p:row> 
             </p:panelGrid>
+            <h:panelGroup rendered="#{mBExtracaoDados.erroUnidade and not empty mBExtracaoDados.manifestacoes}" style="text-align: justify; color: red; font-size: 14px;">
+            	<br/>
+            	A unidade <b>#{mBExtracaoDados.unidadeVerificada.nmUnidade}</b> possui pendências em manifestações, relacionadas
+            	a manifestestações que ainda não tiveram uma resposta satisfatória para a Ouvidoria da AGR ou para o manifestante, estas manifestações
+            	estão disponíveis para visualização abaixo e precisam ser solucionadas para que esta unidade se torne apta a receber a
+            	sua Certidão Negativa de Ouvidoria!
+            	<br/>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{mBExtracaoDados.erroUnidade and empty mBExtracaoDados.manifestacoes}" style="text-align: justify; color: green; font-size: 14px;">
+            	<br/>
+            	A unidade <b>#{mBExtracaoDados.unidadeVerificada.nmUnidade}</b> não possui nenhuma manifestação pendente sob sua responsabilidade
+            	e está apta para receber a sua Certidão Negativa de Ouvidoria!
+            	<br/>
+            </h:panelGroup>
             <p:spacer height="20px;" />
             <p:dataTable id="tabelaManifestacoes"
                          value="#{mBExtracaoDados.manifestacoes}"
@@ -241,7 +258,7 @@
                          emptyMessage="Nenhuma manifestação foi encontrada"
                          var="manifestacao"
                          rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" 
-                         rowIndexVar="rowIx" >
+                         rowIndexVar="rowIx">
                 <f:facet name="header">
                     <h:outputText value="Manifestações Encontradas: #{mBExtracaoDados.manifestacoes.size()}"/>
                 </f:facet>
@@ -268,11 +285,11 @@
                     </h:outputText>
                 </p:column>
                 
-                <p:column headerText="Cadastrada por" style="width: 20%;" sortBy="#{manifestacao.idUsuarioCriador.nmUsuario}" filterBy="#{manifestacao.idUsuarioCriador.nmUsuario}" filterMatchMode="contains">
+                <p:column headerText="Cadastrada por" style="width: 15%;" sortBy="#{manifestacao.idUsuarioCriador.nmUsuario}" filterBy="#{manifestacao.idUsuarioCriador.nmUsuario}" filterMatchMode="contains">
                 	<h:outputText value="#{not empty manifestacao.idUsuarioCriador ? manifestacao.idUsuarioCriador.nmUsuario : 'Usuário Externo'}" />
                 </p:column>
 
-                <p:column headerText="Manifestante" style="width: 23%;" filterBy="#{manifestacao.nmPessoa}" filterMatchMode="contains" sortBy="#{manifestacao.nmPessoa}">
+                <p:column headerText="Manifestante" style="width: 15%;" filterBy="#{manifestacao.nmPessoa}" filterMatchMode="contains" sortBy="#{manifestacao.nmPessoa}">
                     <h:outputText value="#{manifestacao.nmPessoa}" />
                 </p:column>
 
@@ -280,34 +297,38 @@
                     <h:outputText value="#{manifestacao.idTipoManifestacao.nmTipoManifestacao}"/>
                 </p:column>
 
-                <p:column headerText="Prioridade" style="width: 8%;" filterBy="#{manifestacao.idPrioridade.nmPrioridade}" filterMatchMode="contains" sortBy="#{manifestacao.idPrioridade.nmPrioridade}">
-                    <h:outputText value="#{manifestacao.idPrioridade.nmPrioridade}"/>
-                </p:column>
-
-                <p:column headerText="Status" style="width: 10%;" filterBy="#{mBEnum.getStatusManifestacaoEnum(manifestacao.stStatusManifestacao).descricao}" filterMatchMode="contains" sortBy="#{mBEnum.getStatusManifestacaoEnum(manifestacao.stStatusManifestacao).descricao}">
+                <p:column headerText="Status" style="width: 8%;" filterBy="#{mBEnum.getStatusManifestacaoEnum(manifestacao.stStatusManifestacao).descricao}" filterMatchMode="contains" sortBy="#{mBEnum.getStatusManifestacaoEnum(manifestacao.stStatusManifestacao).descricao}">
                     <h:outputText value="#{mBEnum.getStatusManifestacaoEnum(manifestacao.stStatusManifestacao).descricao}"/>
                 </p:column>
 
-                <p:column headerText="Unidade(s)"  style="width: 15%;" filterBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}" filterMatchMode="contains" sortBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}">
+                <p:column headerText="Unidade(s)"  style="width: 10%;" filterBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}" filterMatchMode="contains" sortBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}">
                     <h:outputText value="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}"/>
                 </p:column>
                 
-                <p:column headerText="Dias em Atraso" style="width:5%;" sortBy="#{mBListarManifestacoes.diasAtrasoAoManifestante(manifestacao)}">
+                <p:column headerText="Dias em Atraso Resposta para Ouvidoria" style="width:5%;" sortBy="#{mBListarManifestacoes.diasAtrasoAoManifestante(manifestacao)}">
+					<h:outputText value="#{mBListarManifestacoes.diasAtrasoAreaSolucionadora(manifestacao)}" />
+				</p:column>
+                
+                <p:column headerText="Dias em Atraso Resposta ao Manifestante" style="width:5%;" sortBy="#{mBListarManifestacoes.diasAtrasoAoManifestante(manifestacao)}">
 					<h:outputText value="#{mBListarManifestacoes.diasAtrasoAoManifestante(manifestacao)}" />
 				</p:column>
                 
                 <p:column headerText="Ver">
 					<div style="width: 40px; display: inline-block;">
-						<p:commandButton id="cbViewManifestacao" icon="ui-icon-search"
+						<p:commandButton id="cbViewManifestacao"
+							icon="ui-icon-search"
 							title="Visualizar"
-							action="/pages/manifestacao/administrar.xhtml"
-							actionListener="#{mBManifestacao.setManifestacao(manifestacao)}"
-							ajax="false" style="float: left">
-							<f:actionListener binding="#{mBManifestacao.init()}" />
+							action="#{mBListarManifestacoes.getManifestationUrl(manifestacao)}"
+							ajax="false" 
+							style="float: left">
 						</p:commandButton>
 					</div>
 				</p:column>
             </p:dataTable>
+            
+            <p:dialog height="auto" width="600" header="Situação da Unidade" widgetVar="situacaoUnidade">
+            	teste teste teste
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

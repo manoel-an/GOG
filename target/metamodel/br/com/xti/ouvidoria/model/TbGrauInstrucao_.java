@@ -9,9 +9,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbGrauInstrucao.class)
 public abstract class TbGrauInstrucao_ {
 
-	public static volatile SingularAttribute<TbGrauInstrucao, Integer> idGrauInstrucao;
-	public static volatile CollectionAttribute<TbGrauInstrucao, TbManifestacao> tbManifestacaoCollection;
 	public static volatile SingularAttribute<TbGrauInstrucao, String> nmGrauInstrucao;
+	public static volatile CollectionAttribute<TbGrauInstrucao, TbManifestacao> tbManifestacaoCollection;
+	public static volatile SingularAttribute<TbGrauInstrucao, Integer> idGrauInstrucao;
 
 }
 

@@ -8,10 +8,10 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(VwUltimoTramite.class)
 public abstract class VwUltimoTramite_ {
 
-	public static volatile SingularAttribute<VwUltimoTramite, Integer> idTramite;
 	public static volatile SingularAttribute<VwUltimoTramite, Integer> idEncaminhamento;
-	public static volatile SingularAttribute<VwUltimoTramite, Integer> idManifestacao;
 	public static volatile SingularAttribute<VwUltimoTramite, Integer> idUsuarioReceptor;
+	public static volatile SingularAttribute<VwUltimoTramite, Integer> idTramite;
+	public static volatile SingularAttribute<VwUltimoTramite, Integer> idManifestacao;
 
 }
 

@@ -8,9 +8,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbFiltroPersonalizado.class)
 public abstract class TbFiltroPersonalizado_ {
 
-	public static volatile SingularAttribute<TbFiltroPersonalizado, String> nmFiltroPersonalizado;
 	public static volatile SingularAttribute<TbFiltroPersonalizado, TbUsuario> idUsuario;
 	public static volatile SingularAttribute<TbFiltroPersonalizado, Integer> idFiltroPersonalizado;
+	public static volatile SingularAttribute<TbFiltroPersonalizado, String> nmFiltroPersonalizado;
 	public static volatile SingularAttribute<TbFiltroPersonalizado, String> dsParticao;
 
 }

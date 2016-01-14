@@ -9,9 +9,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbEncaminhamentoPadronizado.class)
 public abstract class TbEncaminhamentoPadronizado_ {
 
-	public static volatile SingularAttribute<TbEncaminhamentoPadronizado, Date> dtCadastro;
-	public static volatile SingularAttribute<TbEncaminhamentoPadronizado, String> dsConteudo;
 	public static volatile SingularAttribute<TbEncaminhamentoPadronizado, Integer> idEncaminhamentoPadronizado;
+	public static volatile SingularAttribute<TbEncaminhamentoPadronizado, String> dsConteudo;
+	public static volatile SingularAttribute<TbEncaminhamentoPadronizado, Date> dtCadastro;
 	public static volatile SingularAttribute<TbEncaminhamentoPadronizado, String> dsTitulo;
 
 }

@@ -620,6 +620,73 @@ public class MBListarManifestacoes implements Serializable {
     	return diasEmAtraso;
     }
     
+    public int diasAtrasoAreaSolucionadora(TbManifestacao manifestation) {
+		int diasEmAtraso = 0;
+		if (manifestation != null
+				&& !StatusManifestacaoEnum.SOLUCIONADA.getId().equals(manifestation.getStStatusManifestacao())) {
+    		if(securityService.isInterlocutor() || securityService.isOperador()) {
+    			Date dateLimitToAnswer = getPrazoAtendimento(manifestation);
+    			if(dateLimitToAnswer != null){
+    				DateTimeZone BRAZIL = DateTimeZone.forID("America/Sao_Paulo");
+    				DateTime start = new LocalDate(dateLimitToAnswer.getTime(), BRAZIL).toDateTimeAtStartOfDay();
+    				DateTime end = new LocalDate(new Date().getTime(), BRAZIL).toDateTimeAtStartOfDay();
+    				Days days = Days.daysBetween(start, end);
+    				
+    				if(days.isGreaterThan(null)) {
+    					diasEmAtraso = days.getDays();
+    				}
+    			}
+    		} else {
+    			Integer prazoEncaminhamento = manifestation.getIdTipoManifestacao().getPrazoEntrada();
+    			Integer prazoRespostaAOuvidoria = manifestation.getIdTipoManifestacao().getPrazoAreaSolucionadora();
+    			int diasParaResponderManifestante = prazoEncaminhamento + prazoRespostaAOuvidoria;
+    			
+    			Date dataManifestacao = manifestation.getDtCadastro();
+    			Date dataAtual = new Date();
+    			int diasTranscorridos = DataHelper.getDiferencaEntreDatasEmDias(dataAtual, dataManifestacao);
+    			
+    			if (diasTranscorridos > ++diasParaResponderManifestante) {
+    				diasEmAtraso = diasTranscorridos - diasParaResponderManifestante;
+    			}
+    		}
+    		
+    	}
+    	return diasEmAtraso;
+    }
+    
+    public int diasAtrasoEncaminhamento(TbManifestacao manifestation) {
+		int diasEmAtraso = 0;
+		if (manifestation != null
+				&& !StatusManifestacaoEnum.SOLUCIONADA.getId().equals(manifestation.getStStatusManifestacao())) {
+    		if(securityService.isInterlocutor() || securityService.isOperador()) {
+    			Date dateLimitToAnswer = getPrazoAtendimento(manifestation);
+    			if(dateLimitToAnswer != null){
+    				DateTimeZone BRAZIL = DateTimeZone.forID("America/Sao_Paulo");
+    				DateTime start = new LocalDate(dateLimitToAnswer.getTime(), BRAZIL).toDateTimeAtStartOfDay();
+    				DateTime end = new LocalDate(new Date().getTime(), BRAZIL).toDateTimeAtStartOfDay();
+    				Days days = Days.daysBetween(start, end);
+    				
+    				if(days.isGreaterThan(null)) {
+    					diasEmAtraso = days.getDays();
+    				}
+    			}
+    		} else {
+    			Integer prazoEncaminhamento = manifestation.getIdTipoManifestacao().getPrazoEntrada();
+    			int diasParaResponderManifestante = prazoEncaminhamento;
+    			
+    			Date dataManifestacao = manifestation.getDtCadastro();
+    			Date dataAtual = new Date();
+    			int diasTranscorridos = DataHelper.getDiferencaEntreDatasEmDias(dataAtual, dataManifestacao);
+    			
+    			if (diasTranscorridos > ++diasParaResponderManifestante) {
+    				diasEmAtraso = diasTranscorridos - diasParaResponderManifestante;
+    			}
+    		}
+    		
+    	}
+    	return diasEmAtraso;
+    }
+    
     public String verificaAtrasoStyleClass(TbManifestacao manifestacao) {
     	AtrasoManifestacaoEnum tipoAtraso = verificaAtraso(manifestacao);
     	String styleClass = tipoAtraso.getStyleClass();

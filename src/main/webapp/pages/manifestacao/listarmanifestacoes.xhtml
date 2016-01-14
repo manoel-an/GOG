@@ -248,14 +248,14 @@
 								<p:rowToggler />
 							</p:column>
 
-							<p:column style="width: 4%;" headerText="Nº"
+							<p:column style="width: 2%;" headerText="Nº"
 								filterBy="#{manifestacao.nrManifestacao}"
 								filterMatchMode="contains"
 								sortBy="#{manifestacao.nrManifestacao}">
 								<h:outputText value="#{manifestacao.nrManifestacao}" />
 							</p:column>
 
-							<p:column style="width: 4%;" sortBy="#{manifestacao.dtUltimaAtualizacao}">
+							<p:column style="width: 3%;" sortBy="#{manifestacao.dtUltimaAtualizacao}">
 								<f:facet name="header">
 									<h:outputText value="Dt. Registro (R)" />
 									<br />
@@ -272,7 +272,7 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Nome do Manifestante" style="width: 20%;"
+							<p:column headerText="Nome do Manifestante" style="width: 15%;"
 								filterBy="#{manifestacao.nmPessoa}" filterMatchMode="contains"
 								sortBy="#{manifestacao.nmPessoa}">
 								<h:outputText 
@@ -281,7 +281,7 @@
 							</p:column>
 							
 
-							<p:column headerText="Tipo" style="width: 10%;"
+							<p:column headerText="Tipo" style="width: 7%;"
 								filterBy="#{manifestacao.idTipoManifestacao.nmTipoManifestacao}"
 								filterMatchMode="contains"
 								sortBy="#{manifestacao.idTipoManifestacao.nmTipoManifestacao}">
@@ -305,7 +305,7 @@
 								<h:outputText value="#{mBListarManifestacoes.getNomeOperadoresComManifestacao(manifestacao)}" />
 							</p:column>
 
-							<p:column headerText="Status" style="width: 10%;"
+							<p:column headerText="Status" style="width: 8%;"
 								filterBy="#{mBEnum.getStatusManifestacaoEnum(manifestacao.stStatusManifestacao).descricao}"
 								filterMatchMode="contains"
 								sortBy="#{mBEnum.getStatusManifestacaoEnum(manifestacao.stStatusManifestacao).descricao}">
@@ -319,7 +319,7 @@
 								<h:outputText value="#{manifestacao.idUsuarioCriador != null ? manifestacao.idUsuarioCriador.nmUsuario : 'Usuário Externo'}"/>
 							</p:column>
 
-							<p:column headerText="Unidade(s)" style="width:15%;"
+							<p:column headerText="Unidade(s)" style="width:8%;"
 								filterBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}"
 								filterMatchMode="contains"
 								sortBy="#{mBListarManifestacoes.getUnidadesEncaminhadas(manifestacao)}"
@@ -335,9 +335,8 @@
 									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
 								</h:outputText>
 							</p:column>
-
 							
-							<p:column headerText="Dias em Atraso" style="width:5%;"
+							<p:column headerText="Dias em Atraso ao manifestante" style="width:5%;"
 								sortBy="#{mBListarManifestacoes.diasAtrasoAoManifestante(manifestacao)}"
 								rendered="#{not security.manifestante}">
 								<h:outputText value="#{mBListarManifestacoes.diasAtrasoAoManifestante(manifestacao)}" />

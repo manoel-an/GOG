@@ -9,8 +9,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class TbEncaminhamentoxAnexo_ {
 
 	public static volatile SingularAttribute<TbEncaminhamentoxAnexo, TbEncaminhamento> idEncaminhamento;
-	public static volatile SingularAttribute<TbEncaminhamentoxAnexo, Integer> idEncaminhamentoxAnexo;
 	public static volatile SingularAttribute<TbEncaminhamentoxAnexo, TbAnexo> idAnexo;
+	public static volatile SingularAttribute<TbEncaminhamentoxAnexo, Integer> idEncaminhamentoxAnexo;
 
 }
 

@@ -98,6 +98,10 @@ public class MBExtracaoDados implements Serializable {
     private List<TbPrioridade> listaPrioridades;
     private List<TbClassificacao> listaClassificacao;
     
+    private TbUnidade unidadeVerificada;
+    
+    private Boolean erroUnidade;
+    
     
     public void setLocalidadeBean(LocalidadeBean localidadeBean) {
         this.localidadeBean = localidadeBean;
@@ -228,6 +232,7 @@ public class MBExtracaoDados implements Serializable {
     }
     
     public void consultarManifestacoes() {
+    	erroUnidade = false;
         List<TbManifestacao> listaManifestacoes;
         FiltroPersonalizado filtro = new FiltroPersonalizado();
                 
@@ -327,6 +332,19 @@ public class MBExtracaoDados implements Serializable {
         if(atrasadas != null)
         	filtrarAtraso();
         	
+    }
+    
+    public void checarSituacaoParaCertidao(){
+    	FiltroPersonalizado filtro = new FiltroPersonalizado();
+    	List<TbManifestacao> listaManifestacoes;
+    	if(!ValidacaoHelper.isEmpty(idUnidade)){
+    		erroUnidade = true;
+    		unidadeVerificada = unidadeDAO.find(idUnidade);
+    		filtro.addEncIdUnidadeRecebeu(idUnidade);
+    		listaManifestacoes = dao.getManifestacoes(filtro);
+    		listaManifestacoes = filtroAtrasoDoResponsavel(listaManifestacoes);
+    		manifestacoes = listaManifestacoes;
+    	}
     }
     
     private void filtrarAtraso() {
@@ -598,6 +616,18 @@ public class MBExtracaoDados implements Serializable {
 	            }
             }
         }
+        return filtradas;
+    }
+    
+    private ArrayList<TbManifestacao> filtroAtrasoDoResponsavel(List<TbManifestacao> listaManifestacoes) {
+        ArrayList<TbManifestacao> filtradas = new ArrayList<>();
+        for (TbManifestacao tbManifestacao : listaManifestacoes) {
+            AtrasoManifestacaoEnum tipo = verificaAtraso(tbManifestacao);
+            
+            if(AtrasoManifestacaoEnum.ATRASO_RESPOSTA_MANIFESTANTE == tipo || AtrasoManifestacaoEnum.ATRASO_RESPOSTA_OUVIDORIA == tipo)
+            	filtradas.add(tbManifestacao);
+        }
+         
         return filtradas;
     }
 
@@ -1133,5 +1163,21 @@ public class MBExtracaoDados implements Serializable {
     	}
     	manifestacoes = dao.getManifestacoes(filtro);
     }
+
+	public TbUnidade getUnidadeVerificada() {
+		return unidadeVerificada;
+	}
+
+	public void setUnidadeVerificada(TbUnidade unidadeVerificada) {
+		this.unidadeVerificada = unidadeVerificada;
+	}
+
+	public Boolean getErroUnidade() {
+		return erroUnidade;
+	}
+
+	public void setErroUnidade(Boolean erroUnidade) {
+		this.erroUnidade = erroUnidade;
+	}
     
 }

@@ -8,9 +8,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbPerfilxFuncionalidade.class)
 public abstract class TbPerfilxFuncionalidade_ {
 
-	public static volatile SingularAttribute<TbPerfilxFuncionalidade, TbFuncionalidade> idFuncionalidade;
 	public static volatile SingularAttribute<TbPerfilxFuncionalidade, TbPerfil> idPerfil;
 	public static volatile SingularAttribute<TbPerfilxFuncionalidade, Integer> idPerfilxFuncionalidade;
+	public static volatile SingularAttribute<TbPerfilxFuncionalidade, TbFuncionalidade> idFuncionalidade;
 
 }
 

@@ -8,9 +8,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbComunicacaoExternaxAnexo.class)
 public abstract class TbComunicacaoExternaxAnexo_ {
 
-	public static volatile SingularAttribute<TbComunicacaoExternaxAnexo, TbComunicacaoExterna> idComunicacaoExterna;
 	public static volatile SingularAttribute<TbComunicacaoExternaxAnexo, Integer> idComunicacaoExternaxAnexo;
 	public static volatile SingularAttribute<TbComunicacaoExternaxAnexo, TbAnexo> idAnexo;
+	public static volatile SingularAttribute<TbComunicacaoExternaxAnexo, TbComunicacaoExterna> idComunicacaoExterna;
 
 }
 
