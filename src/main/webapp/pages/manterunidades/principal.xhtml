@@ -61,6 +61,13 @@
                         </f:facet>
                         <h:outputText value="#{item.eeEmail}"/>
                     </p:column>
+                    
+                    <p:column>
+                    	<f:facet name="header">
+                    		<h:outputText value="CNPJ" />
+                    	</f:facet>
+                    	<h:outputText value="#{item.cnpj}" />
+                    </p:column>
 
                     <p:column style="width: 80px">
                         <f:facet name="header">
@@ -124,6 +131,9 @@
                             <f:validator binding="#{emailValidator}" />
                         </p:inputText>
                         
+                        <h:outputLabel value="CNPJ: " />
+                        <p:inputMask mask="99.999.999/9999-99" value="#{mBUnidade.unidadeNovo.cnpj}" title="Informe caso possua, o CNPJ da unidade" size="50"/>
+                        
                         <h:outputText value="Permitir qualquer interlocutor realizar encaminhamento para outras unidades"/>
                         <p:selectBooleanCheckbox value="#{mBUnidade.unidadeNovo.encaminharOutrasAreas}" />
                         
@@ -168,6 +178,9 @@
                         <p:inputText value="#{mBUnidade.unidade.eeEmail}" size="50" required="true" requiredMessage="Digite o E-mail da Unidade" title="Informe o E-mail da Unidade " >
                             <f:validator binding="#{emailValidator}" />
                         </p:inputText>
+                        
+                        <h:outputLabel value="CNPJ: " />
+                        <p:inputMask mask="99.999.999/9999-99" value="#{mBUnidade.unidade.cnpj}" title="Informe caso possua, o CNPJ da unidade" size="50"/>
                         
                         <h:outputText value="Permitir qualquer interlocutor realizar encaminhamento para outras unidades"/>
                         <p:selectBooleanCheckbox value="#{mBUnidade.unidade.encaminharOutrasAreas}" />

@@ -43,5 +43,16 @@ public class UnidadeDAO extends AbstractDAO<TbUnidade> {
                e.printStackTrace();
            }
            return retorno;
-       }       
+       }
+
+	public String buscarCNPJPorRegistroAGR(String sgUnidadeComoRegistroAGR) {
+		try{
+			return (String) this.getEntityManager()
+            .createNativeQuery("select cnpj from tbcnpj_registroagr where reg_agr = :reg_agr")
+            .setParameter("reg_agr", sgUnidadeComoRegistroAGR).getSingleResult();
+		}catch (Exception e){
+			return null;
+		}
+			
+	}       
 }

@@ -90,7 +90,8 @@
                 <p:row>
                     <p:column style="width: 20%;"><p:outputLabel value="Unidade Responsável" for="unidade"/></p:column>
                     <p:column style="width: 80%">
-                    	<p:selectOneMenu id="unidade" value="#{mBExtracaoDados.idUnidade}" style="width: 300px; border: 1px solid red;" required="true" requiredMessage="Selecione a unidade responsável pela resolução da manifestação">
+                    	<p:selectOneMenu id="unidade" value="#{mBExtracaoDados.idUnidade}" style="width: 300px; border: 1px solid red;" required="true" requiredMessage="Selecione a unidade responsável pela resolução da manifestação"
+                    		filter="true" filterMatchMode="contains" effect="fade">
                     	    <f:selectItem itemLabel="- Selecione -" itemValue="" />  
                 	        <f:selectItems var="unidade" value="#{mBUnidade.todos}" itemValue="#{unidade.idUnidade}" itemLabel="#{unidade.nmUnidade}" />
             	        	<p:ajax update="ddlOperador" 
@@ -236,7 +237,7 @@
             </p:panelGrid>
             <h:panelGroup rendered="#{mBExtracaoDados.erroUnidade and not empty mBExtracaoDados.manifestacoes}" style="text-align: justify; color: red; font-size: 14px;">
             	<br/>
-            	A unidade <b>#{mBExtracaoDados.unidadeVerificada.nmUnidade}</b> possui pendências em manifestações, relacionadas
+            	A unidade <b>#{mBExtracaoDados.unidadeVerificada.nmUnidade}</b> CNPJ Nº: <b>#{not empty mBExtracaoDados.buscarCNPJUnidade() ? mBExtracaoDados.buscarCNPJUnidade() : 'S/N'}</b> possui pendências em manifestações, relacionadas
             	a manifestestações que ainda não tiveram uma resposta satisfatória para a Ouvidoria da AGR ou para o manifestante, estas manifestações
             	estão disponíveis para visualização abaixo e precisam ser solucionadas para que esta unidade se torne apta a receber a
             	sua Certidão Negativa de Ouvidoria!
@@ -244,7 +245,7 @@
             </h:panelGroup>
             <h:panelGroup rendered="#{mBExtracaoDados.erroUnidade and empty mBExtracaoDados.manifestacoes}" style="text-align: justify; color: green; font-size: 14px;">
             	<br/>
-            	A unidade <b>#{mBExtracaoDados.unidadeVerificada.nmUnidade}</b> não possui nenhuma manifestação pendente sob sua responsabilidade
+            	A unidade <b>#{mBExtracaoDados.unidadeVerificada.nmUnidade}</b> CNPJ Nº: <b>#{not empty mBExtracaoDados.buscarCNPJUnidade() ? mBExtracaoDados.buscarCNPJUnidade() : 'S/N'}</b> não possui nenhuma manifestação pendente sob sua responsabilidade
             	e está apta para receber a sua Certidão Negativa de Ouvidoria!
             	<br/>
             </h:panelGroup>

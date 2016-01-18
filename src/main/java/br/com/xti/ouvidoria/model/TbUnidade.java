@@ -78,6 +78,9 @@ public class TbUnidade implements Serializable, Comparable<TbUnidade> {
     @Size(min = 1, max = 1)
     @Column(name = "stEncaminharOutrasAreas")
     private String stEncaminharOutrasAreas;
+    
+    @Column(name = "cnpj", length = 20)
+    private String cnpj;
    
     @OneToMany(mappedBy = "idUnidadeEnvio")
     private Collection<TbTramite> tbTramiteCollection  = new ArrayList<>();
@@ -240,6 +243,14 @@ public class TbUnidade implements Serializable, Comparable<TbUnidade> {
 		this.stEncaminharOutrasAreas = stEncaminharOutrasAreas;
 	}
 	
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
 	public boolean isEncaminharOutrasAreas() {
 		return SIM.getId().equals(stEncaminharOutrasAreas);
 	}

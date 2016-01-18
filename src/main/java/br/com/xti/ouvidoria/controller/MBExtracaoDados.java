@@ -21,6 +21,7 @@ import br.com.xti.ouvidoria.dao.ManifestacaoDAO;
 import br.com.xti.ouvidoria.dao.PrioridadeDAO;
 import br.com.xti.ouvidoria.dao.UnidadeDAO;
 import br.com.xti.ouvidoria.dao.UsuarioDAO;
+import br.com.xti.ouvidoria.exception.InfrastructureException;
 import br.com.xti.ouvidoria.filtropersonalizado.FiltroPersonalizado;
 import br.com.xti.ouvidoria.helper.DataHelper;
 import br.com.xti.ouvidoria.helper.ValidacaoHelper;
@@ -344,6 +345,19 @@ public class MBExtracaoDados implements Serializable {
     		listaManifestacoes = dao.getManifestacoes(filtro);
     		listaManifestacoes = filtroAtrasoDoResponsavel(listaManifestacoes);
     		manifestacoes = listaManifestacoes;
+    	}
+    }
+    
+    public String buscarCNPJUnidade() throws InfrastructureException{
+    	if(unidadeVerificada.getCnpj() != null && unidadeVerificada.getCnpj().length() > 15){
+    		return unidadeVerificada.getCnpj();
+    	}else{
+    		String cnpj = unidadeDAO.buscarCNPJPorRegistroAGR(unidadeVerificada.getSgUnidade());
+    		if(cnpj != null){
+    			unidadeVerificada.setCnpj(cnpj);
+    			unidadeDAO.edit(unidadeVerificada);
+    		}
+    		return cnpj;
     	}
     }
     
