@@ -5,7 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	
     <ui:define name="bread">
         <p:breadCrumb>
@@ -93,31 +94,20 @@
                         </p:column>
                     </p:row>
                     
-                    <p:row>  
-                        <p:column style="width: 22%; font-weight: bold; vertical-align: top; padding-top: 10px;">Tipo de manifestação: *</p:column>  
-                        <p:column style="font-weight: bold; padding-top: 10px;">
-                            <div style="width: 30%; float: left">
-                                <p:selectOneMenu value="#{mBManifestacaoCadastrar.manifestacao.idTipoManifestacao}"
-                                                 style="width: 250px"
-                                                 required="true"
-                                                 requiredMessage="Informe o Tipo da Manifestação" 
-                                                 converter="#{conversorTipoManifestacao}"> 
-                                    <f:selectItem itemLabel="- Selecione -" itemValue="" />
-                                    <f:selectItems value="#{mBTipoManifestacao.todos}" 
-                                                   var="tipo"
-                                                   itemLabel="#{tipo.nmTipoManifestacao}"
-                                                   itemValue="#{tipo}">
-                                    </f:selectItems>
-                                    <p:ajax update="textoDsTipoManifestacao" event="change" />
-                                </p:selectOneMenu>
-                            </div>
-                            <div style="width: 70%; float: left">
-                                <h:outputText id="textoDsTipoManifestacao" value="#{mBManifestacaoCadastrar.manifestacao.idTipoManifestacao.dsTipoManifestacao}" />
-                            </div>
-                        </p:column>
+                    <p:row>
+                    	<p:column style="font-weight:bold;">Tipo da Solicitação de Ouvidoria: *</p:column>
+                    	<p:column>
+                    		<p:selectOneRadio style="font-weight: bold;" id="tipoOuvidoria" value="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao}" required="true" requiredMessage="Informe o tipo da Solicitação">
+                           		<f:selectItem itemLabel="Saneamento" itemValue="saneamento"/>
+                           		<f:selectItem itemLabel="Transporte" itemValue="transporte"/>
+                           		<f:selectItem itemLabel="Energia" itemValue="energia"/>
+                           		<f:selectItem itemLabel="Outros" itemValue="outros"/>
+                           		<p:ajax event="change" process="@this" update="@form"/>
+                            </p:selectOneRadio>
+                    	</p:column>
                     </p:row>
-                    
-                    <p:row rendered="#{security.manifestante}">
+
+                    <p:row rendered="#{security.manifestante and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Anônimo: *</p:column>  
                         <p:column style="font-weight: bold;">
                             <p:selectOneRadio id="rdAnonimo" value="#{mBManifestacaoCadastrar.anonimo}">  
@@ -127,8 +117,41 @@
                             </p:selectOneRadio>
                         </p:column>
                     </p:row>
+
+                    <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">  
+                        <p:column style="width: 22%; font-weight: bold; vertical-align: top; padding-top: 10px;">Tipo de manifestação: *</p:column>  
+                        <p:column style="font-weight: bold; padding-top: 10px;">
+                            <div style="width: 30%; float: left">
+                                <p:selectOneMenu value="#{mBManifestacaoCadastrar.manifestacao.idTipoManifestacao}"
+                                                 style="width: 250px"
+                                                 required="true"
+                                                 requiredMessage="Informe o Tipo da Manifestação" 
+                                                 converter="#{conversorTipoManifestacao}"
+                                                 rendered="#{not mBManifestacaoCadastrar.anonimo}"> 
+                                    <f:selectItem itemLabel="- Selecione -" itemValue="" />
+                                    <f:selectItems value="#{mBTipoManifestacao.todos}" 
+                                                   var="tipo"
+                                                   itemLabel="#{tipo.nmTipoManifestacao}"
+                                                   itemValue="#{tipo}">
+                                    </f:selectItems>
+                                    <p:ajax update="textoDsTipoManifestacao" event="change" />
+                                </p:selectOneMenu>
+                                <p:selectOneMenu value="#{mBManifestacaoCadastrar.manifestacao.idTipoManifestacao}"
+                                				 style="width: 250px"
+                                				 converter="#{conversorTipoManifestacao}"
+                                                 rendered="#{mBManifestacaoCadastrar.anonimo}">
+                                	<p:ajax update="textoDsTipoManifestacao" event="change" />
+                                	<f:selectItem itemLabel="#{mBTipoManifestacao.tipoDenuncia.nmTipoManifestacao}" itemValue="#{mBTipoManifestacao.tipoDenuncia}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <div style="width: 70%; float: left">
+                                <h:outputText id="textoDsTipoManifestacao" value="#{mBManifestacaoCadastrar.manifestacao.idTipoManifestacao.dsTipoManifestacao}" />
+                            </div>
+                        </p:column>
+                    </p:row>
                     
-                    <p:row rendered="#{mBManifestacaoCadastrar.anonimo}">  
+                    
+                    <p:row rendered="#{mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">  
                         <p:column style="font-weight: bold;">E-mail:</p:column>  
                         <p:column style="font-weight: bold;">
                             <p:inputText value="#{mBManifestacaoCadastrar.manifestacao.eeEmailUsuario}" 
@@ -182,6 +205,7 @@
                         </p:column>
                     </p:row>
                     
+                    <!-- 
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
                         <p:column style="font-weight: bold;">Tipo Manifestante: *</p:column>  
                         <p:column style="font-weight: bold;">
@@ -202,7 +226,7 @@
                             </p:selectOneRadio>
                         </p:column>
                     </p:row>
-                    <!-- Física :: CPF -->
+                    
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.tipoPessoaFisica}">  
                         <p:column style="font-weight: bold;">CPF:  </p:column>  
                         <p:column style="font-weight: bold;">
@@ -220,7 +244,7 @@
                             <p:watermark for="nrCpf" value="999.999.999-99" />  
                         </p:column>
                     </p:row>  
-                    <!-- Jurídica :: CNPJ -->
+                    
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and not mBManifestacaoCadastrar.tipoPessoaFisica}">  
                         <p:column style="font-weight: bold;">CNPJ: </p:column>  
                         <p:column style="font-weight: bold;">
@@ -235,8 +259,9 @@
                             <p:watermark for="nrCnpj" value="99.999.999/9999-99" />  
                         </p:column>
                     </p:row>
+                    -->
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Nome: *</p:column>  
                         <p:column style="font-weight: bold;">
 							<p:inputText
@@ -250,23 +275,20 @@
 						</p:column>
                     </p:row>
                     
-                    <p:row>
-                    	<p:column style="font-weight:bold;">Tipo da Solicitação de Ouvidoria: *</p:column>
+                    
+                    <p:row rendered="#{not empty mBManifestacaoCadastrar.manifestacao.tipoSolicitacao and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'transporte'}">
+                    	<p:column style="font-weight: bold;">Prestadora de Serviço: *</p:column>
                     	<p:column>
-                    		<p:selectOneRadio style="font-weight: bold;" id="tipoOuvidoria" value="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao}" required="true" requiredMessage="Informe o tipo da Solicitação">
-                           		<f:selectItem itemLabel="Saneamento" itemValue="saneamento"/>
-                           		<f:selectItem itemLabel="Transporte" itemValue="transporte"/>
-                           		<f:selectItem itemLabel="Energia" itemValue="energia"/>
-                           		<f:selectItem itemLabel="Outros" itemValue="outros"/>
-                           		<p:ajax event="change" process="@this" update="@form"/>
-                            </p:selectOneRadio>
+	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="font-weight: bold; width:250px;" required="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'transporte'}" requiredMessage="Informe o nome da prestadora de serviço"/>
                     	</p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not empty mBManifestacaoCadastrar.manifestacao.tipoSolicitacao and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'outros'}">
+                    <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
                     	<p:column style="font-weight: bold;">Prestadora de Serviço: *</p:column>
                     	<p:column>
-	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="font-weight: bold; width:250px;" required="true" requiredMessage="Informe o nome da prestadora de serviço"/>
+	                    	<p:selectOneMenu value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="font-weight: bold; width:260px;">
+	                    		<f:selectItem itemLabel="Saneago" itemValue="Saneago"/>
+	                    	</p:selectOneMenu>
                     	</p:column>
                     </p:row>
                     
@@ -292,49 +314,52 @@
                     </p:row>
                     
                     <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'transporte'}">
-                    	<p:column style="font-weight: bold;">Placa do veículo: *</p:column>
+                    	<p:column style="font-weight: bold;">Placa do veículo: </p:column>
                     	<p:column>
-	                    	<p:inputMask value="#{mBManifestacaoCadastrar.manifestacao.placaVeiculo}" mask="aaa-9999" style="font-weight: bold; width:250px;" required="true" requiredMessage="Informe a placa do veículo"/>
+	                    	<p:inputMask value="#{mBManifestacaoCadastrar.manifestacao.placaVeiculo}" mask="aaa-9999" style="font-weight: bold; width:250px;"/>
                     	</p:column>
                     </p:row>
                     
                     <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'transporte'}">
-                    	<p:column style="font-weight: bold;">N.Veiculo: *</p:column>
+                    	<p:column style="font-weight: bold;">N.Veiculo: </p:column>
                     	<p:column>
-	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.numeroVeiculo}" style="font-weight: bold; width:250px;" required="true" requiredMessage="Informe o número do veículo">
+	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.numeroVeiculo}" style="font-weight: bold; width:250px;">
 	                    	</p:inputText>
                     	</p:column>
                     </p:row>
                     
                     <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'transporte'}">
-                    	<p:column style="font-weight: bold;">Horário: *</p:column>
+                    	<p:column style="font-weight: bold;">Horário: </p:column>
                     	<p:column>
-	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.horario}" style="font-weight: bold; width:250px;" required="true" requiredMessage="Informe o horário"/>
+	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.horario}" style="font-weight: bold; width:250px;"/>
                     	</p:column>
                     </p:row>
                     
                     <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'transporte'}">
-                    	<p:column style="font-weight: bold;">Motorista: *</p:column>
+                    	<p:column style="font-weight: bold;">Motorista: </p:column>
                     	<p:column>
-	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.motorista}" style="font-weight: bold; width:250px;" required="true" requiredMessage="Informe o motorista"/>
+	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.motorista}" style="font-weight: bold; width:250px;"/>
                     	</p:column>
                     </p:row>
                     
+                    <!-- 
                     <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'energia'}">
                     	<p:column style="font-weight: bold;">Unidade Consumidora: *</p:column>
                     	<p:column>
 	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.unidadeConsumidora}" style="font-weight: bold; width:250px;" required="true" requiredMessage="Informe a unidade consumidora"/>
                     	</p:column>
                     </p:row>
+                     -->
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Telefone 1: *</p:column>  
                         <p:column style="font-weight: bold;">
 							<p:inputMask required="true" requiredMessage="Informe pelo menos um telefone para contato" id="nrTelefone" value="#{mBManifestacaoCadastrar.manifestacao.nrTelefone}" mask="(99)99999999?9"  maxlength="13" title="Informe um Telefone para contato" style="width: 250px" />  
 							<p:watermark for="nrTelefone" value="(99)99999999" />  
                         </p:column>
                     </p:row>
-                    
+                   
+                   	<!-- 
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
                         <p:column style="font-weight: bold;">Telefone 2: </p:column>  
                         <p:column style="font-weight: bold;">
@@ -342,8 +367,9 @@
 							<p:watermark for="nrTelefone2" value="(99)99999999" />
                         </p:column>
                     </p:row>
+                   	 --> 
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Celular: </p:column>  
                         <p:column style="font-weight: bold;">
 							<p:inputMask id="nrCelular" value="#{mBManifestacaoCadastrar.manifestacao.nrCelular}" mask="(99)99999999?9"  maxlength="13" title="Informe um Telefone Celular para contato" style="width: 250px" />  
@@ -351,6 +377,7 @@
                         </p:column>
                     </p:row>
                     
+                    <!-- 
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
                         <p:column style="font-weight: bold;">FAX: </p:column>
                         <p:column style="font-weight: bold;">
@@ -358,8 +385,9 @@
                             <p:watermark for="nrFAX" value="(99)99999999" />
                         </p:column>
                     </p:row>
+                     -->
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">E-mail: *</p:column>  
                         <p:column style="font-weight: bold;">
                             <p:inputText value="#{mBManifestacaoCadastrar.manifestacao.eeEmailUsuario}" 
@@ -377,7 +405,7 @@
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Outros e-mails: </p:column>  
                         <p:column style="font-weight: bold;">
                             <p:inputText value="#{mBManifestacaoCadastrar.manifestacao.eeEmailSecundario}"  style="width:250px;" title="Informe outros e-mails" >
@@ -436,7 +464,7 @@
                     </p:row>
                     -->
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Meio de resposta: </p:column>  
                         <p:column style="font-weight: bold;">
                             <p:selectOneMenu value="#{mBManifestacaoCadastrar.manifestacao.idMeioResposta}"
@@ -454,7 +482,7 @@
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Nº Protocolo Prestadora de Serviço: </p:column>  
                         <p:column style="font-weight: bold;">
                         	<p:inputText id="nrPronac" value="#{mBManifestacaoCadastrar.manifestacao.nrPronac}" maxlength="50" title="Informe o número do Protocolo" style="width: 250px;">
@@ -462,7 +490,7 @@
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Nº Processo: </p:column>  
                         <p:column style="font-weight: bold;">
                         	<p:inputText id="nrProcesso" value="#{mBManifestacaoCadastrar.manifestacao.nrProcesso}" maxlength="50" title="Informe o número do Processo" style="width: 250px;">
@@ -470,7 +498,7 @@
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">CEP: *</p:column>  
                         <p:column style="font-weight: bold;">
                             <p:inputMask required="true" requiredMessage="Informe um CEP" value="#{mBManifestacaoCadastrar.manifestacao.nrCEP}" mask="99999-999" maxlength="9" style="width:250px;" title="Informe o seu CEP" >
@@ -479,35 +507,35 @@
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Endereço: *</p:column>  
                         <p:column style="font-weight: bold;">
                             <p:inputText required="true" requiredMessage="Informe o endereço" id="endereco" value="#{mBManifestacaoCadastrar.manifestacao.enEndereco}" style="width:250px;" title="Informe seu Endereço" />
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Número: *</p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:inputText required="true" requiredMessage="Informe o número" id="numero" value="#{mBManifestacaoCadastrar.manifestacao.nrEndereco}" style="width:50px;" title="Informe o número do endereço" converterMessage="Campo número só aceita digitos numéricos" />
+                            <p:inputText id="numero" value="#{mBManifestacaoCadastrar.manifestacao.nrEndereco}" style="width:50px;" title="Informe o número do endereço" converterMessage="Campo número só aceita digitos numéricos" />
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Bairro: *</p:column>  
                         <p:column style="font-weight: bold;">
                             <p:inputText required="true" requiredMessage="Informe o bairro" id="bairro" value="#{mBManifestacaoCadastrar.manifestacao.dsBairro}" style="width:250px;" title="Informe o seu bairro" />
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Complemento: </p:column>  
                         <p:column style="font-weight: bold;">
                             <p:inputText value="#{mBManifestacaoCadastrar.manifestacao.dsComplemento}" style="width:250px;" title="Informe o complemento do endereço" />
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">País: <h:outputLabel value="*" rendered="#{mBManifestacaoCadastrar.campoObrigatorio}" /></p:column>  
                         <p:column style="font-weight: bold;">
                             <p:selectOneMenu id="pais" value="#{mBManifestacaoCadastrar.idPais}" style="width: 250px" required="#{mBManifestacaoCadastrar.campoObrigatorio}" requiredMessage="Informe um país">
@@ -521,7 +549,7 @@
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Estado:</p:column>  
                         <p:column style="font-weight: bold;">
                             <p:selectOneMenu 
@@ -541,7 +569,7 @@
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Cidade: </p:column>  
                         <p:column style="font-weight: bold;">
                             <p:autoComplete id="localidade" minQueryLength="2" size="32"
@@ -566,7 +594,7 @@
                     </p:row>
                      -->
                     
-                    <p:row>
+                    <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                         <p:column style="font-weight: bold;">Texto da manifestação: *
                         	<br/><br/><br/>
                         	<h:outputText style="font-size: 11px; font-weight: normal;" value="Digite na caixa ao lado o texto detalhado da sua manifestação."/>
@@ -581,7 +609,7 @@
                                       />
                         </p:column>
                     </p:row>  
-                    <p:row id="arquivo">  
+                    <p:row id="arquivo" rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">  
                         <p:column style="font-weight: bold;">Arquivo(s):
                             <div style="background-color: wheat;">
                                 Tamanho: 10M por arquivo<br/>
@@ -625,7 +653,50 @@
                             </p:outputPanel>
                         </p:column>
                     </p:row>  
-                    <p:row >  
+                    <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'energia'}">
+                    	<p:column colspan="2">
+	                    	<h:panelGroup>
+	                    	<h3><u><b>ATENÇÃO!</b></u></h3>
+	                    	<div style="font-size: 11px;">
+	                    	<p>
+								Informamos que a Ouvidoria da AGR em casos de manifestações referentes à energia 
+								elétrica somente atende através de convênio com a Agência Nacional de Energia 
+								Elétrica – ANEEL. 
+	                    	</p>
+							<p>
+								Antes de se manifestar junto a esta Agência Reguladora V.S.ª deverá formalizar 
+								manifestação junto a sua concessionária seguindo o <b>“Caminho do Entendimento”.</b>
+							</p>
+							<p>
+								Caso sua concessionária seja a <b>CELG DISTRIBUIÇÃO S.A. – CELG D</b>, deverá se 
+								encaminhar ao primeiro nível de atendimento da concessionária pelos meios: Presencial, 
+								Agência Virtual, Agências Vapt Vupt ou ainda pelo teleatendimento 0800 62 0196, o 
+								prazo de resposta é de até 05 dias. Não havendo resposta deverá registrar manifestação 
+								no segundo nível que equivale à Ouvidoria da Celg pelo 0800 062 1500, o prazo neste 
+								nível é de até 15 dias. 
+							</p>
+							<p>
+								Caso sua concessionária seja a <b>COMPANHIA HIDROELÉTRICA SÃO PATRÍCIO 
+								– CHESP</b>, deverá se encaminhar ao primeiro nível de atendimento da concessionária 
+								pelos meios: Presencial, Site, ou ainda pelo teleatendimento 0800 62 2003, o prazo de 
+								resposta é de até 05 dias. Não havendo resposta deverá registrar manifestação no 
+								segundo nível que equivale à Ouvidoria da Chesp pelos telefones 0800 648 2030 ou 
+								(62) 3323-1841, o prazo neste nível é de até 15 dias.
+							</p>
+							<p>
+								Após, caso ainda não tenha resposta ou a mesma não seja satisfatória, deverá procurar o 
+								terceiro nível de atendimento que equivale a Agência Reguladora pelo 0800 727 0167, 
+								onde é necessário portar todos os protocolos já registrados nos níveis anteriores. 
+							</p>
+							<p>
+								<b><i>Os procedimentos acima descritos estão presentes nos Artigos 201 e 202 da Resolução Normativa 
+								414/2010 da ANEEL.</i></b>
+							</p>
+	                    	</div>
+	                    	</h:panelGroup>
+                    	</p:column>
+                    </p:row>
+                    <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">  
                         <p:column colspan="2" style="text-align: center; ">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
@@ -638,7 +709,6 @@
                             </p:panelGrid>
                         </p:column>  
                     </p:row>   
-                    <br />
                 </p:panelGrid>
             </p:panel>  
         </h:form>

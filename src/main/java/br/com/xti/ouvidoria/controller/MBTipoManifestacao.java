@@ -32,6 +32,8 @@ public class MBTipoManifestacao implements Serializable {
     private TbTipoManifestacao tipomanifestacaoNovo = new TbTipoManifestacao();
     private Boolean definirPrazo;
     private TbPreferenciaSistema preferenciaSistema;
+    
+    private TbTipoManifestacao tipoDenuncia;
 
     @PostConstruct
     public void init() {
@@ -157,4 +159,15 @@ public class MBTipoManifestacao implements Serializable {
     public void setTipomanifestacaoNovo(TbTipoManifestacao tipomanifestacaoNovo) {
         this.tipomanifestacaoNovo = tipomanifestacaoNovo;
     }
+
+	public TbTipoManifestacao getTipoDenuncia() {
+		if(tipoDenuncia == null){
+			tipoDenuncia = dao.getPorNome("Denúncia");
+		}
+		return tipoDenuncia;
+	}
+
+	public void setTipoDenuncia(TbTipoManifestacao tipoDenuncia) {
+		this.tipoDenuncia = tipoDenuncia;
+	}
 }

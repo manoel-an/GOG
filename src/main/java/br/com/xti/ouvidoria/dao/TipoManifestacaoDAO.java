@@ -14,8 +14,20 @@ import br.com.xti.ouvidoria.model.TbTipoManifestacao;
  */
 @Stateless
 public class TipoManifestacaoDAO extends AbstractDAO<TbTipoManifestacao> {
+	
     public TipoManifestacaoDAO() {
         super(TbTipoManifestacao.class);
+    }
+    
+    public TbTipoManifestacao getPorNome(String nome){
+    	try{
+    		return this.getEntityManager().createQuery("SELECT tm FROM TbTipoManifestacao tm WHERE tm.nmTipoManifestacao = :nome", TbTipoManifestacao.class)
+    				.setParameter("nome", nome)
+    				.getSingleResult();
+    	}catch(Exception e){
+    		return null;
+    	}
+    	
     }
     
     
