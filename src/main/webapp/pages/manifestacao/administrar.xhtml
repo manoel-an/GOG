@@ -228,6 +228,7 @@
 					<p:column headerText="Descrição" style="background:#fdf1dc">
 						<h:outputText value="#{mBManifestacao.manifestacao.getDsTextoManifestacaoFormatado()}" escape="false" /><br />
 						<p:spacer height="20px" width="100%" />
+						<br/><br/>
 						<h:outputLabel value="Arquivo(s)" styleClass="bold" rendered="#{not empty mBManifestacao.manifestacao.tbManifestacaoxAnexoCollection}" />
 							<ul>
 								<ui:repeat value="#{mBManifestacao.manifestacao.tbManifestacaoxAnexoCollection}" var="item">
