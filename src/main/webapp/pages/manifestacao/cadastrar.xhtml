@@ -276,15 +276,15 @@
                     </p:row>
                     
                     
-                    <p:row rendered="#{not empty mBManifestacaoCadastrar.manifestacao.tipoSolicitacao and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'transporte'}">
-                    	<p:column style="font-weight: bold;">Prestadora de Serviço: *</p:column>
+                    <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'saneamento' and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
+                    	<p:column style="font-weight: bold;">Prestadora do Serviço:</p:column>
                     	<p:column>
-	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="font-weight: bold; width:250px;" required="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'transporte'}" requiredMessage="Informe o nome da prestadora de serviço"/>
+	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="font-weight: bold; width:250px;"/>
                     	</p:column>
                     </p:row>
                     
                     <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
-                    	<p:column style="font-weight: bold;">Prestadora de Serviço: *</p:column>
+                    	<p:column style="font-weight: bold;">Prestadora do Serviço:</p:column>
                     	<p:column>
 	                    	<p:selectOneMenu value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="font-weight: bold; width:260px;">
 	                    		<f:selectItem itemLabel="Saneago" itemValue="Saneago"/>
@@ -292,21 +292,21 @@
                     	</p:column>
                     </p:row>
                     
-                    <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
                     	<p:column style="font-weight: bold;">N° RA: *</p:column>
                     	<p:column>
 	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.ra}" style="font-weight: bold; width:250px;" required="true" requiredMessage="Informe o número do registro de atendimento"/>
                     	</p:column>
                     </p:row>
                     
-                    <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
                     	<p:column style="font-weight: bold;">N° da Conta: *</p:column>
                     	<p:column>
 	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.numeroConta}" style="font-weight: bold; width:250px;"/>
                     	</p:column>
                     </p:row>
                     
-                    <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
                     	<p:column style="font-weight: bold;">Titularidade: *</p:column>
                     	<p:column>
 	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.titularidade}" style="font-weight: bold; width:250px;"/>

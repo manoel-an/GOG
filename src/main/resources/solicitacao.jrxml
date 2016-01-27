@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="solicitacao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e5c5cb75-a262-4df4-b84f-31b253d89120">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="77"/>
+	<property name="ireport.y" value="29"/>
 	<parameter name="numeroManifestacao" class="java.lang.String"/>
 	<parameter name="logoAGR" class="java.lang.String"/>
 	<parameter name="dataManifestacao" class="java.util.Date"/>
@@ -98,7 +98,9 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="35" y="136" width="491" height="20" uuid="75839ee1-30aa-4a72-b427-65e06efcf539"/>
+				<reportElement x="35" y="136" width="491" height="20" uuid="75839ee1-30aa-4a72-b427-65e06efcf539">
+					<printWhenExpression><![CDATA[$P{prestadoraServico} != null]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -112,7 +114,9 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 				<text><![CDATA[Data:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="287" width="86" height="30" uuid="c62a7532-71bd-4053-95ec-060202a0e64c"/>
+				<reportElement x="10" y="287" width="86" height="30" uuid="c62a7532-71bd-4053-95ec-060202a0e64c">
+					<printWhenExpression><![CDATA[$P{prestadoraServico} != null]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
@@ -140,7 +144,9 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 				<textFieldExpression><![CDATA[$P{atendente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="96" y="287" width="176" height="30" uuid="61592c9f-e902-4f94-828b-d33bf155bba8"/>
+				<reportElement x="96" y="287" width="176" height="30" uuid="61592c9f-e902-4f94-828b-d33bf155bba8">
+					<printWhenExpression><![CDATA[$P{prestadoraServico} != null]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -314,24 +320,32 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 				<textFieldExpression><![CDATA[$P{nomeManifestante}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="8" y="380" width="87" height="20" uuid="a02f2277-cca8-41dc-8cb3-6e4f28ba291a"/>
+				<reportElement x="8" y="380" width="87" height="20" uuid="a02f2277-cca8-41dc-8cb3-6e4f28ba291a">
+					<printWhenExpression><![CDATA[$P{telefoneUm} != null]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Contato:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="95" y="380" width="87" height="20" uuid="9f0d46a2-0918-4e7e-8a37-0f3d8d273eb9"/>
+				<reportElement x="95" y="380" width="87" height="20" uuid="9f0d46a2-0918-4e7e-8a37-0f3d8d273eb9">
+					<printWhenExpression><![CDATA[$P{telefoneUm} != null]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{telefoneUm}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="9" y="400" width="87" height="20" uuid="c5c7f341-4bed-4178-94e2-198a18a007a1"/>
+				<reportElement x="9" y="400" width="87" height="20" uuid="c5c7f341-4bed-4178-94e2-198a18a007a1">
+					<printWhenExpression><![CDATA[$P{endereco} != null && !$P{endereco}.isEmpty()]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<text><![CDATA[Endereço:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="96" y="400" width="459" height="41" isPrintWhenDetailOverflows="true" uuid="bfc4cf25-e91e-4934-a4b6-257d8dec91b9"/>
+				<reportElement x="96" y="400" width="459" height="41" isPrintWhenDetailOverflows="true" uuid="bfc4cf25-e91e-4934-a4b6-257d8dec91b9">
+					<printWhenExpression><![CDATA[$P{endereco} != null && !$P{endereco}.isEmpty()]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>

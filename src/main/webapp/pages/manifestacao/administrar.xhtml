@@ -499,6 +499,7 @@
 									style="font-weight: bold"
 									disabled="#{mBManifestacao.desabilitaEncaminhamentoManifestacao()}"
 									actionListener="#{mBManifestacao.preparaListaAreasSolucionadoras()}"
+									action="#{mBManifestacao.gerarAnexo()}"
 									process="@this">
 									<p:resetInput target=":frmEncaminharManifestacao:pnlEncaminhamentoManifestacao" />
 								</p:commandButton>

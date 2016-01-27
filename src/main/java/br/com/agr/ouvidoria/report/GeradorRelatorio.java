@@ -27,7 +27,9 @@ import org.apache.commons.io.IOUtils;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import br.com.xti.ouvidoria.dao.ParametroDAO;
 import br.com.xti.ouvidoria.exception.InfrastructureException;
+import br.com.xti.ouvidoria.helper.CdiHelper;
 
 @SuppressWarnings("deprecation")
 public class GeradorRelatorio {
@@ -113,6 +115,41 @@ public class GeradorRelatorio {
         } finally {
 
         }
+    }
+    
+    public File retornaPDF(String nomeArquivoJasper, List<?> objetos, String nomeRelatorio) throws InfrastructureException{
+            JRBeanCollectionDataSource jrds = new JRBeanCollectionDataSource(objetos);
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            InputStream inputStream = classLoader.getResourceAsStream(nomeArquivoJasper + ".jasper");
+            ParametroDAO parametroDAO = CdiHelper.getFacadeWithJNDI(ParametroDAO.class);
+    		String attachementDirectory = parametroDAO.getDiretorioAnexo();
+            JasperReport jasperReport = null;
+            JasperPrint printer = null;
+            File pdfFile = null;
+            try {
+                jasperReport = (JasperReport) JRLoader.loadObject(inputStream);
+                printer = JasperFillManager.fillReport(jasperReport, getParametros(),
+                        (objetos == null ? new JREmptyDataSource() : jrds));
+                pdfFile = new File(attachementDirectory + nomeRelatorio + ".pdf");
+                if (pdfFile.exists()) {
+                    try {
+                        pdfFile.delete();
+                    } catch (Exception e) {
+                        throw new InfrastructureException(e.getMessage());
+                    }
+                }
+                JRPdfExporter jrpdfexporter = new JRPdfExporter();
+                jrpdfexporter.setParameter(JRExporterParameter.JASPER_PRINT, printer);
+                jrpdfexporter.setParameter(JRExporterParameter.OUTPUT_FILE, pdfFile);
+                jrpdfexporter.exportReport();
+                return pdfFile;
+            }catch (JRException e) {
+                throw new InfrastructureException(e.getMessage());
+            } catch (Exception erro) {
+                throw new InfrastructureException(erro.getMessage());
+            } finally {
+
+            }
     }
 
     public void adicionaParametroRelatorio(String chave, Object valor) {

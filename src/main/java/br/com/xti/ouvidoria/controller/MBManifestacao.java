@@ -342,7 +342,16 @@ public class MBManifestacao extends AbstractManifestationController implements S
     }
     
     public void baixarSolicitacao(){
-    	//dados comuns
+    	gerarParametrosSolicitacaoDeOuvidoria();
+    	try {
+			baixarPDF("solicitacao", null, "solicitacao");
+			manifestacaoDAO.edit(manifestacao);
+		} catch (InfrastructureException e) {
+			MensagemFaceUtil.erro("Erro!", e.getMessage());
+		}
+    }
+    
+    public void gerarParametrosSolicitacaoDeOuvidoria(){
     	adicionaParametroRelatorio("numeroManifestacao", String.valueOf(manifestacao.getNrManifestacao()));
     	adicionaParametroRelatorio("dataManifestacao", manifestacao.getDtCadastro());
     	adicionaParametroRelatorio("atendente", manifestacao.getIdUsuarioCriador() != null ? manifestacao.getIdUsuarioCriador().getNmUsuario() : "Criada Externamente" );
@@ -371,12 +380,6 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	adicionaParametroRelatorio("unidadeConsumidora", manifestacao.getUnidadeConsumidora());
     	
     	adicionaParametroRelatorio("logoAGR", "logoagr.jpg");
-    	try {
-			baixarPDF("solicitacao", null, "solicitacao");
-			manifestacaoDAO.edit(manifestacao);
-		} catch (InfrastructureException e) {
-			MensagemFaceUtil.erro("Erro!", e.getMessage());
-		}
     }
     
     private String getClassificaoESubClassificacao() {
@@ -1787,6 +1790,21 @@ public class MBManifestacao extends AbstractManifestationController implements S
         listaUnidades.remove(new TbUnidade(UnidadeEnum.OUVIDORIA.getId()));
         Collections.sort(listaUnidades, new UnidadeSiglaComparator());
         listaUnidadesCompleta = new ArrayList<TbUnidade>(listaUnidades);
+    }
+    
+    public void gerarAnexo(){
+    	try {
+    		gerarParametrosSolicitacaoDeOuvidoria();
+    		File file = retornaPDF("solicitacao", null, manifestacao.getNrManifestacao()+"so");
+    		System.out.println(file.getName());
+    		TbAnexo anexo = new TbAnexo();
+			anexo.setNmAnexo(manifestacao.getNrManifestacao() + "so.pdf");
+			anexo.setDsCaminhoAnexo(file.getName());
+			arquivosEncaminhamento.add(anexo);
+			
+    	} catch (InfrastructureException e) {
+    		MensagemFaceUtil.erro("Erro!", e.getMessage());
+    	}
     }
     
     public Boolean habilitaUsuarioEncaminhamento() {
