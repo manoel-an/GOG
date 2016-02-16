@@ -100,6 +100,7 @@ public class MBManifestacaoCadastrar implements Serializable {
     
     // Outros Campos
     private Boolean cadastroSucesso = Boolean.FALSE;
+    private Boolean cadastroScript = Boolean.FALSE;
     private Boolean anonimo = Boolean.FALSE;
     private Boolean campoObrigatorio = Boolean.FALSE;
     private Boolean tipoPessoaFisica = Boolean.TRUE;
@@ -237,6 +238,173 @@ public class MBManifestacaoCadastrar implements Serializable {
             manifestacaoDAO.edit(manifestacao);
 
             cadastroSucesso = Boolean.TRUE;
+            
+            //----- enviando e-mail ---------//
+            try {
+                EmailService.Email email = emailService.newEmail();
+                
+                if (manifestacao.getEeEmailUsuario() != null && !manifestacao.getEeEmailUsuario().isEmpty() && "1".equals(manifestacao.getStResposta())) {
+
+                	//adiciona email primario como destinatario
+                    String nomeManifestante = ValidacaoHelper.isNotEmpty(manifestacao.getNmPessoa()) ? manifestacao.getNmPessoa() : "Manifestante";
+                    email.addDestinatario(nomeManifestante, manifestacao.getEeEmailUsuario());
+
+                    //adiciona emails secundarios com o copia
+                    if (manifestacao.getEeEmailSecundario() != null && !manifestacao.getEeEmailSecundario().isEmpty()) {
+                        for (String emailSecundario : manifestacao.getEeEmailSecundario().split("[,;]+")) {
+                            email.addDestinatarioCc(nomeManifestante, emailSecundario);
+                        }
+                    }
+                    
+                    //recupera texto padrao para o email
+                    TbEmailAutomatizado emailAutomatizado = emailAutomatizadoDAO.findByTipo(EmailAutomatizadoEnum.NOVO);
+
+                    //adiciona texto e assunto de email padrao
+                    StringBuilder emailTextoHtml = new StringBuilder();
+                    StringBuilder emailTexto = new StringBuilder();
+
+                    email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, false));
+                    emailTextoHtml.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, false));
+                    emailTexto.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, false));
+
+                    email.setTextoHtml(emailTextoHtml.toString());
+                    email.setTextoSemFormatacao(emailTexto.toString());
+                    
+                    emailService.envia(email);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                MensagemFaceUtil.alerta("Atenção!", "Sua Manifestação foi cadastrada com sucesso porém, não foi possível enviar-lhe um e-mail com os dados de acesso a mesma.");
+                return;
+            }
+            MensagemFaceUtil.info("Sucesso!", "Manifestação cadastrada com sucesso.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            MensagemFaceUtil.erro("Erro ao cadastrar a Manifestação", "Ocorreu um erro ao cadastrar a Manifestação");
+        }
+    }
+    
+    /**
+	 * Cadastra a manifestação na base de dados e encerra.
+	 */
+    public void encerrarPorScript(){
+    	try {
+            manifestacao.setStResposta("1");
+            manifestacao.setSiSigilo("1");
+            
+            //----- Número da Manifestação -------//
+            // verifica se o número da Manifestação está com o valor zero e gera um número para ela
+        	manifestacao.setNrManifestacao(gerarNrManifestacao());
+            
+            // Se já existir uma manifestação com esse número não cadastra de novo
+            TbManifestacao man = manifestacaoDAO.getManifestacaoPorNumero(manifestacao.getNrManifestacao());
+            if(man != null) {
+            	manifestacao = man;
+            	cadastroScript = Boolean.TRUE;
+            	MensagemFaceUtil.alerta("Atenção!", "Manifestação já foi cadastrada");
+            	return;
+            }
+            
+            //----- Tipo Pessoa -------//
+            if(tipoPessoaFisica) {
+            	manifestacao.setTipoPessoa(TipoPessoaEnum.FISICA.getId());
+            } else {
+            	manifestacao.setTipoPessoa(TipoPessoaEnum.JURIDICA.getId());
+            }
+            	
+            
+            //----- pais e estado-------//
+            // Seta o Brasil como País caso não seja selecionado um
+            if(ValidacaoHelper.isEmpty(idPais)) {
+            	manifestacao.setIdPais(new TbPais(37));
+            } else {
+	            manifestacao.setIdPais(new TbPais(idPais));
+	            if(idPais == 37) { // Brasil
+	            	manifestacao.setIdUF(ufDAO.find(idUf));
+	            }
+            }
+            
+            //----- prioridade -------//
+            manifestacao.setIdPrioridade(new TbPrioridade(PrioridadeEnum.NORMAL.getId())); // 1 = Prioridade Normal
+
+            //----- area entrada -------//
+            if (manifestacao.getIdAreaEntrada() != null) {
+                manifestacao.setIdAreaEntrada(manifestacao.getIdAreaEntrada());
+            } else {
+                manifestacao.setIdAreaEntrada(new TbAreaEntrada(AreaEntradaEnum.PAGINA_ELETRONICA.getId())); //1 = Página eletrônica da Cultura
+            }
+
+            //----- meio entrada -------//
+            if (manifestacao.getIdMeioEntrada() != null) {
+                manifestacao.setIdMeioEntrada(manifestacao.getIdMeioEntrada());
+            } else {
+                manifestacao.setIdMeioEntrada(new TbMeioEntrada(MeioEntradaEnum.FORMULARIO_ELETRONICO.getId())); //1=Formulario eletrônico (default)
+            }
+
+            //----- Usuário -------//
+            if (securityService.getUser() != null) {
+            	if(securityService.isManifestante()) {
+            		manifestacao.setIdUsuarioManifestante(securityService.getUser());
+            	} else if(securityService.isAdministrador() || securityService.isOuvidor()) {
+            		manifestacao.setIdUsuarioCriador(securityService.getUser());
+            	}
+            }
+            
+            //----- Nome Manifestante -------//
+            if(anonimo) {
+            	manifestacao.setNmPessoa("Anônimo");
+            }
+            
+            //----- Sexo -------//
+            if(!ValidacaoHelper.isNotEmpty(manifestacao.getTpSexo())) {
+            	manifestacao.setTpSexo(SexoEnum.NAO_INFORMADO.getId());
+            }
+            
+            //----- Raça -------//
+            if(!ValidacaoHelper.isNotEmpty(manifestacao.getTpRaca())) {
+            	manifestacao.setTpRaca(RacaEnum.NAO_INFORMADO.getId());
+            }
+            
+            //----- Email -------//
+        	if(!ValidacaoHelper.isNotEmpty(manifestacao.getEeEmailUsuario())) {
+        		manifestacao.setEeEmailUsuario("a@a.com");
+        	}
+            
+
+            manifestacao.setDsSenha(PasswordUtils.generatePassword());
+            manifestacao.setStStatusManifestacao(StatusManifestacaoEnum.NOVA.getId());
+            //manifestacao.setTbUnidadeAreaSolucionadoraCollection();
+            manifestacao.setDtCadastro(new Date());
+            manifestacao.setDtUltimaAtualizacao(new Date());
+
+            //----- gravando manifestacao -------//
+            manifestacaoDAO.create(manifestacao);
+
+            //----- gravando anexos ---------//
+            ArrayList<TbManifestacaoxAnexo> anexos = new ArrayList<>();
+            for (TbAnexo anexo : arquivos) {
+                anexoDAO.create(anexo);
+
+                TbManifestacaoxAnexo tbManifestacaoxAnexo = new TbManifestacaoxAnexo();
+                tbManifestacaoxAnexo.setIdAnexo(anexo);
+                tbManifestacaoxAnexo.setIdManifestacao(manifestacao);
+                anexos.add(tbManifestacaoxAnexo);
+            }
+
+            manifestacao.setTbManifestacaoxAnexoCollection(anexos);
+            
+            
+            //Fechando Manifestação
+            manifestacao.setIdUsuarioAnalisador(securityService.getUser());
+
+            manifestacao.setStStatusManifestacao(StatusManifestacaoEnum.SOLUCIONADA.getId());
+            
+            manifestacao.setDtFechamento(new Date());
+            
+            manifestacaoDAO.edit(manifestacao);
+
+            cadastroScript = Boolean.TRUE;
             
             //----- enviando e-mail ---------//
             try {
@@ -534,6 +702,18 @@ public class MBManifestacaoCadastrar implements Serializable {
 
 	public void setCampoObrigatorio(Boolean campoObrigatorio) {
 		this.campoObrigatorio = campoObrigatorio;
+	}
+
+
+
+
+
+	public Boolean getCadastroScript() {
+		return cadastroScript;
+	}
+
+	public void setCadastroScript(Boolean cadastroScript) {
+		this.cadastroScript = cadastroScript;
 	}
 
 

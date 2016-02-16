@@ -38,6 +38,7 @@ import br.com.xti.ouvidoria.dao.QuestionarioDAO;
 import br.com.xti.ouvidoria.dao.RespostaManifestacaoDAO;
 import br.com.xti.ouvidoria.dao.SubClassificacaoDAO;
 import br.com.xti.ouvidoria.dao.TipoManifestacaoDAO;
+import br.com.xti.ouvidoria.dao.UnidadeDAO;
 import br.com.xti.ouvidoria.dao.UsuarioDAO;
 import br.com.xti.ouvidoria.exception.InfrastructureException;
 import br.com.xti.ouvidoria.helper.DataHelper;
@@ -123,7 +124,6 @@ public class MBManifestacao extends AbstractManifestationController implements S
 	
 	@EJB
 	private ManifestacaoDAO manifestacaoDAO;
-	
 	
 	private static final String MENSAGEM_ATRASO_UNIDADE = 
 			"Esta manifestação se encontra em atraso por parte %s %s. Caso queira notificar os envolvidos favor clicar no botão ao lado";
@@ -1795,10 +1795,10 @@ public class MBManifestacao extends AbstractManifestationController implements S
     public void gerarAnexo(){
     	try {
     		gerarParametrosSolicitacaoDeOuvidoria();
-    		File file = retornaPDF("solicitacao", null, manifestacao.getNrManifestacao()+"so");
+    		File file = retornaPDF("solicitacao", null, String.valueOf(manifestacao.getNrManifestacao()));
     		System.out.println(file.getName());
     		TbAnexo anexo = new TbAnexo();
-			anexo.setNmAnexo(manifestacao.getNrManifestacao() + "so.pdf");
+			anexo.setNmAnexo(manifestacao.getNrManifestacao() + ".pdf");
 			anexo.setDsCaminhoAnexo(file.getName());
 			arquivosEncaminhamento.add(anexo);
 			
@@ -1917,7 +1917,8 @@ public class MBManifestacao extends AbstractManifestationController implements S
     			if(securityService.isInterlocutor()) {
     				TbEncaminhamento enc = ManifestacaoUtils.getEncaminhamentoDoUsuarioLogado(manifestacao);
 					if(UnidadeEnum.OUVIDORIA.getId() == enc.getIdUnidadeEnviou().getIdUnidade()) {
-						return !mostrarBotaoResponderAOuvidoria();
+						idUnidadeTramite = UnidadeEnum.OUVIDORIA.getId();
+						return mostrarBotaoResponderAOuvidoria();
     				} else {
     					return false;
     				}
@@ -2561,5 +2562,13 @@ public class MBManifestacao extends AbstractManifestationController implements S
     public void setIdUnidadeEncaminhamento(Integer idUnidadeEncaminhamento) {
         this.idUnidadeEncaminhamento = idUnidadeEncaminhamento;
     }
+
+	public UnidadeDAO getUnidadeDAO() {
+		return unidadeDAO;
+	}
+
+	public void setUnidadeDAO(UnidadeDAO unidadeDAO) {
+		this.unidadeDAO = unidadeDAO;
+	}
 
 }

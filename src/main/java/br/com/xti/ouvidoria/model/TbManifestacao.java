@@ -140,7 +140,7 @@ public class TbManifestacao implements Serializable {
     @Column(name = "enEndereco")
     private String enEndereco;
     @Column(name = "nrEndereco")
-    private Integer nrEndereco;
+    private Integer nrEndereco = 0;
     @Size(max = 180)
     @Column(name = "dsComplemento")
     private String dsComplemento;
