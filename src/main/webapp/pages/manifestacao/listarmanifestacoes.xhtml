@@ -271,16 +271,7 @@
 									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
 								</h:outputText>
 							</p:column>
-
-							<p:column headerText="Nome do Manifestante" style="width: 15%;"
-								filterBy="#{manifestacao.nmPessoa}" filterMatchMode="contains"
-								sortBy="#{manifestacao.nmPessoa}">
-								<h:outputText 
-									value="#{manifestacao.nmPessoa}" 
-									rendered="#{mBListarManifestacoes.showSecretData(manifestacao)}" />
-							</p:column>
 							
-
 							<p:column headerText="Tipo" style="width: 7%;"
 								filterBy="#{manifestacao.idTipoManifestacao.nmTipoManifestacao}"
 								filterMatchMode="contains"
@@ -317,6 +308,12 @@
 								filterBy="#{manifestacao.idUsuarioCriador.nmUsuario}" filterMatchMode="contains"
 								sortBy="#{manifestacao.idUsuarioCriador.nmUsuario}">
 								<h:outputText value="#{manifestacao.idUsuarioCriador != null ? manifestacao.idUsuarioCriador.nmUsuario : 'Usuário Externo'}"/>
+							</p:column>
+							
+							<p:column headerText="Em análise por" style="width:30%;" rendered="#{security.administrador || security.ouvidor}"
+								filterBy="#{manifestacao.idUsuarioAnalisador.nmUsuario}" filterMatchMode="contains"
+								sortBy="#{manifestacao.idUsuarioAnalisador.nmUsuario}">
+								<h:outputText value="#{manifestacao.idUsuarioAnalisador != null ? manifestacao.idUsuarioAnalisador.nmUsuario : 'Livre'}"/>
 							</p:column>
 
 							<p:column headerText="Unidade(s)" style="width:8%;"
