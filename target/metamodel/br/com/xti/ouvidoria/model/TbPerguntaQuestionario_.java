@@ -8,10 +8,10 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbPerguntaQuestionario.class)
 public abstract class TbPerguntaQuestionario_ {
 
+	public static volatile SingularAttribute<TbPerguntaQuestionario, Integer> idPergunta;
 	public static volatile SingularAttribute<TbPerguntaQuestionario, String> dsPergunta;
 	public static volatile SingularAttribute<TbPerguntaQuestionario, Integer> posicaoPergunta;
 	public static volatile SingularAttribute<TbPerguntaQuestionario, TbQuestionario> questionario;
-	public static volatile SingularAttribute<TbPerguntaQuestionario, Integer> idPergunta;
 
 }
 

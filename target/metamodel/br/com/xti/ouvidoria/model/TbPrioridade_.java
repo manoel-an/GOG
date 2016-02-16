@@ -10,8 +10,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class TbPrioridade_ {
 
 	public static volatile CollectionAttribute<TbPrioridade, TbManifestacao> tbManifestacaoCollection;
-	public static volatile SingularAttribute<TbPrioridade, String> nmPrioridade;
 	public static volatile SingularAttribute<TbPrioridade, Integer> idPrioridade;
+	public static volatile SingularAttribute<TbPrioridade, String> nmPrioridade;
 
 }
 

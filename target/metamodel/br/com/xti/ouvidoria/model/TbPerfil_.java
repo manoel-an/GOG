@@ -9,11 +9,11 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbPerfil.class)
 public abstract class TbPerfil_ {
 
+	public static volatile SingularAttribute<TbPerfil, String> tpPerfil;
 	public static volatile SingularAttribute<TbPerfil, Integer> idPerfil;
 	public static volatile CollectionAttribute<TbPerfil, TbPerfilxFuncionalidade> tbPerfilxFuncionalidadeCollection;
 	public static volatile SingularAttribute<TbPerfil, String> nmPerfil;
 	public static volatile CollectionAttribute<TbPerfil, TbUsuarioxPerfil> tbUsuarioxPerfilCollection;
-	public static volatile SingularAttribute<TbPerfil, String> tpPerfil;
 
 }
 

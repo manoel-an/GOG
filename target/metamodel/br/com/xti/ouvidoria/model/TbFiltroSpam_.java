@@ -8,8 +8,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbFiltroSpam.class)
 public abstract class TbFiltroSpam_ {
 
-	public static volatile SingularAttribute<TbFiltroSpam, String> dsFiltro;
 	public static volatile SingularAttribute<TbFiltroSpam, Integer> idFiltrosSpam;
+	public static volatile SingularAttribute<TbFiltroSpam, String> dsFiltro;
 	public static volatile SingularAttribute<TbFiltroSpam, String> tpFiltro;
 
 }

@@ -10,9 +10,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class TbUF_ {
 
 	public static volatile SingularAttribute<TbUF, String> sgUF;
-	public static volatile CollectionAttribute<TbUF, TbMunicipio> tbMunicipioCollection;
 	public static volatile SingularAttribute<TbUF, String> nmUF;
 	public static volatile SingularAttribute<TbUF, Integer> idUF;
+	public static volatile CollectionAttribute<TbUF, TbMunicipio> tbMunicipioCollection;
 
 }
 

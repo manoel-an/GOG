@@ -9,9 +9,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbSubClassificacao.class)
 public abstract class TbSubClassificacao_ {
 
-	public static volatile CollectionAttribute<TbSubClassificacao, TbClassificacao> tbClassificacaoCollection;
 	public static volatile CollectionAttribute<TbSubClassificacao, TbManifestacao> tbManifestacaoCollection;
 	public static volatile SingularAttribute<TbSubClassificacao, Integer> idSubClassificacao;
+	public static volatile CollectionAttribute<TbSubClassificacao, TbClassificacao> tbClassificacaoCollection;
 	public static volatile SingularAttribute<TbSubClassificacao, String> dsSubClassificacao;
 
 }

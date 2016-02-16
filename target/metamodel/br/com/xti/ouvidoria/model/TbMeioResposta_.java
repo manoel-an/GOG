@@ -9,8 +9,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbMeioResposta.class)
 public abstract class TbMeioResposta_ {
 
-	public static volatile CollectionAttribute<TbMeioResposta, TbManifestacao> tbManifestacaoCollection;
 	public static volatile SingularAttribute<TbMeioResposta, String> nmMeioResposta;
+	public static volatile CollectionAttribute<TbMeioResposta, TbManifestacao> tbManifestacaoCollection;
 	public static volatile SingularAttribute<TbMeioResposta, Integer> idMeioResposta;
 
 }

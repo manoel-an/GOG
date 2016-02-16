@@ -12,10 +12,10 @@ public abstract class TbTipoManifestacao_ {
 	public static volatile CollectionAttribute<TbTipoManifestacao, TbManifestacao> tbManifestacaoCollection;
 	public static volatile SingularAttribute<TbTipoManifestacao, Integer> prazoAreaSolucionadora;
 	public static volatile SingularAttribute<TbTipoManifestacao, String> nmTipoManifestacao;
-	public static volatile SingularAttribute<TbTipoManifestacao, String> dsTipoManifestacao;
-	public static volatile SingularAttribute<TbTipoManifestacao, Integer> prazoEntrada;
 	public static volatile SingularAttribute<TbTipoManifestacao, Integer> prazoRespostaCidadao;
 	public static volatile SingularAttribute<TbTipoManifestacao, Integer> idTipoManifestacao;
+	public static volatile SingularAttribute<TbTipoManifestacao, String> dsTipoManifestacao;
+	public static volatile SingularAttribute<TbTipoManifestacao, Integer> prazoEntrada;
 
 }
 

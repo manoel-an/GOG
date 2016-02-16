@@ -9,13 +9,13 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbAnexo.class)
 public abstract class TbAnexo_ {
 
+	public static volatile SingularAttribute<TbAnexo, String> dsCaminhoAnexo;
 	public static volatile SingularAttribute<TbAnexo, String> nmAnexo;
-	public static volatile CollectionAttribute<TbAnexo, TbTramitexAnexo> tbTramitexAnexoCollection;
-	public static volatile CollectionAttribute<TbAnexo, TbComunicacaoExternaxAnexo> tbComunicacaoExternaxAnexoCollection;
 	public static volatile CollectionAttribute<TbAnexo, TbEncaminhamentoxAnexo> tbEncaminhamentoxAnexoCollection;
 	public static volatile SingularAttribute<TbAnexo, Integer> idAnexo;
 	public static volatile CollectionAttribute<TbAnexo, TbManifestacaoxAnexo> tbManifestacaoxAnexoCollection;
-	public static volatile SingularAttribute<TbAnexo, String> dsCaminhoAnexo;
+	public static volatile CollectionAttribute<TbAnexo, TbComunicacaoExternaxAnexo> tbComunicacaoExternaxAnexoCollection;
+	public static volatile CollectionAttribute<TbAnexo, TbTramitexAnexo> tbTramitexAnexoCollection;
 
 }
 

@@ -9,10 +9,10 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbRespostaManifestacao.class)
 public abstract class TbRespostaManifestacao_ {
 
-	public static volatile SingularAttribute<TbRespostaManifestacao, String> dsTituloResposta;
-	public static volatile SingularAttribute<TbRespostaManifestacao, String> dsResposta;
 	public static volatile SingularAttribute<TbRespostaManifestacao, Integer> idRespostaManifestacao;
+	public static volatile SingularAttribute<TbRespostaManifestacao, String> dsTituloResposta;
 	public static volatile SingularAttribute<TbRespostaManifestacao, Date> dtCadastroRespostaManifestacao;
+	public static volatile SingularAttribute<TbRespostaManifestacao, String> dsResposta;
 
 }
 

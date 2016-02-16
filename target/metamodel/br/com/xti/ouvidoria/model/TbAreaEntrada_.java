@@ -9,9 +9,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbAreaEntrada.class)
 public abstract class TbAreaEntrada_ {
 
-	public static volatile SingularAttribute<TbAreaEntrada, Integer> idAreaEntrada;
 	public static volatile CollectionAttribute<TbAreaEntrada, TbManifestacao> tbManifestacaoCollection;
 	public static volatile SingularAttribute<TbAreaEntrada, String> nmAreaEntrada;
+	public static volatile SingularAttribute<TbAreaEntrada, Integer> idAreaEntrada;
 
 }
 

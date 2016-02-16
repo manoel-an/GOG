@@ -10,13 +10,13 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbQuestionario.class)
 public abstract class TbQuestionario_ {
 
-	public static volatile SingularAttribute<TbQuestionario, Date> dtInicio;
-	public static volatile CollectionAttribute<TbQuestionario, TbPerguntaQuestionario> tbPerguntaCollection;
-	public static volatile SingularAttribute<TbQuestionario, String> stQuestionario;
 	public static volatile CollectionAttribute<TbQuestionario, TbManifestacao> manifestacoes;
+	public static volatile SingularAttribute<TbQuestionario, String> stQuestionario;
+	public static volatile CollectionAttribute<TbQuestionario, TbPerguntaQuestionario> tbPerguntaCollection;
 	public static volatile CollectionAttribute<TbQuestionario, TbPerguntaQuestionario> perguntas;
-	public static volatile SingularAttribute<TbQuestionario, Date> dtFinal;
 	public static volatile SingularAttribute<TbQuestionario, String> nmQuestionario;
+	public static volatile SingularAttribute<TbQuestionario, Date> dtFinal;
+	public static volatile SingularAttribute<TbQuestionario, Date> dtInicio;
 	public static volatile SingularAttribute<TbQuestionario, Integer> idQuestionario;
 
 }

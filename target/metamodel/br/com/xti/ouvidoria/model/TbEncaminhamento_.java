@@ -10,18 +10,18 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(TbEncaminhamento.class)
 public abstract class TbEncaminhamento_ {
 
-	public static volatile SingularAttribute<TbEncaminhamento, Integer> idEncaminhamento;
-	public static volatile CollectionAttribute<TbEncaminhamento, TbTramite> tbTramiteCollection;
-	public static volatile SingularAttribute<TbEncaminhamento, TbUnidade> idUnidadeEnviou;
-	public static volatile SingularAttribute<TbEncaminhamento, Date> dtRespostaTramite;
-	public static volatile SingularAttribute<TbEncaminhamento, Date> dtEnvioTramite;
 	public static volatile SingularAttribute<TbEncaminhamento, TbUsuario> idUsuarioEnviou;
-	public static volatile CollectionAttribute<TbEncaminhamento, TbEncaminhamentoxAnexo> tbEncaminhamentoxAnexoCollection;
-	public static volatile SingularAttribute<TbEncaminhamento, String> stEncaminhamento;
 	public static volatile SingularAttribute<TbEncaminhamento, String> dsDescricao;
-	public static volatile SingularAttribute<TbEncaminhamento, TbManifestacao> idManifestacao;
+	public static volatile SingularAttribute<TbEncaminhamento, TbUnidade> idUnidadeEnviou;
+	public static volatile SingularAttribute<TbEncaminhamento, Integer> idEncaminhamento;
+	public static volatile SingularAttribute<TbEncaminhamento, Date> dtRespostaTramite;
+	public static volatile CollectionAttribute<TbEncaminhamento, TbEncaminhamentoxAnexo> tbEncaminhamentoxAnexoCollection;
 	public static volatile SingularAttribute<TbEncaminhamento, TbUnidade> idUnidadeRecebeu;
+	public static volatile SingularAttribute<TbEncaminhamento, Date> dtEnvioTramite;
+	public static volatile SingularAttribute<TbEncaminhamento, String> stEncaminhamento;
+	public static volatile SingularAttribute<TbEncaminhamento, TbManifestacao> idManifestacao;
 	public static volatile SingularAttribute<TbEncaminhamento, Date> dtCriacaoEncaminhamento;
+	public static volatile CollectionAttribute<TbEncaminhamento, TbTramite> tbTramiteCollection;
 
 }
 
