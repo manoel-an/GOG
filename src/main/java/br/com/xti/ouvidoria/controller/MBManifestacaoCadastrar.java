@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -23,11 +24,15 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.xti.ouvidoria.dao.AnexoDAO;
+import br.com.xti.ouvidoria.dao.ClassificacaoDAO;
+import br.com.xti.ouvidoria.dao.ComunicacaoExternaDAO;
 import br.com.xti.ouvidoria.dao.EmailAutomatizadoDAO;
 import br.com.xti.ouvidoria.dao.ManifestacaoDAO;
 import br.com.xti.ouvidoria.dao.MeioRespostaDAO;
 import br.com.xti.ouvidoria.dao.ParametroDAO;
+import br.com.xti.ouvidoria.dao.RespostaManifestacaoDAO;
 import br.com.xti.ouvidoria.dao.UfDAO;
+import br.com.xti.ouvidoria.dao.UnidadeDAO;
 import br.com.xti.ouvidoria.dao.UsuarioDAO;
 import br.com.xti.ouvidoria.exception.InfrastructureException;
 import br.com.xti.ouvidoria.helper.FileHelper;
@@ -35,6 +40,8 @@ import br.com.xti.ouvidoria.helper.PalavrasChavesHelper;
 import br.com.xti.ouvidoria.helper.ValidacaoHelper;
 import br.com.xti.ouvidoria.model.TbAnexo;
 import br.com.xti.ouvidoria.model.TbAreaEntrada;
+import br.com.xti.ouvidoria.model.TbClassificacao;
+import br.com.xti.ouvidoria.model.TbComunicacaoExterna;
 import br.com.xti.ouvidoria.model.TbEmailAutomatizado;
 import br.com.xti.ouvidoria.model.TbManifestacao;
 import br.com.xti.ouvidoria.model.TbManifestacaoxAnexo;
@@ -42,9 +49,12 @@ import br.com.xti.ouvidoria.model.TbMeioEntrada;
 import br.com.xti.ouvidoria.model.TbMunicipio;
 import br.com.xti.ouvidoria.model.TbPais;
 import br.com.xti.ouvidoria.model.TbPrioridade;
+import br.com.xti.ouvidoria.model.TbRespostaManifestacao;
 import br.com.xti.ouvidoria.model.TbUF;
+import br.com.xti.ouvidoria.model.TbUnidade;
 import br.com.xti.ouvidoria.model.TbUsuario;
 import br.com.xti.ouvidoria.model.enums.AreaEntradaEnum;
+import br.com.xti.ouvidoria.model.enums.BooleanEnum;
 import br.com.xti.ouvidoria.model.enums.EmailAutomatizadoEnum;
 import br.com.xti.ouvidoria.model.enums.FuncaoUsuarioEnum;
 import br.com.xti.ouvidoria.model.enums.MeioEntradaEnum;
@@ -95,6 +105,15 @@ public class MBManifestacaoCadastrar implements Serializable {
 	@EJB
 	private UfDAO ufDAO;
 	
+	@EJB
+	private UnidadeDAO unidadeDAO;
+	
+	@EJB
+	private ClassificacaoDAO classificacaoDAO;
+
+	@EJB
+	private RespostaManifestacaoDAO respostaManifestacaoDAO;
+	
 	@ManagedProperty("#{localidadeBean}")
 	private LocalidadeBean localidadeBean;
     
@@ -114,6 +133,14 @@ public class MBManifestacaoCadastrar implements Serializable {
     
     private static final String MSG_MANIFESTACAO_ANONIMA;
     
+    private Collection<TbUnidade> unidadesTransporte;
+
+	private List<TbRespostaManifestacao> respostasManifestacao;
+
+	@EJB
+	private ComunicacaoExternaDAO comunicacaoExternaDAO;
+
+    
     
     @PostConstruct
     public void init() {
@@ -125,6 +152,10 @@ public class MBManifestacaoCadastrar implements Serializable {
         manifestacao.setIdMeioResposta(meioRespostaDAO.find(MeioRespostaEnum.EMAIL_ELETRONICO.getId()));
         manifestacao.setTpManifestante(TipoManifestanteEnum.CIDADAO.getId());
         preencherDadosUsuarioLogado();
+        TbClassificacao transporte = classificacaoDAO.getClassificacaoPorNome("Transporte");
+        
+        if(transporte != null)
+        	unidadesTransporte = unidadeDAO.getPorClassificacao(transporte.getIdClassificacao());
     }
     
     /**
@@ -406,6 +437,23 @@ public class MBManifestacaoCadastrar implements Serializable {
 
             cadastroScript = Boolean.TRUE;
             
+            if(!manifestacao.getDsTextoEncerramentoScript().isEmpty() && manifestacao.getDsTextoEncerramentoScript() != null){
+            	TbComunicacaoExterna comunicacaoExterna = new TbComunicacaoExterna();
+                comunicacaoExterna.setDsComunicacao(manifestacao.getDsTextoEncerramentoScript());
+                comunicacaoExterna.setDtComunicacao(new Date());
+                comunicacaoExterna.setIdManifestacao(manifestacao);
+                comunicacaoExterna.setStComunicacaoPublica(BooleanEnum.NAO.getId());
+                
+                TbUsuario usuario = null;
+                if(securityService.isManifestante()) {
+                	usuario = manifestacao.getIdUsuarioManifestante();
+                } else {
+                	usuario = usuarioDAO.find(securityService.getUser().getIdUsuario());
+                }
+                comunicacaoExterna.setIdUsuario(usuario);
+                comunicacaoExternaDAO.edit(comunicacaoExterna);
+            }
+            
             //----- enviando e-mail ---------//
             try {
                 EmailService.Email email = emailService.newEmail();
@@ -623,7 +671,13 @@ public class MBManifestacaoCadastrar implements Serializable {
 		}
 	}
     
-    
+	public List<TbRespostaManifestacao> getRespostasManifestacao() {
+    	if(!ValidacaoHelper.isNotEmpty(respostasManifestacao)) {
+    		respostasManifestacao = respostaManifestacaoDAO.findAll();
+    		Collections.sort(respostasManifestacao);
+    	}
+    	return respostasManifestacao;
+    }
     
     // GETTERS e SETTERS
     public List<TbAnexo> getArquivos() {
@@ -714,6 +768,30 @@ public class MBManifestacaoCadastrar implements Serializable {
 
 	public void setCadastroScript(Boolean cadastroScript) {
 		this.cadastroScript = cadastroScript;
+	}
+
+
+
+
+
+	public UnidadeDAO getUnidadeDAO() {
+		return unidadeDAO;
+	}
+
+	public void setUnidadeDAO(UnidadeDAO unidadeDAO) {
+		this.unidadeDAO = unidadeDAO;
+	}
+
+
+
+
+
+	public Collection<TbUnidade> getUnidadesTransporte() {
+		return unidadesTransporte;
+	}
+
+	public void setUnidadesTransporte(Collection<TbUnidade> unidadesTransporte) {
+		this.unidadesTransporte = unidadesTransporte;
 	}
 
 

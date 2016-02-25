@@ -32,7 +32,7 @@ public class EncaminhamentoDAO extends AbstractDAO<TbEncaminhamento> {
         try {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("idManifestacao", idManifestacao);
-            retorno = selectList("SELECT t FROM TbEncaminhamento t WHERE t.idManifestacao = :idManifestacao", map);
+            retorno = selectList("SELECT t FROM TbEncaminhamento t WHERE t.idManifestacao = :idManifestacao ORDER BY t.idEncaminhamento ASC", map);
         } catch (Exception e) {
             e.printStackTrace();
         }

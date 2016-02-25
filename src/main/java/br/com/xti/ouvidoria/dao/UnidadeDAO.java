@@ -53,6 +53,5 @@ public class UnidadeDAO extends AbstractDAO<TbUnidade> {
 		}catch (Exception e){
 			return null;
 		}
-			
-	}       
+	}
 }

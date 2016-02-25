@@ -46,7 +46,6 @@ html,body {
 
 .cabecalho {
 	height: 150px;
-	background: url("../resources/img/topoOuvidoriaInterno.png");
 	background-color: white;
 	background-position: 190px;
 }
@@ -136,7 +135,7 @@ html,body {
 }
 
 .perguntas-frequentes a:HOVER {
-	color: #000033;
+	color: #02364c;
 	text-decoration: none;
 }
 
@@ -277,7 +276,7 @@ html,body {
 
 .rodape {
 	color: white;
-	background-color: #000033;
+	background-color: #02364c;
 	width: auto;
 	height: 250px;
 	margin: 0 auto;
@@ -414,7 +413,7 @@ html,body {
 }
 
 .endereco {
-	background: #000033;
+	background: #02364c;
 	font-family: 'Open Sans', serif;
 	font-size: 14px;
 	color: white;
@@ -450,7 +449,7 @@ html,body {
 }
 
 .conteudoLogin {
-	background-color: #000033;
+	background-color: #02364c;
 	height: 230px;
 	width: 380px;
 }
@@ -481,7 +480,7 @@ html,body {
 
 .conteudoLogin2 {
 	font-family: 'Open Sans', serif;
-	background-color: #000033;
+	background-color: #02364c;
 	color: #FFFFFF;
 	height: 230px;
 	margin: 0 auto;
@@ -490,7 +489,7 @@ html,body {
 
 .conteudoLogin3 {
 	font-family: 'Open Sans', serif;
-	background-color: #000033;
+	background-color: #02364c;
 	color: #FFFFFF;
 	height: 280px;
 	margin: 0 auto;
@@ -514,7 +513,7 @@ html,body {
 
 .conteudoLogin4 {
 	font-family: 'Open Sans', serif;
-	background-color: #000033;
+	background-color: #02364c;
 	color: #FFFFFF;
 	height: 280px;
 	margin: 0 auto;
@@ -631,7 +630,7 @@ html,body {
 }
 
 .panelLogin {
-	background-color: #000033;
+	background-color: #02364c;
 	color: #FFFFFF;
 	height: 176px;
 	margin: 0 auto;
@@ -690,7 +689,7 @@ html,body {
 	height: 25px;
 	position: absolute;
 	width: 360px;
-	background-color: #000033;
+	background-color: #02364c;
 }
 
 .mensagem4 {
@@ -819,7 +818,7 @@ html,body {
 .notch {
 	border-left: 10px solid transparent;
 	border-right: 10px solid transparent;
-	border-top: 10px solid #000033;
+	border-top: 10px solid #02364c;
 	left: 20px;
 	margin-bottom: 10px;
 	margin-left: 20px;
@@ -849,7 +848,7 @@ html,body {
 }
 
 .topoLoginBox {
-	background-color: #000033;
+	background-color: #02364c;
 	height: 10px;
 	position: absolute;
 	width: 380px;
@@ -892,7 +891,7 @@ ui-corner-all {
 }
 	
 .btnResponderQuestionario span {
-	background-color: #000033;
+	background-color: #02364c;
 	color: #fff;
 	padding: 10px !important;
 }

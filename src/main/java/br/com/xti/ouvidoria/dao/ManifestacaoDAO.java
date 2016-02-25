@@ -139,7 +139,7 @@ public class ManifestacaoDAO extends AbstractDAO<TbManifestacao> {
             Root<TbManifestacao> m = query.from(TbManifestacao.class);
             query.select(m);
             query.distinct(true);
-            // query.orderBy(cb.desc(m.get(TbManifestacao_.nrManifestacao)));
+            query.orderBy(cb.desc(m.get(TbManifestacao_.nrManifestacao)));
 
             List<Predicate> restricoesLista = new ArrayList<>();
             for (FiltroPersonalizado filtro : filtrosPersonalizados) {

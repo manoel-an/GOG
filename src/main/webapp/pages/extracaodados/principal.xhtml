@@ -90,7 +90,7 @@
                 <p:row>
                     <p:column style="width: 20%;"><p:outputLabel value="Unidade Responsável" for="unidade"/></p:column>
                     <p:column style="width: 80%">
-                    	<p:selectOneMenu id="unidade" value="#{mBExtracaoDados.idUnidade}" style="width: 300px; border: 1px solid red;" required="true" requiredMessage="Selecione a unidade responsável pela resolução da manifestação"
+                    	<p:selectOneMenu id="unidade" value="#{mBExtracaoDados.idUnidade}" style="width: 300px; border: 1px solid red;" 
                     		filter="true" filterMatchMode="contains" effect="fade">
                     	    <f:selectItem itemLabel="- Selecione -" itemValue="" />  
                 	        <f:selectItems var="unidade" value="#{mBUnidade.todos}" itemValue="#{unidade.idUnidade}" itemLabel="#{unidade.nmUnidade}" />
@@ -224,7 +224,7 @@
                         <p:panelGrid style="width: 100%">
                             <p:row>
                                 <p:column style="text-align: center; width: 100%" styleClass="ui-widget-header">
-                                    <p:commandButton value="Consultar" actionListener="#{mBExtracaoDados.consultarManifestacoes()}" ajax="false" immediate="true" />
+                                    <p:commandButton value="Consultar" actionListener="#{mBExtracaoDados.consultarManifestacoes()}" update="tabelaManifestacoes" ajax="false" />
                                     <p:spacer width="20px"/>
                                     <p:commandButton value="Checar Regularidade para Certidão" style="margin-left: 5px;" ajax="false" action="#{mBExtracaoDados.checarSituacaoParaCertidao()}"/>
                                     <p:spacer width="20px"/>

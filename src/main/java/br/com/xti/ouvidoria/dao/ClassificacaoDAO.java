@@ -69,5 +69,15 @@ public class ClassificacaoDAO extends AbstractDAO<TbClassificacao> {
             return new ArrayList<TbClassificacao>(0);
         }
         return res;
-    }     
+    } 
+    
+    public TbClassificacao getClassificacaoPorNome(String nome){
+    	try{
+    		return this.getEntityManager().createQuery("SELECT c FROM TbClassificacao c WHERE c.dsClassificacao = :nome", TbClassificacao.class)
+    				.setParameter("nome", nome)
+    				.getSingleResult();
+    	}catch(Exception e){
+    		return null;
+    	}
+    }
 }

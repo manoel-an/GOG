@@ -344,7 +344,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     public void baixarSolicitacao(){
     	gerarParametrosSolicitacaoDeOuvidoria();
     	try {
-			baixarPDF("solicitacao", null, "solicitacao");
+			baixarPDF("solicitacao", null, String.valueOf(manifestacao.getNrManifestacao()));
 			manifestacaoDAO.edit(manifestacao);
 		} catch (InfrastructureException e) {
 			MensagemFaceUtil.erro("Erro!", e.getMessage());
@@ -354,8 +354,9 @@ public class MBManifestacao extends AbstractManifestationController implements S
     public void gerarParametrosSolicitacaoDeOuvidoria(){
     	adicionaParametroRelatorio("numeroManifestacao", String.valueOf(manifestacao.getNrManifestacao()));
     	adicionaParametroRelatorio("dataManifestacao", manifestacao.getDtCadastro());
-    	adicionaParametroRelatorio("atendente", manifestacao.getIdUsuarioCriador() != null ? manifestacao.getIdUsuarioCriador().getNmUsuario() : "Criada Externamente" );
+    	adicionaParametroRelatorio("atendente", manifestacao.getIdUsuarioAnalisador().getNmUsuario());
     	adicionaParametroRelatorio("prestadoraServico", manifestacao.getPrestadoraServico());
+    	adicionaParametroRelatorio("titulo", getClassificacaoNome());
     	adicionaParametroRelatorio("tipoSolicitacao", manifestacao.getTipoSolicitacao());
     	adicionaParametroRelatorio("nomeManifestante", manifestacao.getNmPessoa());
     	adicionaParametroRelatorio("telefoneUm", manifestacao.getNrTelefone());
@@ -398,6 +399,19 @@ public class MBManifestacao extends AbstractManifestationController implements S
 		
 		return sb.toString();
 	}
+    
+    private String getClassificacaoNome(){
+    	List<TbClassificacao> classificacao = (List<TbClassificacao>) manifestacao.getTbClassificacaoCollection();
+		List<TbSubClassificacao> tbSubClassificacoes = (List<TbSubClassificacao>) manifestacao.getTbSubClassificacaoCollection();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		if(!classificacao.isEmpty()){
+			sb.append(classificacao.get(0).getDsClassificacao());
+		}
+		
+		return sb.toString();
+    }
 
 	public boolean showTakeUpManifestation() {
 		return (isManifestacaoNova() || hasUsuarioAnalisador())

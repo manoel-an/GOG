@@ -28,7 +28,7 @@
 			
 			.nota {
 				font-weight: bold;
-				color: #000033;
+				color: #02364c;
 				background-color: #DEDEDE;
 				padding: 3px;
 				margin-top: 4px;
@@ -297,7 +297,13 @@
                     <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'saneamento' and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                     	<p:column style="font-weight: bold;">Prestadora do Serviço:</p:column>
                     	<p:column>
-	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="font-weight: bold; width:250px;"/>
+	                    	<p:inputText id="ps" value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="height: 15px; width: 250px;"/>
+	                    	<h:outputText rendered="#{!security.manifestante}" value="Digite ou selecione:" style="margin-left: 5px; font-weight: bold;"/>
+	                    	<p:selectOneMenu rendered="#{!security.manifestante}" value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="height: 15px; margin-left: 5px;">
+	                    		<f:selectItem itemLabel="----- Prestadoras ------" itemValue="#{null}" noSelectionOption="true"/>
+	                    		<f:selectItems value="#{mBManifestacaoCadastrar.unidadesTransporte}" var="u" itemLabel="#{u.nmUnidade}" itemValue="#{u.nmUnidade}"/>
+	                    		<p:ajax process="@this" update="ps"/>
+	                    	</p:selectOneMenu>
                     	</p:column>
                     </p:row>
                     
@@ -313,23 +319,23 @@
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
                     	<p:column style="font-weight: bold;">N° RA: *</p:column>
                     	<p:column>
-	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.ra}" style="font-weight: bold; width:250px;" required="true" requiredMessage="Informe o número do registro de atendimento">
+	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.ra}" style="font-weight: bold; width:250px;" required="#{security.manifestante}" requiredMessage="Informe o número do registro de atendimento">
 	                    	</p:inputText>
-	                    	<h:outputLabel value="Registro de atendimento da concessionária" style="font-weight: bold;" />
+	                    	<h:outputLabel value="Registro de atendimento da concessionária (Protocolo da SANEAGO)" style="font-weight: bold;" />
                     	</p:column>
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
                     	<p:column style="font-weight: bold;">N° da Conta: *</p:column>
                     	<p:column>
-	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.numeroConta}" style="font-weight: bold; width:250px;"/>
+	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.numeroConta}" style="font-weight: bold; width:250px;" required="#{security.manifestante}"/>
                     	</p:column>
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'}">
                     	<p:column style="font-weight: bold;">Titularidade: *</p:column>
                     	<p:column>
-	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.titularidade}" style="font-weight: bold; width:250px;"/>
+	                    	<p:inputText value="#{mBManifestacaoCadastrar.manifestacao.titularidade}" style="font-weight: bold; width:250px;" required="#{security.manifestante}"/>
                     	</p:column>
                     </p:row>
                     
@@ -726,7 +732,7 @@
                                                          type="submit" update="frmNovaManifestacao" />
                                         <p:commandButton style="margin-left: 10px;" id="cbEncerrarScript" value="Encerrar Por Script" ajax="true" 
                                                          oncomplete="if (!args.validationFailed){cd2.show()};" 
-                                                         type="submit" update="frmNovaManifestacao" />
+                                                         type="submit" update="frmNovaManifestacao, :modalEncerramento" rendered="#{!security.manifestante}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -753,20 +759,80 @@
             </h:form>
         </p:confirmDialog>
         
-        <p:confirmDialog appendToBody="true" closable="false" widgetVar="cd2" header="Cadastrar Manifestação"
-                         message="Tem certeza que deseja cadastrar a manifestação por script?">
-            <h:form>
+        <p:confirmDialog appendToBody="true" closable="false" widgetVar="cd2" header="Encerramento por script"
+                         message="Tem certeza que deseja cadastrar a manifestação por script?" width="1000">
+            <h:form id="modalEncerramento">
+					
+					<p:outputPanel rendered="#{not security.manifestante}">
+						<p:panelGrid id="pnlMasterComunicacaoExterna" style="height: auto; margin: 0 auto">
+							<p:row>
+								<p:column style="width: 50%;vertical-align: top" colspan="2">
+									<p:panelGrid style="width: 100%; margin: 0 auto; vertical-align: top;">
+										<p:row>
+											<p:column style="width: 15%" styleClass="ui-widget-header centro">Mensagem de Resposta por Script</p:column>
+										</p:row>
+										<p:row>
+											<p:column>
+												<p:editor widgetVar="editorMensagemAoManifestante"
+													rendered="true"
+													value="#{mBManifestacaoCadastrar.manifestacao.dsTextoEncerramentoScript}"
+													id="textoMensagemAoManifestante"
+													styleClass="classIdCampo_textoMensagemAoManifestante"
+													height="320"
+													required="true"
+													requiredMessage="Informe um texto para enviar ao manifestante." />
+											</p:column>
+										</p:row>
+									</p:panelGrid>
+								</p:column>
+								<p:column style="width: 50%; vertical-align: top;" colspan="2">
+									<p:panelGrid
+										style="width: 100%; margin: 0 auto; vertical-align: central;">
+										<p:row>
+											<p:column styleClass="ui-widget-header centro"
+												style="vertical-align: top">  
+	                                            Respostas personalizadas
+	                                        </p:column>
+										</p:row>
+										<p:row>
+											<p:column>
+												<p:selectOneMenu
+													value="#{mBManifestacaoCadastrar.manifestacao.dsTextoEncerramentoScript}"
+													id="slcRespostaManifestacao">
+													<f:selectItem itemLabel="- Selecionar resposta -" itemValue="" />
+													<f:selectItems
+														value="#{mBManifestacaoCadastrar.respostasManifestacao}" var="item"
+														itemLabel="#{item.dsTituloResposta}"
+														itemValue="#{item.dsResposta}" />
+													<p:ajax update="@form" event="change" />
+												</p:selectOneMenu>
+											</p:column>
+										</p:row>
+										<p:row>
+											<p:column colspan="2">
+												<p:editor id="modeloRespostaManifestacao"
+													styleClass="classIdCampo_modeloRespostaPadronizado"
+													value="#{mBManifestacaoCadastrar.manifestacao.dsTextoEncerramentoScript}"
+													disabled="true" height="290" />
+											</p:column>
+										</p:row>
+									</p:panelGrid>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:outputPanel>
+            
                 <p:commandButton value="Sim, cadastrar e encerrar" 
                                  ajax="true" icon="ui-icon-check"
                                  styleClass="ui-confirmdialog-yes"
                                  update=":frmNovaManifestacao" 
                                  actionListener="#{mBManifestacaoCadastrar.encerrarPorScript}" 
-                                 onclick="cd2.hide();"/>
+                                 onclick="cd2.hide();" style="margin-left: 30%;"/>
                 <p:commandButton value="Não, rever informações" 
                                  ajax="true" icon="ui-icon-close"
                                  styleClass="ui-confirmdialog-no" 
                                  type="button"
-                                 onclick="cd.hide();" />
+                                 onclick="cd2.hide();" />
             </h:form>
         </p:confirmDialog>
 

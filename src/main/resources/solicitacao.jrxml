@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="solicitacao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e5c5cb75-a262-4df4-b84f-31b253d89120">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="38"/>
-	<property name="ireport.y" value="339"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="numeroManifestacao" class="java.lang.String"/>
 	<parameter name="logoAGR" class="java.lang.String"/>
 	<parameter name="dataManifestacao" class="java.util.Date"/>
@@ -24,6 +24,7 @@
 	<parameter name="tipoManifestacao" class="java.lang.String"/>
 	<parameter name="classificacao" class="java.lang.String"/>
 	<parameter name="texto" class="java.lang.String"/>
+	<parameter name="titulo" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -69,11 +70,11 @@
 				<text><![CDATA[]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="326" y="60" width="137" height="20" uuid="9306cf69-31aa-487e-9b6a-094f920157f6"/>
+				<reportElement x="310" y="60" width="175" height="20" uuid="9306cf69-31aa-487e-9b6a-094f920157f6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{numeroManifestacao}+"/2015"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Número: " + $P{numeroManifestacao}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="9" y="109" width="46" height="20" uuid="a1c5aac6-b152-4fbd-b404-b7c182750620"/>
@@ -106,7 +107,7 @@ Solicitamos a V. Sa. a apuração dos fatos e que providências adotadas nos sej
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{prestadoraServico}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="267" width="86" height="20" uuid="0fae4370-d454-457c-9ea0-77641d6d815b"/>

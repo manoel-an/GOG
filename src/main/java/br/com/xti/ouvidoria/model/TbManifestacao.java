@@ -154,6 +154,8 @@ public class TbManifestacao implements Serializable {
     @NotNull
     @Column(columnDefinition = "text", name = "dsTextoManifestacao")
     private String dsTextoManifestacao;
+    @Column(columnDefinition = "text", name = "dsTextoEncerramentoScript")
+    private String dsTextoEncerramentoScript;
     @Basic(optional = false)
     @NotNull
     @Column(name = "stStatusManifestacao")
@@ -549,7 +551,15 @@ public class TbManifestacao implements Serializable {
         this.dsTextoManifestacao = dsTextoManifestacao;
     }
 
-    public String getStStatusManifestacao() {
+    public String getDsTextoEncerramentoScript() {
+		return dsTextoEncerramentoScript;
+	}
+
+	public void setDsTextoEncerramentoScript(String dsTextoEncerramentoScript) {
+		this.dsTextoEncerramentoScript = dsTextoEncerramentoScript;
+	}
+
+	public String getStStatusManifestacao() {
         return stStatusManifestacao;
     }
 
