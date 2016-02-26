@@ -773,10 +773,11 @@
 										</p:row>
 										<p:row>
 											<p:column>
-												<p:editor widgetVar="editorMensagemAoManifestante"
+												<p:editor
+													id="mensagemEncerramento" 
+													widgetVar="editorMensagemAoManifestante"
 													rendered="true"
 													value="#{mBManifestacaoCadastrar.manifestacao.dsTextoEncerramentoScript}"
-													id="textoMensagemAoManifestante"
 													styleClass="classIdCampo_textoMensagemAoManifestante"
 													height="320"
 													required="true"
@@ -825,6 +826,7 @@
                 <p:commandButton value="Sim, cadastrar e encerrar" 
                                  ajax="true" icon="ui-icon-check"
                                  styleClass="ui-confirmdialog-yes"
+                                 process="@this, mensagemEncerramento"
                                  update=":frmNovaManifestacao" 
                                  actionListener="#{mBManifestacaoCadastrar.encerrarPorScript}" 
                                  onclick="cd2.hide();" style="margin-left: 30%;"/>
