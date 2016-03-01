@@ -678,10 +678,14 @@
 							<p:row>
 								<p:column styleClass="bold" style="width: 100px;">Unidade*</p:column>
 								<p:column>
+									<p:inputText id="txtFiltroUndDestino" value="#{mBManifestacao.txtFiltroOrgaoDestino}" style="width: 495px">
+										<p:ajax update="slcUnidade" event="keyup" global="false" listener="#{mBManifestacao.filtrarOrgaoDestino}" />
+									</p:inputText>
 									<p:selectManyMenu value="#{mBManifestacao.idOrgaoDestino}"
 										id="slcUnidade" required="true"
 										style="height: 80px; width:500px"
-										requiredMessage="Informe a unidade de encaminhamento">
+										requiredMessage="Informe a unidade de encaminhamento"
+										filter="true" filterMatchMode="contains" effect="fade" showCheckbox="true">
 										<f:selectItems
 											value="#{mBManifestacao.listaUnidades}" var="item"
 											itemLabel="#{item.sgUnidade} - #{item.nmUnidade}"
