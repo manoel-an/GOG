@@ -310,7 +310,7 @@
 								<h:outputText value="#{manifestacao.idUsuarioCriador != null ? manifestacao.idUsuarioCriador.nmUsuario : 'Usuário Externo'}"/>
 							</p:column>
 							
-							<p:column headerText="Em análise por" style="width:30%;" rendered="#{security.administrador || security.ouvidor}"
+							<p:column headerText="Acompanhamento por" style="width:30%;" rendered="#{security.administrador || security.ouvidor}"
 								filterBy="#{manifestacao.idUsuarioAnalisador.nmUsuario}" filterMatchMode="contains"
 								sortBy="#{manifestacao.idUsuarioAnalisador.nmUsuario}">
 								<h:outputText value="#{manifestacao.idUsuarioAnalisador != null ? manifestacao.idUsuarioAnalisador.nmUsuario : 'Livre'}"/>

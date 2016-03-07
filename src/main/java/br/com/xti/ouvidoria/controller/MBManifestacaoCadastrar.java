@@ -500,6 +500,17 @@ public class MBManifestacaoCadastrar implements Serializable {
         }
     }
     
+    public boolean renderizaCamposCasoSolicitacaoEnergia(){
+    	if(securityService.isManifestante()){
+    		if(manifestacao.getTipoSolicitacao() != null && manifestacao.getTipoSolicitacao().equals("energia"))
+    			return false;
+    		else
+    			return true;
+    	} else{
+    		return true;
+    	}
+    }
+    
     /**
      * Efetua o upload do arquivo selecionado e salva em disco
      * 
