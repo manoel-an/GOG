@@ -587,6 +587,9 @@ public class MBManifestacao extends AbstractManifestationController implements S
     		List<TbTramite> listTramites = new ArrayList<TbTramite>(e.getTbTramiteCollection());
     		TbTramite ultimoTramite = listTramites.get(listTramites.size() - 1);
     		
+    		if(e.getStEncaminhamento().equals(StatusEncaminhamentoEnum.RETORNADA.getId()))
+    			return false;
+    		
     		if(e.getIdUnidadeEnviou().getIdUnidade() == UnidadeEnum.OUVIDORIA.getId()) {
     			if(!(UnidadeEnum.OUVIDORIA.getId().equals(ultimoTramite.getIdUnidadeEnvio().getIdUnidade()) || ultimoTramite.getIdUnidadeEnvio() == null)) {
     				mostrar = true;
@@ -1800,7 +1803,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	// Unidades que ainda podem receber encaminhamento
 		listaUnidades = null;
         listaUnidades = unidadeDAO.findAll();
-        listaUnidades.removeAll(unidadeDAO.getPorEncaminhamentoManifestacao(manifestacao));
+        //listaUnidades.removeAll(unidadeDAO.getPorEncaminhamentoManifestacao(manifestacao));
         listaUnidades.remove(new TbUnidade(UnidadeEnum.OUVIDORIA.getId()));
         Collections.sort(listaUnidades, new UnidadeSiglaComparator());
         listaUnidadesCompleta = new ArrayList<TbUnidade>(listaUnidades);

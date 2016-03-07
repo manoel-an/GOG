@@ -101,7 +101,7 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 	    		filtroNumeroManifestacao.setManIdRangeAte(manifestationNumber);
 	    		
 	    		TbManifestacao oldManifestation = getOldManifestation();
-	    		List<TbManifestacao> lista = dao.getManifestacoes(filtroPadrao, filtroNumeroManifestacao);
+	    		List<TbManifestacao> lista = dao.getManifestacoes(filtroNumeroManifestacao);
 	    		if(ValidacaoHelper.isNotEmpty(lista)) {
 	    			manifestacao = lista.get(0);
 	    			if(ValidacaoHelper.isEmpty(oldManifestation)) {

@@ -343,6 +343,7 @@
 								rendered="#{not security.manifestante}">
 								<p:ajax event="blur" process="@this"/>
 							</p:inputText>
+							<h:outputText style="color: #02364c" value=" Caso não queira informar o nome coloque como: Anônimo"/>
 						</p:column>
                     </p:row>
                     
@@ -480,17 +481,22 @@
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia()}">
                         <p:column style="font-weight: bold;">E-mail: *</p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:inputText value="#{mBManifestacaoCadastrar.manifestacao.eeEmailUsuario}" 
-	                            	style="width:250px;" 
-	                            	title="Informe o seu E-mail"
-	                            	required="true"
-	             				 	requiredMessage="Informe um e-mail">
-                                <f:validator binding="#{emailValidator}" />
-                                <p:ajax event="blur" process="@this"/>
-                            </p:inputText>
+                        	<h:panelGroup>
+                           	    <p:inputText value="#{mBManifestacaoCadastrar.manifestacao.eeEmailUsuario}" 
+	                        	    	style="width:250px;" 
+	                    	        	title="Informe o seu E-mail"
+	                	            	required="true"
+	            	 				 	requiredMessage="Informe um e-mail" id="emailOb" readonly="#{mBManifestacaoCadastrar.emailFicticio}">
+            	                    <f:validator binding="#{emailValidator}" />
+        	                        <p:ajax event="blur" process="@this"/>
+    	                        </p:inputText>
+	                            <p:selectBooleanCheckbox value="#{mBManifestacaoCadastrar.emailFicticio}" itemLabel=" Utilizar e-mail fictício" style="margin-left: 10px; height: 13px;">
+	                            	<p:ajax process="@this" update="emailOb"/>
+	                            </p:selectBooleanCheckbox>
+                        	</h:panelGroup>
                             <br />
                             <div class="nota">
-	                            <span>Nota: Aqui deve ser digitado somente um e-mail primário.</span>
+	                            <span>Nota: Aqui deve ser digitado somente um e-mail primário caso não queira informar, marque a caixa ao lado.</span>
                             </div>
                         </p:column>
                     </p:row>
@@ -654,7 +660,7 @@
                                                var="uf"
                                                itemLabel="#{uf.nmUF}"
                                                itemValue="#{uf.idUF}" />
-                                <p:ajax event="change" process="@this"/>
+                                <p:ajax event="change" process="@this" update="localidade"/>
                             </p:selectOneMenu>
                         </p:column>
                     </p:row>
@@ -662,11 +668,10 @@
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia()}">
                         <p:column style="font-weight: bold;">Cidade: </p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:autoComplete id="localidade" minQueryLength="2" size="32"
-                            	value="#{mBManifestacaoCadastrar.manifestacao.dsLocalidade}"
-                            	completeMethod="#{mBManifestacaoCadastrar.completaMunicipio}"
-                            	required="true"
-                            	requiredMessage="Informe a cidade" />
+                            <p:selectOneMenu id="localidade" value="#{mBManifestacaoCadastrar.manifestacao.dsLocalidade}" style="width: 250px;" filter="true" filterMatchMode="contains">
+                           		<f:selectItem itemLabel=" - Selecione -" itemValue="Não informada" noSelectionOption="true" />
+                           		<f:selectItems value="#{localidadeBean.municipios}" var="municipio" itemLabel="#{municipio.nmMunicipio}" itemValue="#{municipio.nmMunicipio}"/>
+                           	</p:selectOneMenu>
                         </p:column>
                     </p:row>
                     

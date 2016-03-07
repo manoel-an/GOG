@@ -1338,7 +1338,7 @@ body .ui-tooltip {
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
-    border: solid 1px #f0f0f0!important;
+    border: solid 1px #f0f0f0 !important;
 }
 
 .ui-panelmenu-header ui-state-default ui-state-active ui-corner-top{
