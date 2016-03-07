@@ -77,6 +77,7 @@ public class LocalidadeBean implements Serializable {
             
             this.paises.removeAll(paises);
             this.paises.add(0, brasil);
+            //this.idUf = 9; //Estado de Goiás
         } catch (Exception ex) {
             Logger.getLogger(LocalidadeBean.class.getName()).log(Level.SEVERE, null, ex);
         }

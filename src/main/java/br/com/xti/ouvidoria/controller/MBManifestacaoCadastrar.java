@@ -127,6 +127,7 @@ public class MBManifestacaoCadastrar implements Serializable {
     private Integer idUf;
     private Integer idPais;
     private boolean emailCadastrado;
+    private boolean emailFicticio;
     
     private List<TbAnexo> arquivos = new ArrayList<>();
     private Collection<TbMunicipio> municipios = new ArrayList<>();
@@ -153,6 +154,7 @@ public class MBManifestacaoCadastrar implements Serializable {
         manifestacao.setTpManifestante(TipoManifestanteEnum.CIDADAO.getId());
         preencherDadosUsuarioLogado();
         TbClassificacao transporte = classificacaoDAO.getClassificacaoPorNome("Transporte");
+        idUf = 9;
         
         if(transporte != null)
         	unidadesTransporte = unidadeDAO.getPorClassificacao(transporte.getIdClassificacao());
@@ -803,6 +805,22 @@ public class MBManifestacaoCadastrar implements Serializable {
 
 	public void setUnidadesTransporte(Collection<TbUnidade> unidadesTransporte) {
 		this.unidadesTransporte = unidadesTransporte;
+	}
+
+
+
+
+
+	public boolean isEmailFicticio() {
+		return emailFicticio;
+	}
+
+	public void setEmailFicticio(boolean emailFicticio) {
+		if(emailFicticio)
+			manifestacao.setEeEmailUsuario("anonimo@agr.go.gov.br");
+		else
+			manifestacao.setEeEmailUsuario("");
+		this.emailFicticio = emailFicticio;
 	}
 
 
