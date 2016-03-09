@@ -200,6 +200,8 @@ public class MBManifestacao extends AbstractManifestationController implements S
     private String txtFiltroAreaSolucionadora;
     
     
+    //Atributo para nova funcionalidade mensagem preliminar do interlocutor
+    private boolean mensagemPreliminar;
     
     @Override
     public void loadManifestation() {
@@ -1645,40 +1647,44 @@ public class MBManifestacao extends AbstractManifestationController implements S
             tramiteDAO.create(tramite);
             /*------- fim - gravando tramite ------------*/
             
-            //atualiza status do encaminhamento dependendo de para onde a msg foi enviada
-            TbUnidade unidadeEnviou = manifestacaoTabView.getUnidadeEnviou();
-            TbEncaminhamento encaminhamento = encaminhamentoDAO.find(manifestacaoTabView.getEncaminhamento().getIdEncaminhamento());
-            if (unidadeEnviou.getIdUnidade().equals(idUnidadeTramite) && !(securityService.isOuvidor() || securityService.isAdministrador())) {
-                encaminhamento.setStEncaminhamento(StatusEncaminhamentoEnum.RETORNADA.getId());
-                encaminhamento.setDtRespostaTramite(new Date());
-                
-				// Se retornar a mensagem para a Unidade que realizou o encaminhamento
-                // seta todos os tramites da unidade como retornado
-                for (TbTramite t : encaminhamento.getTbTramiteCollection()) {
-            		t.setStRetornada(BooleanEnum.SIM.getId());
-            		tramiteDAO.edit(t);
-            	}
-            } else {
-                encaminhamento.setStEncaminhamento(StatusEncaminhamentoEnum.ENCAMINHADA.getId());
-				if (!manifestacao.getStStatusManifestacao().equals(StatusManifestacaoEnum.EM_ANDAMENTO)
-						&& EnumHelper.getFuncaoUsuarioEnum(securityService.getUser().getTpFuncao()) == FuncaoUsuarioEnum.OUVIDOR) {
-					encaminhamento.setDtEnvioTramite(new Date());
-				}
-                
-                manifestacao.setStStatusManifestacao(StatusManifestacaoEnum.EM_ANDAMENTO.getId());
-                dao.edit(manifestacao);
-            }
-            encaminhamentoDAO.edit(encaminhamento);
             
-            // atualiza status dos tramites
-            if (EnumHelper.getFuncaoUsuarioEnum(securityService.getUser().getTpFuncao()) == FuncaoUsuarioEnum.OPERADOR) {
-            	int idOperador = securityService.getUser().getIdUsuario();
-	        	for (TbTramite t : encaminhamento.getTbTramiteCollection()) {
-	        		if(t.getIdUsuarioReceptor() != null && t.getIdUsuarioReceptor().getIdUsuario() == idOperador) {
-	        			t.setStRetornada(BooleanEnum.SIM.getId());
-	        			tramiteDAO.edit(t);
-	        		}
-	        	}
+            //atualiza status do encaminhamento dependendo de para onde a msg foi enviada
+            if(!mensagemPreliminar){
+            	
+	            TbUnidade unidadeEnviou = manifestacaoTabView.getUnidadeEnviou();
+	            TbEncaminhamento encaminhamento = encaminhamentoDAO.find(manifestacaoTabView.getEncaminhamento().getIdEncaminhamento());
+	            if (unidadeEnviou.getIdUnidade().equals(idUnidadeTramite) && !(securityService.isOuvidor() || securityService.isAdministrador())) {
+	                encaminhamento.setStEncaminhamento(StatusEncaminhamentoEnum.RETORNADA.getId());
+	                encaminhamento.setDtRespostaTramite(new Date());
+	                
+					// Se retornar a mensagem para a Unidade que realizou o encaminhamento
+	                // seta todos os tramites da unidade como retornado
+	                for (TbTramite t : encaminhamento.getTbTramiteCollection()) {
+	            		t.setStRetornada(BooleanEnum.SIM.getId());
+	            		tramiteDAO.edit(t);
+	            	}
+	            } else {
+	                encaminhamento.setStEncaminhamento(StatusEncaminhamentoEnum.ENCAMINHADA.getId());
+					if (!manifestacao.getStStatusManifestacao().equals(StatusManifestacaoEnum.EM_ANDAMENTO)
+							&& EnumHelper.getFuncaoUsuarioEnum(securityService.getUser().getTpFuncao()) == FuncaoUsuarioEnum.OUVIDOR) {
+						encaminhamento.setDtEnvioTramite(new Date());
+					}
+	                
+	                manifestacao.setStStatusManifestacao(StatusManifestacaoEnum.EM_ANDAMENTO.getId());
+	                dao.edit(manifestacao);
+	            }
+	            encaminhamentoDAO.edit(encaminhamento);
+	            
+	            // atualiza status dos tramites
+	            if (EnumHelper.getFuncaoUsuarioEnum(securityService.getUser().getTpFuncao()) == FuncaoUsuarioEnum.OPERADOR) {
+	            	int idOperador = securityService.getUser().getIdUsuario();
+		        	for (TbTramite t : encaminhamento.getTbTramiteCollection()) {
+		        		if(t.getIdUsuarioReceptor() != null && t.getIdUsuarioReceptor().getIdUsuario() == idOperador) {
+		        			t.setStRetornada(BooleanEnum.SIM.getId());
+		        			tramiteDAO.edit(t);
+		        		}
+		        	}
+	            }
             }
 
             //----- gravando anexos ---------//
@@ -2543,6 +2549,14 @@ public class MBManifestacao extends AbstractManifestationController implements S
 
 	public void setTxtFiltroAreaSolucionadora(String txtFiltroAreaSolucionadora) {
 		this.txtFiltroAreaSolucionadora = txtFiltroAreaSolucionadora;
+	}
+
+	public boolean isMensagemPreliminar() {
+		return mensagemPreliminar;
+	}
+
+	public void setMensagemPreliminar(boolean mensagemPreliminar) {
+		this.mensagemPreliminar = mensagemPreliminar;
 	}
 
 	public List<TbUnidade> getListaUnidades() {

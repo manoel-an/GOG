@@ -612,6 +612,19 @@
 											oncomplete="dlgEnviarMensagemTramiteW.show();">
 											<f:actionListener binding="#{mBManifestacao.ajustaListaUnidadeTramite(tabItem)}" />
 											<f:setPropertyActionListener value="1" target="#{mBManifestacao.idUnidadeTramite}" />
+											<f:setPropertyActionListener value="false" target="#{mBManifestacao.mensagemPreliminar}"/>
+										</p:commandButton>
+										<p:commandButton id="respostaPreliminar" value="Resposta Preliminar"
+											rendered="#{mBManifestacao.mostrarBotaoResponderAOuvidoria()}"
+											update=":frmAdministrarManifestacao,
+													:frmEncaminharManifestacao,
+													:frmTramiteManifestacao,
+													:frmEnviarMensagemTramite,
+													:frmEncerraManifestacaoComMensagem"
+											oncomplete="dlgEnviarMensagemTramiteW.show();">
+											<f:actionListener binding="#{mBManifestacao.ajustaListaUnidadeTramite(tabItem)}" />
+											<f:setPropertyActionListener value="1" target="#{mBManifestacao.idUnidadeTramite}" />
+											<f:setPropertyActionListener value="true" target="#{mBManifestacao.mensagemPreliminar}"/>
 										</p:commandButton>
 									</h:form>
 								</p:outputPanel>
