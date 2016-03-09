@@ -606,7 +606,11 @@
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia()}">
                         <p:column style="font-weight: bold;">Endereço: *</p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:inputText required="true" requiredMessage="Informe o endereço" id="endereco" value="#{mBManifestacaoCadastrar.manifestacao.enEndereco}" style="width:250px;" title="Informe seu Endereço" />
+                            <p:inputText required="true" requiredMessage="Informe o endereço" id="endereco" value="#{mBManifestacaoCadastrar.manifestacao.enEndereco}" style="width:250px;" title="Informe seu Endereço" 
+                            	readonly="#{mBManifestacaoCadastrar.enderecoNaoInformado}"/>
+                            <p:selectBooleanCheckbox value="#{mBManifestacaoCadastrar.enderecoNaoInformado}" itemLabel="Endereço não informado" style="margin-left: 10px; height: 13px;">
+	                        	<p:ajax process="@this" update="endereco"/>
+	                        </p:selectBooleanCheckbox>
                         </p:column>
                     </p:row>
                     

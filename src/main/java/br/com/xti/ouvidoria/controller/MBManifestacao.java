@@ -400,6 +400,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
 		return sb.toString();
 	}
     
+    @SuppressWarnings("all")
     private String getClassificacaoNome(){
     	List<TbClassificacao> classificacao = (List<TbClassificacao>) manifestacao.getTbClassificacaoCollection();
 		List<TbSubClassificacao> tbSubClassificacoes = (List<TbSubClassificacao>) manifestacao.getTbSubClassificacaoCollection();
@@ -1825,7 +1826,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     }
     
     public Boolean habilitaUsuarioEncaminhamento() {
-//        return !(idUnidadeEncaminhamento != null);
+//        return !(idUnidadeEncaminamento != null);
         return true;
     }
 

@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import br.com.agr.ouvidoria.report.GeradorRelatorio;
+import br.com.xti.ouvidoria.controller.MensagemFaceUtil;
 import br.com.xti.ouvidoria.dao.AnexoDAO;
 import br.com.xti.ouvidoria.dao.ComunicacaoExternaDAO;
 import br.com.xti.ouvidoria.dao.EncaminhamentoDAO;
@@ -82,6 +83,7 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 	protected ManifestacaoTabView tabViewSelecionada;
 	protected Integer tabViewAtiva = 0;
 	
+	@SuppressWarnings("all")
 	public void loadManifestation() {
 		boolean redirectToHomePage = false;
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -143,13 +145,17 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void imprimirDialogoEncaminhamento(ManifestacaoTabView encaminhamento) throws InfrastructureException{
+	public void imprimirDialogoEncaminhamento(ManifestacaoTabView encaminhamento){
 		adicionaParametroRelatorio("numeroManifestacao", encaminhamento.getEncaminhamento().getIdManifestacao().getNrManifestacao());
 		adicionaParametroRelatorio("logoAGR", "logoagr.jpg");
 		adicionaParametroRelatorio("dataInicioDialogo", encaminhamento.getEncaminhamento().getDtCriacaoEncaminhamento());
 		adicionaParametroRelatorio("origemTramite", encaminhamento.getEncaminhamento().getIdUnidadeEnviou().getNmUnidade());
 		adicionaParametroRelatorio("destinoTramite", encaminhamento.getEncaminhamento().getIdUnidadeRecebeu().getNmUnidade());
-		baixarPDF("dialogomanifestacao", (List<TbTramite>) encaminhamento.getConteudo(), "tramites");
+		try {
+			baixarPDF("dialogomanifestacao", (List<TbTramite>) encaminhamento.getConteudo(), "tramites");
+		} catch (InfrastructureException e) {
+			MensagemFaceUtil.erro("Erro!", e.getMessage());
+		}
 	}
 	
 	@SuppressWarnings("unchecked")

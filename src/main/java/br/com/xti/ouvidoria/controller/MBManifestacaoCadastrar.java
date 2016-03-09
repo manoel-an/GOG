@@ -128,6 +128,7 @@ public class MBManifestacaoCadastrar implements Serializable {
     private Integer idPais;
     private boolean emailCadastrado;
     private boolean emailFicticio;
+    private boolean enderecoNaoInformado;
     
     private List<TbAnexo> arquivos = new ArrayList<>();
     private Collection<TbMunicipio> municipios = new ArrayList<>();
@@ -821,6 +822,22 @@ public class MBManifestacaoCadastrar implements Serializable {
 		else
 			manifestacao.setEeEmailUsuario("");
 		this.emailFicticio = emailFicticio;
+	}
+
+
+
+
+
+	public boolean isEnderecoNaoInformado() {
+		return enderecoNaoInformado;
+	}
+
+	public void setEnderecoNaoInformado(boolean enderecoNaoInformado) {
+		if(enderecoNaoInformado)
+			manifestacao.setEnEndereco("Não informado");
+		else
+			manifestacao.setEnEndereco("");
+		this.enderecoNaoInformado = enderecoNaoInformado;
 	}
 
 
