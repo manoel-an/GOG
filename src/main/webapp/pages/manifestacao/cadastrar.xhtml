@@ -177,7 +177,7 @@
                         </p:column>
                     </p:row>
 
-                    <p:row rendered="#{mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia()}">  
+                    <p:row rendered="#{mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia() and security.manifestante}">  
                         <p:column style="width: 22%; font-weight: bold; vertical-align: top; padding-top: 10px;">Tipo de manifestação: *</p:column>  
                         <p:column style="font-weight: bold; padding-top: 10px;">
                             <div style="width: 30%; float: left">
@@ -672,6 +672,38 @@
                            		<f:selectItem itemLabel=" - Selecione -" itemValue="Não informada" noSelectionOption="true" />
                            		<f:selectItems value="#{localidadeBean.municipios}" var="municipio" itemLabel="#{municipio.nmMunicipio}" itemValue="#{municipio.nmMunicipio}"/>
                            	</p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row rendered="#{mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia() and !security.manifestante}">  
+                        <p:column style="width: 22%; font-weight: bold; vertical-align: top; padding-top: 10px;">Tipo de manifestação: *</p:column>  
+                        <p:column style="font-weight: bold; padding-top: 10px;">
+                            <div style="width: 30%; float: left">
+                                <p:selectOneMenu value="#{mBManifestacaoCadastrar.manifestacao.idTipoManifestacao}"
+                                                 style="width: 250px"
+                                                 required="true"
+                                                 requiredMessage="Informe o Tipo da Manifestação" 
+                                                 converter="#{conversorTipoManifestacao}"
+                                                 rendered="#{not mBManifestacaoCadastrar.anonimo}"> 
+                                    <f:selectItem itemLabel="- Selecione -" itemValue="" />
+                                    <f:selectItems value="#{mBTipoManifestacao.todos}" 
+                                                   var="tipo"
+                                                   itemLabel="#{tipo.nmTipoManifestacao}"
+                                                   itemValue="#{tipo}">
+                                    </f:selectItems>
+                                    <p:ajax update="textoDsTipoManifestacao2" event="change" />
+                                </p:selectOneMenu>
+                                <p:selectOneMenu value="#{mBManifestacaoCadastrar.manifestacao.idTipoManifestacao}"
+                                				 style="width: 250px"
+                                				 converter="#{conversorTipoManifestacao}"
+                                                 rendered="#{mBManifestacaoCadastrar.anonimo}">
+                                	<p:ajax update="textoDsTipoManifestacao2" event="change" />
+                                	<f:selectItem itemLabel="#{mBTipoManifestacao.tipoDenuncia.nmTipoManifestacao}" itemValue="#{mBTipoManifestacao.tipoDenuncia}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <div style="width: 70%; float: left">
+                                <h:outputText id="textoDsTipoManifestacao2" value="#{mBManifestacaoCadastrar.manifestacao.idTipoManifestacao.dsTipoManifestacao}" />
+                            </div>
                         </p:column>
                     </p:row>
                     
