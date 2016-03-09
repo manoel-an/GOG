@@ -16,7 +16,8 @@
 			<p:tab style="vertical-align: middle;">
 				<f:facet name="title">
 					<h:panelGroup style="vertical-align: middle;">
-						<h:outputText value="#{tabItem.titulo}" />
+						<h:outputText value="Nº#{tabItem.index} " rendered="#{tabItem.index != 0}"/>
+						<h:outputText value=" #{tabItem.titulo}" />
 					</h:panelGroup>
 				</f:facet>
 				
