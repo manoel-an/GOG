@@ -34,29 +34,25 @@
 							</div>
 							<div class="panelRecuperarSenha" style="margin-left: 20px;">
 								<h4>Você precisa alterar sua senha para continuar utilizando o sistema.</h4>
-								
 								<p:focus for="novaSenha" />
-								<h:outputLabel for="novaSenha" style="font-size: 12px;" value="Nova Senha (entre 4 e 10 caracteres): " />
+								<h:outputLabel for="novaSenha" style="font-size: 12px;" value="Nova Senha: " />
 								<p:spacer height="10px" width="100%" />
 								<p:password id="novaSenha" 
 									value="#{mBNovaSenha.novaSenha}"
 									size="25" 
 									required="true" 
 									requiredMessage="Digite a nova senha"
-									maxlength="10">
-									<f:validator binding="#{senhaValidator}" />
+									validatorMessage="Digite no mínimo 8 caracteres contendo apenas letras e números">
+									<f:validateRegex pattern="^[a-zA-Z0-9]{8,}+"></f:validateRegex>
 								</p:password>
 								<p:spacer height="10px" width="100%" />
-								
 								<h:outputLabel for="novaSenha2" style="font-size: 12px;" value="Confirma Nova Senha: " />
 								<p:spacer height="10px" width="100%" />
 								<p:password id="novaSenha2"
 									value="#{mBNovaSenha.novaSenhaConfirmar}" 
 									size="25"
 									required="true" 
-									requiredMessage="Repita a nova senha"
-									maxlength="10">
-									<f:validator binding="#{senhaValidator}" />
+									requiredMessage="Repita a nova senha">
 								</p:password>
 								<p:spacer height="10px" width="100%" />
 								

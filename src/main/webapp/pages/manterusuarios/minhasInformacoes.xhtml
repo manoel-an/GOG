@@ -20,7 +20,7 @@
                 <h:outputLabel value="Minhas Informações"/>
             </f:facet>
             <h:form id="frmEditarMinhasInformacoes" >
-                <p:messages id="messages" showDetail="true" />
+                <p:messages id="messages" showDetail="false" />
                 <p:fieldset legend="Informações Básicas">
                     <p:panelGrid columns="2">
                         <h:outputLabel value="Nome: " />
@@ -50,15 +50,26 @@
                         </p:row>
                         <p:row>
                             <p:column><h:outputLabel value="Senha Atual: " /></p:column>
-                            <p:column><p:password value="#{mBMinhasInformacoes.senhaAtual}" size="25" maxlength="10" /></p:column>
+                            <p:column>
+                            	<p:password id="senhaAtual" value="#{mBMinhasInformacoes.senhaAtual}" size="25" maxlength="10">
+                            	</p:password>
+                            </p:column>
                         </p:row>
                         <p:row>
-                            <p:column><h:outputLabel value="Nova Senha (entre 4 e 10 caracteres): " /></p:column>
-                            <p:column><p:password id="novaSenha" value="#{mBMinhasInformacoes.novaSenha}" size="25" maxlength="10" /></p:column>
+                            <p:column><h:outputLabel value="Nova Senha (Míninimo 8 caracteres contendo letras ou números): " /></p:column>
+                            <p:column>
+                            	<p:password id="novaSenha" value="#{mBMinhasInformacoes.novaSenha}" size="25" validatorMessage="Digite no mínimo 8 caracteres contendo apenas letras e números">
+                            		<f:validateRegex pattern="^[a-zA-Z0-9]{8,}+"></f:validateRegex>
+                            	</p:password>
+                            </p:column>
                         </p:row>
                         <p:row>
-                            <p:column><h:outputLabel value="Confirma Nova Senha: " /></p:column>
-                            <p:column><p:password id="novaSenha2" value="#{mBMinhasInformacoes.novaSenhaConfirmar}" size="25" maxlength="10" /></p:column>
+                            <p:column><h:outputLabel value="Confirma Nova Senha (Míninimo 8 caracteres contendo letras ou números): " /></p:column>
+                            <p:column>
+                            	<p:password id="novaSenha2" value="#{mBMinhasInformacoes.novaSenhaConfirmar}" size="25" validatorMessage="Digite no mínimo 8 caracteres contendo apenas letras e números">
+                            		<f:validateRegex pattern="^[a-zA-Z0-9]{8,}+"></f:validateRegex>
+                            	</p:password>
+                            </p:column>
                         </p:row>
                     </p:panelGrid>
                 </p:fieldset>
@@ -67,6 +78,7 @@
                     <p:row>
                         <p:column style="text-align: center; width: 100%" styleClass="ui-widget-header">
                             <p:commandButton id="cbEditarSalvarMinhasInformacoes" value="Salvar"
+                            				 process="frmEditarMinhasInformacoes"	
                                              update="frmEditarMinhasInformacoes"
                                              actionListener="#{mBMinhasInformacoes.alterarMinhasInformacoes}"
                                              />

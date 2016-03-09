@@ -137,15 +137,19 @@
                                     <f:validator binding="#{usuarioCadastradoValidator}" />
                                 </p:inputText>
                                 <h:outputLabel value="Senha:* " />
-                                <p:password  required="true" value="#{mBUsuario.usuarioNovo.nmSenha}" requiredMessage="Informe a Senha" maxlength="10">
-                                    <f:validator binding="#{senhaValidator}" />
+                                <p:password  required="true" value="#{mBUsuario.usuarioNovo.nmSenha}" requiredMessage="Informe a Senha" 
+                                		validatorMessage="Digite no mínimo 8 caracteres contendo apenas letras e números">
+                                   		<f:validateRegex pattern="^[a-zA-Z0-9]{8,}+"></f:validateRegex>
                                 </p:password>
 
                                 <h:outputLabel value="Confirmar Senha:" />
-                                <p:password id="idSenha" value="#{mBUsuario.senhaConfirmar}" required="true" requiredMessage="Informe a Senha" maxlength="10" >
-                                    <f:validator binding="#{senhaValidator}" />
+                                <p:password id="idSenha" value="#{mBUsuario.senhaConfirmar}" required="true" requiredMessage="Informe a Senha"
+                                	validatorMessage="Digite no mínimo 8 caracteres contendo apenas letras e números">
+                                	<f:validateRegex pattern="^[a-zA-Z0-9]{8,}+"></f:validateRegex>
                                 </p:password>
                             </p:panelGrid>
+                            <br/>
+                            <h:outputText style="margin-left: 3px; margin-top: 15px;" value="A senha deve conter no minímo 8 caracteres e apenas letras e números são permitidos" />
                         </p:fieldset>
                         <br />
                         <p:fieldset legend="Perfis">
@@ -229,11 +233,16 @@
                         <p:fieldset legend="Dados de acesso">
                             <p:panelGrid columns="2">
                                 <h:outputLabel value="Login:* " />
-                                <p:inputText value="#{mBUsuario.usuario.nmLogin}" disabled="true"/>
+                                <p:inputText value="#{mBUsuario.usuario.nmLogin}" disabled="true">
+                                </p:inputText>
 
                                 <h:outputLabel value="Senha:* " />
-                                <p:password value="#{mBUsuario.usuario.nmSenha}" redisplay="true" />
+                                <p:password value="#{mBUsuario.usuario.nmSenha}" redisplay="true" validatorMessage="Digite no mínimo 8 caracteres, apenas letras e números são permitidos">
+                                	<f:validateRegex pattern="^[a-zA-Z0-9]{8,}+"></f:validateRegex>
+                                </p:password>
                             </p:panelGrid>
+                            <br/>
+                            <h:outputText style="margin-left: 3px; margin-top: 15px;" value="A senha deve conter no minímo 8 caracteres, apenas letras e números são permitidos" />
                         </p:fieldset>
                         <br />
                         <p:fieldset legend="Perfis">
