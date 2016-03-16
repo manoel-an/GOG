@@ -24,6 +24,8 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
+import com.thoughtworks.xstream.XStream;
+
 import br.com.xti.ouvidoria.dao.FiltroPersonalizadoDAO;
 import br.com.xti.ouvidoria.dao.ManifestacaoDAO;
 import br.com.xti.ouvidoria.filtropersonalizado.FiltroPersonalizado;
@@ -49,8 +51,6 @@ import br.com.xti.ouvidoria.model.enums.UnidadeEnum;
 import br.com.xti.ouvidoria.security.SecurityService;
 import br.com.xti.ouvidoria.util.JSFUtils;
 import br.com.xti.ouvidoria.util.ManifestacaoUtils;
-
-import com.thoughtworks.xstream.XStream;
 
 @SessionScoped
 @SuppressWarnings("serial")
@@ -214,7 +214,7 @@ public class MBListarManifestacoes implements Serializable {
         	filtro2.addManIdStatus(StatusManifestacaoEnum.EM_ANDAMENTO.getId());
         	filtro2.setEncStatus(StatusEncaminhamentoEnum.ENCAMINHADA.getId());
         	filtro2.addEncIdUnidadeEnviou(securityService.getUser().getIdUnidade().getIdUnidade());
-        	list.addAll(manifestacaoDAO.getManifestacoes(filtro2));
+        	//list.addAll(manifestacaoDAO.getManifestacoes(filtro2));
         }
         
         ajustarEmAndamento(list);
@@ -250,7 +250,7 @@ public class MBListarManifestacoes implements Serializable {
         				}
         				
         				if(deletarEnviou && deletarRecebeu) {
-        					listIterator.remove();
+        					//listIterator.remove();
         				}
 					}
 	        	}

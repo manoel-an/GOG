@@ -351,13 +351,17 @@
                     <p:row rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'saneamento' and mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}">
                     	<p:column style="font-weight: bold;">Prestadora do Serviço:</p:column>
                     	<p:column>
-	                    	<p:inputText id="ps" value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="height: 15px; width: 250px;"/>
-	                    	<h:outputText rendered="#{!security.manifestante}" value="Digite ou selecione:" style="margin-left: 5px; font-weight: bold;"/>
-	                    	<p:selectOneMenu rendered="#{!security.manifestante}" value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="height: 15px; margin-left: 5px;">
-	                    		<f:selectItem itemLabel="----- Prestadoras ------" itemValue="#{null}" noSelectionOption="true"/>
-	                    		<f:selectItems value="#{mBManifestacaoCadastrar.unidadesTransporte}" var="u" itemLabel="#{u.nmUnidade}" itemValue="#{u.nmUnidade}"/>
-	                    		<p:ajax process="@this" update="ps"/>
-	                    	</p:selectOneMenu>
+	                    	<p:inputText id="ps" value="#{mBManifestacaoCadastrar.manifestacao.prestadoraServico}" style="height: 15px; width: 250px;">
+	                    		<p:ajax event="blur" process="@this" update="@this"/>
+	                    	</p:inputText>
+	                    	<h:panelGroup>
+	                	    	<h:outputText rendered="#{!security.manifestante}" value="Digite ou selecione:" style="margin-left: 5px; font-weight: bold;"/>
+	            	        	<p:selectOneMenu rendered="#{!security.manifestante}" value="#{mBManifestacaoCadastrar.prestadoraServicoAux}" style="height: 15px; margin-left: 5px;">
+	        	            		<f:selectItem itemLabel="----- Prestadoras ------" itemValue="" noSelectionOption="true"/>
+	    	                		<f:selectItems value="#{mBManifestacaoCadastrar.unidadesTransporte}" var="u" itemLabel="#{u.nmUnidade}" itemValue="#{u.nmUnidade}"/>
+		                    		<p:ajax event="change" process="@this" update="ps" listener="#{mBManifestacaoCadastrar.selecionaPrestadora}"/>
+		                    	</p:selectOneMenu>
+	                    	</h:panelGroup>
                     	</p:column>
                     </p:row>
                     
@@ -672,10 +676,11 @@
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia()}">
                         <p:column style="font-weight: bold;">Cidade: </p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:selectOneMenu id="localidade" value="#{mBManifestacaoCadastrar.manifestacao.dsLocalidade}" style="width: 250px;" filter="true" filterMatchMode="contains">
-                           		<f:selectItem itemLabel=" - Selecione -" itemValue="Não informada" noSelectionOption="true" />
-                           		<f:selectItems value="#{localidadeBean.municipios}" var="municipio" itemLabel="#{municipio.nmMunicipio}" itemValue="#{municipio.nmMunicipio}"/>
-                           	</p:selectOneMenu>
+                    	        <p:autoComplete id="localidade" minQueryLength="1" size="32"
+                            	value="#{mBManifestacaoCadastrar.manifestacao.dsLocalidade}"
+                            	completeMethod="#{mBManifestacaoCadastrar.completaMunicipio}"
+                            	required="true"
+                            	requiredMessage="Informe a cidade" />
                         </p:column>
                     </p:row>
                     
@@ -791,13 +796,13 @@
                                 <p:row>
                                     <p:column style="text-align: center; width: 10%" styleClass="ui-widget-header">
                                         <h:panelGroup id="btnSubmit">
-    	                                    <p:commandButton id="cbNovoSalvar" value="Enviar" ajax="true" 
+    	                                    <p:commandButton id="cbNovoSalvar" value="Enviar" ajax="true" process="frmNovaManifestacao"
                                                          oncomplete="if (!args.validationFailed){cd.show()};" 
                                                          type="submit" update="frmNovaManifestacao"
                                                          rendered="#{mBManifestacaoCadastrar.manifestacao.tipoSolicitacao != 'energia'}" />
 	                                        <p:commandButton style="margin-left: 10px;" id="cbEncerrarScript" value="Encerrar Por Script" ajax="true" 
                                                          oncomplete="if (!args.validationFailed){cd2.show()};" 
-                                                         type="submit" update="frmNovaManifestacao, :modalEncerramento" rendered="#{!security.manifestante}" />
+                                                         type="submit" update="frmNovaManifestacao, :modalEncerramento" process="frmNovaManifestacao" rendered="#{!security.manifestante}" />
                                         </h:panelGroup>
                                     </p:column>
                                 </p:row>

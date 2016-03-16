@@ -129,6 +129,7 @@ public class MBManifestacaoCadastrar implements Serializable {
     private boolean emailCadastrado;
     private boolean emailFicticio;
     private boolean enderecoNaoInformado;
+    private String prestadoraServicoAux;
     
     private List<TbAnexo> arquivos = new ArrayList<>();
     private Collection<TbMunicipio> municipios = new ArrayList<>();
@@ -156,6 +157,7 @@ public class MBManifestacaoCadastrar implements Serializable {
         preencherDadosUsuarioLogado();
         TbClassificacao transporte = classificacaoDAO.getClassificacaoPorNome("Transporte");
         idUf = 9;
+        municipios = localidadeBean.getMunicipios();
         
         if(transporte != null)
         	unidadesTransporte = unidadeDAO.getPorClassificacao(transporte.getIdClassificacao());
@@ -245,7 +247,7 @@ public class MBManifestacaoCadastrar implements Serializable {
             
             //----- Email -------//
         	if(!ValidacaoHelper.isNotEmpty(manifestacao.getEeEmailUsuario())) {
-        		manifestacao.setEeEmailUsuario("a@a.com");
+        		manifestacao.setEeEmailUsuario("anonimo@agr.go.gov.br");
         	}
             
 
@@ -402,7 +404,7 @@ public class MBManifestacaoCadastrar implements Serializable {
             
             //----- Email -------//
         	if(!ValidacaoHelper.isNotEmpty(manifestacao.getEeEmailUsuario())) {
-        		manifestacao.setEeEmailUsuario("a@a.com");
+        		manifestacao.setEeEmailUsuario("anonimo@agr.go.gov.br");
         	}
             
 
@@ -609,7 +611,7 @@ public class MBManifestacaoCadastrar implements Serializable {
 	 *         parâmetro. <b>Limitado a 15 municípios.</b>
 	 */
     public List<String> completaMunicipio(String query) {
-        List<String> results = new ArrayList<>();
+    	List<String> results = new ArrayList<>();
         query = query.toUpperCase();
         for (TbMunicipio cidade : municipios) {
             String nmMunicipio = cidade.getNmMunicipio().toUpperCase();
@@ -819,14 +821,8 @@ public class MBManifestacaoCadastrar implements Serializable {
 	public void setEmailFicticio(boolean emailFicticio) {
 		if(emailFicticio)
 			manifestacao.setEeEmailUsuario("anonimo@agr.go.gov.br");
-		else
-			manifestacao.setEeEmailUsuario("");
 		this.emailFicticio = emailFicticio;
 	}
-
-
-
-
 
 	public boolean isEnderecoNaoInformado() {
 		return enderecoNaoInformado;
@@ -835,14 +831,20 @@ public class MBManifestacaoCadastrar implements Serializable {
 	public void setEnderecoNaoInformado(boolean enderecoNaoInformado) {
 		if(enderecoNaoInformado)
 			manifestacao.setEnEndereco("Não informado");
-		else
-			manifestacao.setEnEndereco("");
 		this.enderecoNaoInformado = enderecoNaoInformado;
 	}
 
+	public String getPrestadoraServicoAux() {
+		return prestadoraServicoAux;
+	}
 
-
-
+	public void setPrestadoraServicoAux(String prestadoraServicoAux) {
+		this.prestadoraServicoAux = prestadoraServicoAux;
+	}
+	
+	public void selecionaPrestadora(){
+		manifestacao.setPrestadoraServico(prestadoraServicoAux);
+	}
 
 	static {
     	StringBuilder sb = new StringBuilder()

@@ -1121,8 +1121,6 @@
 							<p:column>
 								<p:selectOneMenu value="#{mBManifestacao.idUsuarioTramite}"
 									id="slcUsuarioTramite"
-									required="#{security.interlocutor}"
-									requiredMessage="Informe o operador"
 									disabled="#{mBManifestacao.desabilitaUsuarioTramite()}">
 									<f:selectItem itemLabel="- Selecione -" itemValue="" />
 									<f:selectItems value="#{mBManifestacao.usuarios}" var="item"
