@@ -1,12 +1,13 @@
 package br.com.xti.ouvidoria.converter;
 
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.FacesConverter;
 
 import br.com.xti.ouvidoria.dao.ClassificacaoDAO;
+import br.com.xti.ouvidoria.helper.CdiHelper;
 import br.com.xti.ouvidoria.model.TbClassificacao;
 
 /**
@@ -16,11 +17,19 @@ import br.com.xti.ouvidoria.model.TbClassificacao;
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
+@FacesConverter(value="classificacaoConverter")
 public class ConversorClassificacao extends ConversorBase {
 	
-	@EJB
 	private ClassificacaoDAO dao;
-    
+
+	public ConversorClassificacao() {
+		try {
+			dao = CdiHelper.getFacadeWithJNDI(ClassificacaoDAO.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         TbClassificacao classificacao = null;

@@ -20,6 +20,7 @@ import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -50,6 +51,7 @@ import br.com.xti.ouvidoria.model.TbMunicipio;
 import br.com.xti.ouvidoria.model.TbPais;
 import br.com.xti.ouvidoria.model.TbPrioridade;
 import br.com.xti.ouvidoria.model.TbRespostaManifestacao;
+import br.com.xti.ouvidoria.model.TbSubClassificacao;
 import br.com.xti.ouvidoria.model.TbUF;
 import br.com.xti.ouvidoria.model.TbUnidade;
 import br.com.xti.ouvidoria.model.TbUsuario;
@@ -142,6 +144,12 @@ public class MBManifestacaoCadastrar implements Serializable {
 
 	@EJB
 	private ComunicacaoExternaDAO comunicacaoExternaDAO;
+	
+	private TbClassificacao classificacao;
+	
+	private TbSubClassificacao subClassificacao;
+	
+	private List<TbClassificacao> classificacoes;
 
     
     
@@ -158,6 +166,7 @@ public class MBManifestacaoCadastrar implements Serializable {
         TbClassificacao transporte = classificacaoDAO.getClassificacaoPorNome("Transporte");
         idUf = 9;
         municipios = localidadeBean.getMunicipios();
+        classificacoes = classificacaoDAO.findAll();
         
         if(transporte != null)
         	unidadesTransporte = unidadeDAO.getPorClassificacao(transporte.getIdClassificacao());
@@ -326,6 +335,8 @@ public class MBManifestacaoCadastrar implements Serializable {
 	 */
     public void encerrarPorScript(){
     	try {
+    		manifestacao.getTbClassificacaoCollection().add(classificacao);
+    		manifestacao.getTbSubClassificacaoCollection().add(subClassificacao);
             manifestacao.setStResposta("1");
             manifestacao.setSiSigilo("1");
             
@@ -497,6 +508,7 @@ public class MBManifestacaoCadastrar implements Serializable {
                 MensagemFaceUtil.alerta("Atenção!", "Sua Manifestação foi cadastrada com sucesso porém, não foi possível enviar-lhe um e-mail com os dados de acesso a mesma.");
                 return;
             }
+            RequestContext.getCurrentInstance().execute("cd2.hide();");
             MensagemFaceUtil.info("Sucesso!", "Manifestação cadastrada com sucesso.");
 
         } catch (Exception e) {
@@ -844,6 +856,30 @@ public class MBManifestacaoCadastrar implements Serializable {
 	
 	public void selecionaPrestadora(){
 		manifestacao.setPrestadoraServico(prestadoraServicoAux);
+	}
+
+	public TbClassificacao getClassificacao() {
+		return classificacao;
+	}
+
+	public void setClassificacao(TbClassificacao classificacao) {
+		this.classificacao = classificacao;
+	}
+
+	public TbSubClassificacao getSubClassificacao() {
+		return subClassificacao;
+	}
+
+	public void setSubClassificacao(TbSubClassificacao subClassificacao) {
+		this.subClassificacao = subClassificacao;
+	}
+
+	public List<TbClassificacao> getClassificacoes() {
+		return classificacoes;
+	}
+
+	public void setClassificacoes(List<TbClassificacao> classificacoes) {
+		this.classificacoes = classificacoes;
 	}
 
 	static {
