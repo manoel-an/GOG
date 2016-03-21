@@ -879,6 +879,7 @@
 													<p:selectOneMenu required="true" requiredMessage="Informe a sub-classificação" id="subs" value="#{mBManifestacaoCadastrar.subClassificacao}" converter="conversorSubClassificacao" style="width: 300px;">
 														<f:selectItem itemLabel="----- Selecione -----" itemValue="#{null}"/>
 														<f:selectItems value="#{mBManifestacaoCadastrar.classificacao.tbSubClassificacaoCollection}" var="sub" itemLabel="#{sub.dsSubClassificacao}" itemValue="#{sub}"/>
+														<p:ajax event="change" process="@this" update="@this"/>
 													</p:selectOneMenu>
 												</h:panelGrid>
 											</p:column>
