@@ -85,6 +85,9 @@ public class TbTramite implements Serializable {
     @Size(max = 1)
     @Column(name = "stTramitePublico")
     private String stTramitePublico;
+    
+    @Transient
+    private String strAnexos;
 
     public TbTramite() {
     }
@@ -193,6 +196,14 @@ public class TbTramite implements Serializable {
 		this.stTramitePublico = stTramitePublico;
 	}
 	
+	public String getStrAnexos() {
+		return strAnexos;
+	}
+
+	public void setStrAnexos(String strAnexos) {
+		this.strAnexos = strAnexos;
+	}
+
 	public boolean isTramitePublico() {
 		return BooleanEnum.SIM.getId().equals(stTramitePublico);
 	}
@@ -221,8 +232,6 @@ public class TbTramite implements Serializable {
         return String.format("%s > %s", getEntidade(), getDescricao());
     }
     
-	// Atributo para marcar o trâmite como selecionado na tela de administração,
-	// para qye o seu conteúdo seja copiado na resposta
 	@Transient
     private boolean selecionado = true;
 	

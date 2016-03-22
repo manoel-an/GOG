@@ -155,20 +155,7 @@
 							<h:outputText value="#{mBManifestacao.manifestacao.idUsuarioCriador != null ? mBManifestacao.manifestacao.idUsuarioCriador.nmUsuario : 'Usuário Externo'}"/>
 					</p:column>
 					<p:column headerText="Tipo de Manifestação">
-						<p:selectOneMenu
-							id="slcTipoManifestacao" required="true" 
-							value="#{mBManifestacao.manifestacao.idTipoManifestacao.idTipoManifestacao}"
-							requiredMessage="Informe o Tipo da Manifestação"
-							disabled="#{mBManifestacao.disableManifestationType()}">
-							<f:selectItem itemLabel=" - Selecione -" itemValue="" />
-							<f:selectItems value="#{mBManifestacao.tipos}" var="tipo"
-								itemLabel="#{tipo.nmTipoManifestacao}"
-								itemValue="#{tipo.idTipoManifestacao}"
-								itemDescription="#{tipo.dsTipoManifestacao}">
-							</f:selectItems>
-							<p:ajax event="change"
-								listener="#{mBManifestacao.alteraTipoManifestacao}" />
-						</p:selectOneMenu>
+						<h:outputText value="#{mBManifestacao.manifestacao.idTipoManifestacao.nmTipoManifestacao}" />
 					</p:column>
 
 					<p:column headerText="Data de Registro">

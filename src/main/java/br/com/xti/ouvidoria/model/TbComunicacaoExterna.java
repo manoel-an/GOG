@@ -72,6 +72,8 @@ public class TbComunicacaoExterna implements Serializable {
     @Column(name = "stComunicacaoPublica")
     private String stComunicacaoPublica;
 
+	private String strAnexos;
+
     public TbComunicacaoExterna() {
     }
 
@@ -183,5 +185,12 @@ public class TbComunicacaoExterna implements Serializable {
     public String toString() {
     	return String.format("%s > %s", getEntidade(), getDescricao());
     }
+
+	public void setStrAnexos(String anexos) {
+		this.strAnexos = anexos;
+	}
     
+	public String getStrAnexos() {
+		return strAnexos;
+	}
 }

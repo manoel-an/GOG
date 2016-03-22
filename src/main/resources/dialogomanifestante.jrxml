@@ -12,6 +12,7 @@
 	<field name="dtComunicacao" class="java.util.Date"/>
 	<field name="dsComunicacao" class="java.lang.String"/>
 	<field name="idUsuario.nmUsuario" class="java.lang.String"/>
+	<field name="strAnexos" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -128,10 +129,7 @@ Sistema de Ouvidoria]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="61" splitType="Stretch">
-			<line>
-				<reportElement positionType="Float" x="10" y="60" width="543" height="1" uuid="dd060870-f63b-46dd-a77c-fdf08b4b06f7"/>
-			</line>
+		<band height="91" splitType="Stretch">
 			<staticText>
 				<reportElement x="97" y="0" width="14" height="20" uuid="25605db7-4656-44b7-8df3-ea14b2ee971c"/>
 				<textElement verticalAlignment="Middle">
@@ -139,13 +137,6 @@ Sistema de Ouvidoria]]></text>
 				</textElement>
 				<text><![CDATA[ás]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="32" y="0" width="65" height="19" uuid="5ded75a0-83ad-40f2-aca3-e6325a59fd2b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true" pdfFontName="Helvetica-Bold"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{dtComunicacao}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="10" y="0" width="22" height="20" uuid="c238563f-9834-4bd4-b405-1d96df9f54c5"/>
 				<textElement verticalAlignment="Middle">
@@ -175,12 +166,27 @@ Sistema de Ouvidoria]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA["<b>"+($F{idUsuario.nmUsuario} == null ? "Manifestante" : "Ouvidoria ("+$F{idUsuario.nmUsuario}+")")+ "</b> disse para <b>" + ($F{idUsuario.nmUsuario} != null ? "Manifestante" : "Ouvidoria")+ "</b>:"]]></textFieldExpression>
 			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement positionType="Float" x="10" y="59" width="543" height="30" uuid="00936781-a0bd-44a4-b49d-95865664577a"/>
+				<box bottomPadding="0">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom" markup="html"/>
+				<textFieldExpression><![CDATA[$F{strAnexos}.isEmpty() ? "Sem anexos" : $F{strAnexos}.replaceAll("13.3333px;", "8px;")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="10" y="59" width="102" height="20" uuid="a9a50463-2bbc-41df-86f9-e45ab0be0ecd"/>
+				<text><![CDATA[Anexos:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="10" y="89" width="543" height="1" uuid="dd060870-f63b-46dd-a77c-fdf08b4b06f7"/>
+			</line>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="28" splitType="Stretch">
+		<band height="30">
 			<textField>
-				<reportElement x="453" y="8" width="100" height="20" uuid="6b8e549d-c08e-4d71-a58f-9610f2ec49e2"/>
+				<reportElement x="453" y="10" width="100" height="20" uuid="ec10cbe9-3356-4de3-bc1d-b7c887feb34b"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>

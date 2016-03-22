@@ -24,10 +24,13 @@ import br.com.xti.ouvidoria.helper.EnumHelper;
 import br.com.xti.ouvidoria.helper.FiltroHelper;
 import br.com.xti.ouvidoria.helper.ValidacaoHelper;
 import br.com.xti.ouvidoria.manifestacao.view.ManifestacaoTabView;
+import br.com.xti.ouvidoria.model.TbAnexo;
 import br.com.xti.ouvidoria.model.TbComunicacaoExterna;
+import br.com.xti.ouvidoria.model.TbComunicacaoExternaxAnexo;
 import br.com.xti.ouvidoria.model.TbEncaminhamento;
 import br.com.xti.ouvidoria.model.TbManifestacao;
 import br.com.xti.ouvidoria.model.TbTramite;
+import br.com.xti.ouvidoria.model.TbTramitexAnexo;
 import br.com.xti.ouvidoria.model.TbUnidade;
 import br.com.xti.ouvidoria.model.TbUsuario;
 import br.com.xti.ouvidoria.model.enums.FuncaoUsuarioEnum;
@@ -146,13 +149,15 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 	
 	@SuppressWarnings("unchecked")
 	public void imprimirDialogoEncaminhamento(ManifestacaoTabView encaminhamento){
+		List<TbTramite> tramites = (List<TbTramite>) encaminhamento.getConteudo();
+		recuperarStringAnexosTramites(tramites);
 		adicionaParametroRelatorio("numeroManifestacao", encaminhamento.getEncaminhamento().getIdManifestacao().getNrManifestacao());
 		adicionaParametroRelatorio("logoAGR", "logoagr.jpg");
 		adicionaParametroRelatorio("dataInicioDialogo", encaminhamento.getEncaminhamento().getDtCriacaoEncaminhamento());
 		adicionaParametroRelatorio("origemTramite", encaminhamento.getEncaminhamento().getIdUnidadeEnviou().getNmUnidade());
 		adicionaParametroRelatorio("destinoTramite", encaminhamento.getEncaminhamento().getIdUnidadeRecebeu().getNmUnidade());
 		try {
-			baixarPDF("dialogomanifestacao", (List<TbTramite>) encaminhamento.getConteudo(), "tramites");
+			baixarPDF("dialogomanifestacao", tramites, "tramites");
 		} catch (InfrastructureException e) {
 			MensagemFaceUtil.erro("Erro!", e.getMessage());
 		}
@@ -161,6 +166,7 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 	@SuppressWarnings("unchecked")
 	public void imprimirDialogoManifestante(ManifestacaoTabView encaminhamento) throws InfrastructureException {
 		List<TbComunicacaoExterna> comunicacoes = (List<TbComunicacaoExterna>) encaminhamento.getConteudo();
+		recuperarStringAnexosExterno(comunicacoes);
 		adicionaParametroRelatorio("numeroManifestacao", manifestacao.getNrManifestacao());
 		adicionaParametroRelatorio("logoAGR", "logoagr.jpg");
 		adicionaParametroRelatorio("dataInicioDialogo", comunicacoes.get(0).getDtComunicacao());
@@ -169,6 +175,35 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 		adicionaParametroRelatorio("nomeManifestante", manifestacao.getNmPessoa());
 		baixarPDF("dialogomanifestante", comunicacoes, "tramites");
 	}
+
+	public void recuperarStringAnexosTramites(List<TbTramite> tramites){
+		for(TbTramite t : tramites){
+			StringBuilder anexos = new StringBuilder("");
+			for(TbTramitexAnexo a : t.getTbTramitexAnexoCollection()){
+				anexos.append(a.getIdAnexo().getNmAnexo());
+				anexos.append(", ");
+			}
+			if(anexos.length() > 2)
+				anexos.replace(anexos.length()-2, anexos.length(), "");
+			t.setStrAnexos(anexos.toString());
+		}
+		
+	}
+	
+	public void recuperarStringAnexosExterno(List<TbComunicacaoExterna> comunicacoes){
+		for(TbComunicacaoExterna c : comunicacoes){
+			StringBuilder anexos = new StringBuilder("");
+			for(TbComunicacaoExternaxAnexo a : c.getTbComunicacaoExternaxAnexoCollection()){
+				anexos.append(a.getIdAnexo().getNmAnexo());
+				anexos.append(", ");
+			}
+			if(anexos.length() > 2)
+				anexos.replace(anexos.length()-2, anexos.length(), "");
+			c.setStrAnexos(anexos.toString());
+		}
+		
+	}
+	
 	
 	public void mountTabs() {
         int index = 0;

@@ -14,6 +14,7 @@
 	<field name="dtTramite" class="java.util.Date"/>
 	<field name="idUsuarioEmissor.nmUsuario" class="java.lang.String"/>
 	<field name="idUnidadeEnvio.nmUnidade" class="java.lang.String"/>
+	<field name="strAnexos" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -119,9 +120,9 @@ Sistema de Ouvidoria]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="63" splitType="Stretch">
+		<band height="94" splitType="Stretch">
 			<line>
-				<reportElement positionType="Float" x="8" y="62" width="543" height="1" uuid="5f541cac-c9b5-4dc3-894f-8388c4399bb1"/>
+				<reportElement positionType="Float" x="9" y="90" width="543" height="1" uuid="5f541cac-c9b5-4dc3-894f-8388c4399bb1"/>
 			</line>
 			<textField>
 				<reportElement x="8" y="19" width="543" height="20" uuid="10ed1c98-2c61-4e9c-ba29-e6021cf4da52"/>
@@ -165,6 +166,18 @@ Sistema de Ouvidoria]]></text>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Em:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement positionType="Float" x="8" y="59" width="543" height="30" uuid="1f5cf3e9-8d37-4306-9550-4fb613e5997a"/>
+				<box bottomPadding="0">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom" markup="html"/>
+				<textFieldExpression><![CDATA[$F{strAnexos}.isEmpty() ? "Sem anexos" : $F{strAnexos}.replaceAll("13.3333px;", "8px;")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="8" y="59" width="102" height="20" uuid="acb872c5-c622-4625-a9b9-2fb6b9340641"/>
+				<text><![CDATA[Anexos:]]></text>
 			</staticText>
 		</band>
 	</detail>
