@@ -887,7 +887,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     private String mensagemEncaminhamento;
 
     public void ajustaMensagemEncaminhamento() {
-        mensagemEncaminhamento = PalavrasChavesHelper.converterPalavrasChaves(dsEncaminhamento, manifestacao, false);
+        mensagemEncaminhamento = PalavrasChavesHelper.converterPalavrasChaves(dsEncaminhamento, manifestacao, securityService.getUser(), false);
     }
 
     public String getDsEncaminhamento() {
@@ -1112,7 +1112,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	TbRespostaManifestacao respostaManifestacao = getRespostaManifestacao();
     	if(respostaManifestacao != null) {
     		String textoPadraoComPalavrasChave = respostaManifestacao.getDsResposta();
-    		String textoPadraoSemPalavrasChave = PalavrasChavesHelper.converterPalavrasChaves(textoPadraoComPalavrasChave, manifestacao, false);
+    		String textoPadraoSemPalavrasChave = PalavrasChavesHelper.converterPalavrasChaves(textoPadraoComPalavrasChave, manifestacao, securityService.getUser(), false);
     		if(dsMensagemAoManifestante.equals(textoPadraoSemPalavrasChave)) {
     			JSFUtils.executeJavaScript("dlgRespostaSemAlteracao.show()");
     		} else {
@@ -1214,9 +1214,9 @@ public class MBManifestacao extends AbstractManifestationController implements S
                     StringBuilder emailTextoHtml = new StringBuilder();
                     StringBuilder emailTexto = new StringBuilder();
 
-                    emailManifestante.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, dsMensagemAoManifestante, false));
-                    emailTextoHtml.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, dsMensagemAoManifestante, false));
-                    emailTexto.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, dsMensagemAoManifestante, false));
+                    emailManifestante.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, securityService.getUser() ,dsMensagemAoManifestante, false));
+                    emailTextoHtml.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(),dsMensagemAoManifestante, false));
+                    emailTexto.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(),dsMensagemAoManifestante, false));
 
                     //emailManifestante.setAssunto("[MinC Ouvidoria] Encaminhamento de Manifestação para análise: " + manifestacao.getNrManifestacao());
                     emailManifestante.setTextoHtml(emailTextoHtml.toString());
@@ -1248,9 +1248,9 @@ public class MBManifestacao extends AbstractManifestationController implements S
 	                 StringBuilder emailTextoHtml = new StringBuilder();
 	                 StringBuilder emailTexto = new StringBuilder();
 	
-	                 emailQuestionario.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, dsMensagemAoManifestante, false));
-	                 emailTextoHtml.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, dsMensagemAoManifestante, false));
-	                 emailTexto.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, dsMensagemAoManifestante, false));
+	                 emailQuestionario.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, securityService.getUser(),dsMensagemAoManifestante, false));
+	                 emailTextoHtml.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(),dsMensagemAoManifestante, false));
+	                 emailTexto.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(),dsMensagemAoManifestante, false));
 	
 	                 emailQuestionario.setTextoHtml(emailTextoHtml.toString());
 	                 emailQuestionario.setTextoSemFormatacao(emailTexto.toString());
@@ -1395,9 +1395,9 @@ public class MBManifestacao extends AbstractManifestationController implements S
 	                        StringBuilder emailTextoHtml = new StringBuilder();
 	                        StringBuilder emailTexto = new StringBuilder();
 	
-	                        emailManifestante.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, false));
-	                        emailTextoHtml.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, false));
-	                        emailTexto.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, false));
+	                        emailManifestante.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, securityService.getUser(), false));
+	                        emailTextoHtml.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(), false));
+	                        emailTexto.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(), false));
 	
 	                        emailManifestante.setTextoHtml(emailTextoHtml.toString());
 	                        emailManifestante.setTextoSemFormatacao(emailTexto.toString());
@@ -1442,9 +1442,9 @@ public class MBManifestacao extends AbstractManifestationController implements S
                 TbEmailAutomatizado emailAutomatizado = emailAutomatizadoDAO.findByTipo(EmailAutomatizadoEnum.OPERADOR);
 
                 //adiciona texto e assunto de email padrao
-                String emailTexto = PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, true);
+                String emailTexto = PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(),true);
 
-                email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, true));
+                email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, securityService.getUser(),true));
                 email.setTextoHtml(emailTexto);
                 email.setTextoSemFormatacao(emailTexto);
                 
@@ -1479,9 +1479,9 @@ public class MBManifestacao extends AbstractManifestationController implements S
     		return;
     	}
 
-        String emailTexto = PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, true);
+        String emailTexto = PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(),true);
         email.addDestinatario(unidade.getNmUnidade(), unidade.getEeEmail());
-        email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, true));
+        email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, securityService.getUser(),true));
         email.setTextoHtml(emailTexto);
         email.setTextoSemFormatacao(emailTexto);
     
@@ -1583,8 +1583,8 @@ public class MBManifestacao extends AbstractManifestationController implements S
                 TbEmailAutomatizado emailAutomatizado = emailAutomatizadoDAO.findByTipo(EmailAutomatizadoEnum.MANIFESTANTE);
 
                 //adiciona texto e assunto de email padrao
-                String emailTexto = PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, true);
-                email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, true));
+                String emailTexto = PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(), true);
+                email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, securityService.getUser(), true));
                 email.setTextoHtml(emailTexto);
                 email.setTextoSemFormatacao(emailTexto);
                 
@@ -1733,7 +1733,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     private String mensagemManifestante;
 
     public void ajustaDescricaoMensagemManifestante() {
-        mensagemManifestante = PalavrasChavesHelper.converterPalavrasChaves(dsMensagemAoManifestante, manifestacao, false);
+        mensagemManifestante = PalavrasChavesHelper.converterPalavrasChaves(dsMensagemAoManifestante, manifestacao, securityService.getUser(), false);
     }
 
     public String getDsMensagemAoManifestante() {
@@ -1752,7 +1752,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     private String mensagemAreaTecnica;
 
     public void ajustaDescricaoMensagemAreaTecnica() {
-        mensagemAreaTecnica = PalavrasChavesHelper.converterPalavrasChaves(dsMensagemAreaTecnica, manifestacao, true);
+        mensagemAreaTecnica = PalavrasChavesHelper.converterPalavrasChaves(dsMensagemAreaTecnica, manifestacao, securityService.getUser(),true);
     }
     
     public String getDsMensagemAreaTecnica() {
@@ -2428,10 +2428,10 @@ public class MBManifestacao extends AbstractManifestationController implements S
 	private void enviarEmail(String userName, String userEmail, EmailAutomatizadoEnum emailType, boolean isExternalEmail) throws EmailException {
         EmailService.Email email = emailService.newEmail();
         TbEmailAutomatizado emailTemplate = emailAutomatizadoDAO.findByTipo(emailType);
-        String emailContent = PalavrasChavesHelper.converterPalavrasChaves(emailTemplate.getDsEmail(), manifestacao, isExternalEmail);
+        String emailContent = PalavrasChavesHelper.converterPalavrasChaves(emailTemplate.getDsEmail(), manifestacao, securityService.getUser(), isExternalEmail);
         
         email.addDestinatario(userName, userEmail);
-        email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailTemplate.getNmTituloEmail(), manifestacao, isExternalEmail));
+        email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailTemplate.getNmTituloEmail(), manifestacao, securityService.getUser(),isExternalEmail));
         email.setTextoHtml(emailContent);
         email.setTextoSemFormatacao(emailContent);
         

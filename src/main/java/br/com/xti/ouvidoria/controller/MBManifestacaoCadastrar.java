@@ -308,9 +308,9 @@ public class MBManifestacaoCadastrar implements Serializable {
                     StringBuilder emailTextoHtml = new StringBuilder();
                     StringBuilder emailTexto = new StringBuilder();
 
-                    email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, false));
-                    emailTextoHtml.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, false));
-                    emailTexto.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, false));
+                    email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, securityService.getUser(), false));
+                    emailTextoHtml.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser() ,false));
+                    emailTexto.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(), false));
 
                     email.setTextoHtml(emailTextoHtml.toString());
                     email.setTextoSemFormatacao(emailTexto.toString());
@@ -494,9 +494,9 @@ public class MBManifestacaoCadastrar implements Serializable {
                     StringBuilder emailTextoHtml = new StringBuilder();
                     StringBuilder emailTexto = new StringBuilder();
 
-                    email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, false));
-                    emailTextoHtml.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, false));
-                    emailTexto.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, false));
+                    email.setAssunto(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestacao, securityService.getUser(), false));
+                    emailTextoHtml.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(), false));
+                    emailTexto.append(PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestacao, securityService.getUser(), false));
 
                     email.setTextoHtml(emailTextoHtml.toString());
                     email.setTextoSemFormatacao(emailTexto.toString());

@@ -77,8 +77,8 @@ public class MBNovaSenha implements Serializable {
     			manifestacaoDAO.edit(manifestation);
     			
     			TbEmailAutomatizado emailAutomatizado = emailAutomatizadoDAO.findByTipo(EmailAutomatizadoEnum.NOVA_SENHA_MANIFESTACAO);
-    			String emailAssunto = PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestation, false);
-    			String emailTexto = PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestation, false);
+    			String emailAssunto = PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getNmTituloEmail(), manifestation, securityService.getUser(), false);
+    			String emailTexto = PalavrasChavesHelper.converterPalavrasChaves(emailAutomatizado.getDsEmail(), manifestation, securityService.getUser(), false);
     			
     			EmailService.Email newPasswordEmail = emailService.newEmail();
     			newPasswordEmail.addDestinatario(manifestation.getNmPessoa(), manifestation.getEeEmailUsuario());

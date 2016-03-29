@@ -34,19 +34,20 @@
 						<p:selectOneMenu  value="#{mBExtracaoDados.idTipoManifestacao}" style="width: 300px;">
                             <f:selectItem itemLabel="- Selecione -" itemValue="" />
                             <f:selectItems var="tipo" value="#{mBTipoManifestacao.todos}" itemValue="#{tipo.idTipoManifestacao}" itemLabel="#{tipo.nmTipoManifestacao}" />
+                        	<p:ajax event="change" process="@this"/>
                         </p:selectOneMenu>
 					</p:column>
                 </p:row>
                 <p:row>
                     <p:column style="width: 20%">Período de abertura (De)</p:column>
                     <p:column style="width: 80%">
-                    	<p:calendar value="#{mBExtracaoDados.dtCadastroInicio}" pattern="dd/MM/yyyy" />
+                    	<p:calendar value="#{mBExtracaoDados.dtCadastroInicio}" pattern="dd/MM/yyyy" id="de"/>
 					</p:column>
                 </p:row>
                 <p:row>
                     <p:column style="width: 20%">Período de abertura (Até)</p:column>
                     <p:column style="width: 80%">
-                    	<p:calendar value="#{mBExtracaoDados.dtCadastroFim}" pattern="dd/MM/yyyy" />
+                    	<p:calendar value="#{mBExtracaoDados.dtCadastroFim}" pattern="dd/MM/yyyy" id="ate"/>
 					</p:column>
                 </p:row>
                 <p:row>
@@ -55,6 +56,7 @@
                         <p:selectOneMenu value="#{mBExtracaoDados.idStatus}" style="width: 300px;">
                             <f:selectItem itemLabel="- Selecione -" itemValue="" />  
                             <f:selectItems var="tipo" value="#{mBExtracaoDados.statusManifestacaoRelatorioEnums}" itemValue="#{tipo}" itemLabel="#{tipo.descricao}" />
+                        	<p:ajax event="change" process="@this"/>
                         </p:selectOneMenu>
                     </p:column>
                 </p:row>
@@ -64,12 +66,11 @@
                         <p:selectOneMenu value="#{mBExtracaoDados.idClassificacao}" style="width: 300px;">
                             <f:selectItem itemLabel="- Selecione -" itemValue="" />  
                             <f:selectItems var="classificacao" value="#{mBClassificacao.todos}" itemValue="#{classificacao.idClassificacao}" itemLabel="#{classificacao.dsClassificacao}" />
-                            <p:ajax process="@this" update="ddlSubClassificacao" 
-                                    event="change" />
+                            <p:ajax event="change" process="@this, de, ate" update="@all"/>
                         </p:selectOneMenu>
                     </p:column>
                 </p:row>
-                <p:row>
+                <p:row id="teste">
                     <p:column style="width: 20%">Subclassificação</p:column>
                     <p:column style="width: 80%">
                     	<p:selectOneMenu id="ddlSubClassificacao"  value="#{mBExtracaoDados.idSubClassificacao}" style="width: 300px;">

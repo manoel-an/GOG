@@ -17,15 +17,15 @@ import br.com.xti.ouvidoria.model.enums.PalavrasChavesEnum;
  */
 public class PalavrasChavesHelper {
 	
-    public static String converterPalavrasChaves(String texto, TbManifestacao manifestacao, String respostaOuvidor, boolean isEmailInterno) {
-        String t = converterPalavrasChaves(texto, manifestacao, isEmailInterno);
+    public static String converterPalavrasChaves(String texto, TbManifestacao manifestacao, TbUsuario usuario, String respostaOuvidor, boolean isEmailInterno) {
+        String t = converterPalavrasChaves(texto, manifestacao, usuario, isEmailInterno);
         // Adiciona resposta do Ouvidor
         t = substituirPorValor(t, "%RESPOSTA_OUVIDOR%", respostaOuvidor);
         return t;
     }
     
     @SuppressWarnings("incomplete-switch")
-	public static String converterPalavrasChaves(String texto, TbManifestacao manifestacao, boolean isEmailInterno) {
+	public static String converterPalavrasChaves(String texto, TbManifestacao manifestacao, TbUsuario usuario, boolean isEmailInterno) {
         if(!ValidacaoHelper.isNotEmpty(texto) || manifestacao == null) {
             return "";
         }
@@ -50,6 +50,14 @@ public class PalavrasChavesHelper {
                     case PRIORIDADE: t = substituirPorValor(t, "%"+palavra+"%", manifestacao.getIdPrioridade().getNmPrioridade()); break;
                     case STATUS: t = substituirPorValor(t, "%"+palavra+"%", EnumHelper.getStatusManifestacaoEnum(manifestacao.getStStatusManifestacao())); break;
                     case AREA_SOLUCIONADORA: t = substituirPorValor(t, "%"+palavra+"%", getAreaSolucionadora(manifestacao.getTbUnidadeAreaSolucionadoraCollection())); break;
+                    
+                    //Dados do Usuário
+                    case NOME_USUARIO: t = substituirPorValor(t, "%"+palavra+"%", usuario != null ? usuario.getNmUsuario() : ""); break;
+                    case EMAIL_USUARIO: t = substituirPorValor(t, "%"+palavra+"%", usuario != null ? usuario.getEeEmail() : ""); break;
+                    case SENHA_USUARIO: t = substituirPorValor(t, "%"+palavra+"%", usuario != null ? usuario.getNmSenha() : ""); break;
+                    case LOGIN_USUARIO: t = substituirPorValor(t, "%"+palavra+"%", usuario != null ? usuario.getNmLogin() : ""); break;
+                    case TELEFONE_USUARIO: t = substituirPorValor(t, "%"+palavra+"%", usuario != null ? usuario.getNumTelefone() : ""); break;
+                    
                     // Dados do Manifestante
                     case NOME: t = substituirPorValor(t, "%"+palavra+"%", manifestacao.getNmPessoa()); break;
                     case EMAIL: t = substituirPorValor(t, "%"+palavra+"%", manifestacao.getEeEmailUsuario()); break;
