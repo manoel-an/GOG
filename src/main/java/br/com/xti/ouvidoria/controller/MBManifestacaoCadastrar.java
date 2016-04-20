@@ -1,11 +1,13 @@
 package br.com.xti.ouvidoria.controller;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -167,9 +169,26 @@ public class MBManifestacaoCadastrar implements Serializable {
         idUf = 9;
         municipios = localidadeBean.getMunicipios();
         classificacoes = classificacaoDAO.findAll();
+        Collections.sort(classificacoes, new Comparator<TbClassificacao>() {
+			@Override
+			public int compare(TbClassificacao o1, TbClassificacao o2) {
+				return o1.getDsClassificacao().compareTo(o2.getDsClassificacao());
+			}
+		});
+        
+		respostasManifestacao = respostaManifestacaoDAO.findAll();
+		System.out.println(respostasManifestacao.get(0));
+		Collections.sort(respostasManifestacao, new Comparator<TbRespostaManifestacao>() {
+			@Override
+			public int compare(TbRespostaManifestacao o1, TbRespostaManifestacao o2) {
+				return o1.getDsTituloResposta().compareTo(o2.getDsTituloResposta());
+			}
+		});
+		System.out.println(respostasManifestacao.get(0));
         
         if(transporte != null)
         	unidadesTransporte = unidadeDAO.getPorClassificacao(transporte.getIdClassificacao());
+        
     }
     
     /**
@@ -517,6 +536,13 @@ public class MBManifestacaoCadastrar implements Serializable {
         }
     }
     
+    public void converteResposta(){
+    	if(!manifestacao.getDsTextoEncerramentoScript().isEmpty()){
+			manifestacao.setDsTextoEncerramentoScript(PalavrasChavesHelper.converterPalavrasChaves(
+					manifestacao.getDsTextoEncerramentoScript(), manifestacao, securityService.getUser(), false));
+    	}
+    }
+    
     public boolean renderizaCamposCasoSolicitacaoEnergia(){
     	if(securityService.isManifestante()){
     		if(manifestacao.getTipoSolicitacao() != null && manifestacao.getTipoSolicitacao().equals("energia"))
@@ -700,10 +726,6 @@ public class MBManifestacaoCadastrar implements Serializable {
 	}
     
 	public List<TbRespostaManifestacao> getRespostasManifestacao() {
-    	if(!ValidacaoHelper.isNotEmpty(respostasManifestacao)) {
-    		respostasManifestacao = respostaManifestacaoDAO.findAll();
-    		Collections.sort(respostasManifestacao);
-    	}
     	return respostasManifestacao;
     }
     
@@ -864,6 +886,16 @@ public class MBManifestacaoCadastrar implements Serializable {
 
 	public void setClassificacao(TbClassificacao classificacao) {
 		this.classificacao = classificacao;
+		if(classificacao != null){
+			Collections.sort((List<TbSubClassificacao>)this.classificacao.getTbSubClassificacaoCollection(), new Comparator<TbSubClassificacao>() {
+
+				@Override
+				public int compare(TbSubClassificacao o1, TbSubClassificacao o2) {
+					return o1.getDsSubClassificacao().compareTo(o2.getDsSubClassificacao());
+				}
+			});
+		}
+		System.out.println(classificacao);
 	}
 
 	public TbSubClassificacao getSubClassificacao() {

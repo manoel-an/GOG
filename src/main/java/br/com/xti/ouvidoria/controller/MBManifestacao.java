@@ -1520,26 +1520,26 @@ public class MBManifestacao extends AbstractManifestationController implements S
             //atualiza data de modificação da manifestação
             manifestacao.setDtUltimaAtualizacao(new Date());
             // Verifica se irá alterar o status da manifestação
-            if(securityService.isManifestante()) {
-            	if(manifestacao.getStStatusManifestacao().equals(StatusManifestacaoEnum.SOLICITADA_INFORMACAO.getId())){
-            		manifestacao.setStStatusManifestacao(StatusManifestacaoEnum.SOLICITACAO_RESPONDIDA.getId());
-            	}
-            } else if(ValidacaoHelper.isEmpty(manifestacao.getTbEncaminhamentoCollection())
-        		|| StatusManifestacaoEnum.SOLICITACAO_RESPONDIDA.getId().equals(manifestacao.getStStatusManifestacao())
-        		|| StatusManifestacaoEnum.EM_ANDAMENTO.getId().equals(manifestacao.getStStatusManifestacao())) {
-            	if(StatusManifestacaoEnum.EM_ANDAMENTO.getId().equals(manifestacao.getStStatusManifestacao())) {
-            		for (TbEncaminhamento e : manifestacao.getTbEncaminhamentoCollection()) {
-						if(StatusEncaminhamentoEnum.RETORNADA.getId().equals(e.getStEncaminhamento())) {
-							manifestacao.setStStatusManifestacao(StatusManifestacaoEnum.SOLICITADA_INFORMACAO.getId());
-							break;
-						}
-					}
-            	} else {
-            		if(!StatusManifestacaoEnum.NOVA.getId().equals(manifestacao.getStStatusManifestacao())) {
-            			manifestacao.setStStatusManifestacao(StatusManifestacaoEnum.SOLICITADA_INFORMACAO.getId());
-            		}
-            	}
-            }
+//            if(securityService.isManifestante()) {
+//            	if(manifestacao.getStStatusManifestacao().equals(StatusManifestacaoEnum.SOLICITADA_INFORMACAO.getId())){
+//            		manifestacao.setStStatusManifestacao(StatusManifestacaoEnum.SOLICITACAO_RESPONDIDA.getId());
+//            	}
+//            } else if(ValidacaoHelper.isEmpty(manifestacao.getTbEncaminhamentoCollection())
+//        		|| StatusManifestacaoEnum.SOLICITACAO_RESPONDIDA.getId().equals(manifestacao.getStStatusManifestacao())
+//        		|| StatusManifestacaoEnum.EM_ANDAMENTO.getId().equals(manifestacao.getStStatusManifestacao())) {
+//            	if(StatusManifestacaoEnum.EM_ANDAMENTO.getId().equals(manifestacao.getStStatusManifestacao())) {
+//            		for (TbEncaminhamento e : manifestacao.getTbEncaminhamentoCollection()) {
+//						if(StatusEncaminhamentoEnum.RETORNADA.getId().equals(e.getStEncaminhamento())) {
+//							manifestacao.setStStatusManifestacao(StatusManifestacaoEnum.SOLICITADA_INFORMACAO.getId());
+//							break;
+//						}
+//					}
+//            	} else {
+//            		if(!StatusManifestacaoEnum.NOVA.getId().equals(manifestacao.getStStatusManifestacao())) {
+//            			manifestacao.setStStatusManifestacao(StatusManifestacaoEnum.SOLICITADA_INFORMACAO.getId());
+//            		}
+//            	}
+//            }
             dao.edit(manifestacao);
 
             /*------- inicio - gravando comunicacao externa ------------*/

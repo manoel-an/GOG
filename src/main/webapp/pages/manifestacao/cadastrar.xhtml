@@ -900,7 +900,7 @@
 														value="#{mBManifestacaoCadastrar.respostasManifestacao}" var="item"
 														itemLabel="#{item.dsTituloResposta}"
 														itemValue="#{item.dsResposta}" />
-													<p:ajax update="@form" event="change" />
+													<p:ajax process="@this" update="@form" event="change" listener="#{mBManifestacaoCadastrar.converteResposta()}" />
 												</p:selectOneMenu>
 											</p:column>
 										</p:row>

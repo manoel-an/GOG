@@ -26,7 +26,7 @@
 						rendered="#{security.administrador || security.ouvidor || security.manifestante}">
 						<p:row>
 							<p:column style="text-align: center; width: 100%" styleClass="ui-widget-header">
-								<p:commandButton value="#{bean.labelSendMessage}"
+								<p:commandButton value="Enviar Mensagem"
 									update=":frmEnviarMensagem" process="@this"
 									oncomplete="dlgEnviarMensagemW.show();"
 									disabled="#{bean.disableSendMessageButton()}">
