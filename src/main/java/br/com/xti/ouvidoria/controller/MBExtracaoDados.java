@@ -76,6 +76,7 @@ public class MBExtracaoDados implements Serializable {
     private String statusOcorrencia;
     private Integer idClassificacao;
     private Integer idSubClassificacao;
+    private Integer idMeioEntrada;
     private Integer idAreaEntrada;
     private Integer idAreaSolucionada;
     private Integer idUnidade;
@@ -253,6 +254,9 @@ public class MBExtracaoDados implements Serializable {
         }
         if (ValidacaoHelper.isNotEmpty(idSubClassificacao)) {
             filtro.addManIdSubClassificacao(idSubClassificacao);
+        }
+        if (ValidacaoHelper.isNotEmpty(idMeioEntrada)) {
+            filtro.addManIdMeioEntrada(idMeioEntrada);
         }
         if (ValidacaoHelper.isNotEmpty(idAreaEntrada)) {
             filtro.addManIdAreaEntrada(idAreaEntrada);
@@ -493,7 +497,15 @@ public class MBExtracaoDados implements Serializable {
         this.idSubClassificacao = idSubClassificacao;
     }
 
-    /**
+    public Integer getIdMeioEntrada() {
+		return idMeioEntrada;
+	}
+
+	public void setIdMeioEntrada(Integer idMeioEntrada) {
+		this.idMeioEntrada = idMeioEntrada;
+	}
+
+	/**
      * @return the idAreaEntrada
      */
     public Integer getIdAreaEntrada() {

@@ -79,6 +79,15 @@
                         </p:selectOneMenu>
                     </p:column>
                 </p:row>
+                <p:row id="meioEntrada">
+                    <p:column style="width: 20%">Meio de Entrada</p:column>
+                    <p:column style="width: 80%">
+                    	<p:selectOneMenu id="ddlMeioDeEntrada"  value="#{mBExtracaoDados.idMeioEntrada}" style="width: 300px;">
+                            <f:selectItem itemLabel="- Selecione -" itemValue="" />  
+                            <f:selectItems var="meio" value="#{mBMeioEntrada.todos}" itemValue="#{meio.idMeioEntrada}" itemLabel="#{meio.nmMeioEntrada}" />
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:row>
                 <p:row>
                     <p:column style="width: 20%">Área solucionadora</p:column>
                     <p:column style="width: 80%">
