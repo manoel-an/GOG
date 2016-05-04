@@ -137,7 +137,7 @@ Sistema de Ouvidoria]]></text>
 					<bottomPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle" markup="html"/>
-				<textFieldExpression><![CDATA[($F{dsDescricao}.replaceAll("13.3333px;", "8px;")).replaceAll("monospace", "'Arial'").replaceAll("14.16px;", "8px;")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{dsDescricao}.replaceAll("13.3333px;", "8px;")).replaceAll("monospace", "'Arial'").replaceAll("14.16px;", "8px;").replaceAll("arial", "Arial")]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH:mm">
 				<reportElement x="114" y="0" width="71" height="20" uuid="68934905-824c-4851-a30b-edf576541214"/>
