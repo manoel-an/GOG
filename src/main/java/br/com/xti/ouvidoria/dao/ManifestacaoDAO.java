@@ -229,6 +229,10 @@ public class ManifestacaoDAO extends AbstractDAO<TbManifestacao> {
             restricoesLista.add(joinTipoManifestacao.get(TbTipoManifestacao_.idTipoManifestacao).in(
                     filtro.getManIdTipo()));
         }
+        //Nome manifestante
+        if(ValidacaoHelper.isNotEmpty(filtro.getManManifestante())){
+        	restricoesLista.add(cb.like(m.get(TbManifestacao_.nmPessoa), "%"+filtro.getManManifestante().toUpperCase()+"%"));
+        }
         if (ValidacaoHelper.isNotEmpty(filtro.getManTipo())) {
             restricoesLista.add(cb.like(cb.upper(joinTipoManifestacao.get(TbTipoManifestacao_.nmTipoManifestacao)), "%"
                     + filtro.getManTipo().toUpperCase() + "%"));

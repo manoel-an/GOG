@@ -2,12 +2,16 @@ package br.com.xti.ouvidoria.controller.generic;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+
+import org.jsoup.Jsoup;
 
 import br.com.agr.ouvidoria.report.GeradorRelatorio;
 import br.com.xti.ouvidoria.controller.MensagemFaceUtil;
@@ -24,11 +28,12 @@ import br.com.xti.ouvidoria.helper.EnumHelper;
 import br.com.xti.ouvidoria.helper.FiltroHelper;
 import br.com.xti.ouvidoria.helper.ValidacaoHelper;
 import br.com.xti.ouvidoria.manifestacao.view.ManifestacaoTabView;
-import br.com.xti.ouvidoria.model.TbAnexo;
+import br.com.xti.ouvidoria.model.TbClassificacao;
 import br.com.xti.ouvidoria.model.TbComunicacaoExterna;
 import br.com.xti.ouvidoria.model.TbComunicacaoExternaxAnexo;
 import br.com.xti.ouvidoria.model.TbEncaminhamento;
 import br.com.xti.ouvidoria.model.TbManifestacao;
+import br.com.xti.ouvidoria.model.TbSubClassificacao;
 import br.com.xti.ouvidoria.model.TbTramite;
 import br.com.xti.ouvidoria.model.TbTramitexAnexo;
 import br.com.xti.ouvidoria.model.TbUnidade;
@@ -148,6 +153,87 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public void imprimirTodosDadosManifestacao(){
+		List<ManifestacaoTabView> tabs = getTabs();
+		List<TbTramite> tramites = new ArrayList<>(0);
+		List<TbComunicacaoExterna> comunicacoes = (List<TbComunicacaoExterna>) tabs.get(0).getConteudo();
+		tabs.remove(0);
+		for(ManifestacaoTabView encaminhamento : tabs){
+			List<TbTramite> aux = (List<TbTramite>) encaminhamento.getConteudo();
+			recuperarStringAnexosTramites(aux);
+			tramites.addAll(aux);
+		}
+		tramites.addAll(converterTramitesExternosParaInternos(comunicacoes));
+		
+		for(TbTramite tramite : tramites){
+			tramite.setDsDescricao(Jsoup.parse(tramite.getDsDescricao()).text());
+		}
+		
+		Collections.sort(tramites, new Comparator<TbTramite>() {
+			@Override
+			public int compare(TbTramite t1, TbTramite t2) {
+				return Long.valueOf(t1.getDtTramite().getTime()).compareTo(Long.valueOf(t2.getDtTramite().getTime()));
+			}
+		});
+		
+		try {
+	    	adicionaParametroRelatorio("numeroManifestacao", String.valueOf(manifestacao.getNrManifestacao()));
+	    	adicionaParametroRelatorio("dataManifestacao", manifestacao.getDtCadastro());
+	    	adicionaParametroRelatorio("atendente", manifestacao.getIdUsuarioAnalisador().getNmUsuario());
+	    	adicionaParametroRelatorio("prestadoraServico", manifestacao.getPrestadoraServico());
+	    	adicionaParametroRelatorio("titulo", getClassificacaoNome());
+	    	adicionaParametroRelatorio("tipoSolicitacao", manifestacao.getTipoSolicitacao());
+	    	adicionaParametroRelatorio("nomeManifestante", manifestacao.getNmPessoa());
+	    	adicionaParametroRelatorio("telefoneUm", manifestacao.getNrTelefone());
+	    	adicionaParametroRelatorio("endereco", manifestacao.getEnderecoCompleto());
+	    	adicionaParametroRelatorio("outrosTelefones", manifestacao.getOutrosTelefones());
+	    	adicionaParametroRelatorio("tipoManifestacao", manifestacao.getIdTipoManifestacao().getNmTipoManifestacao());
+	    	adicionaParametroRelatorio("classificacao", getClassificaoESubClassificacao());
+	    	adicionaParametroRelatorio("texto", Jsoup.parse(manifestacao.getDsTextoManifestacaoFormatado()).text());
+	    	
+	    	//saneamento
+	    	adicionaParametroRelatorio("ra", manifestacao.getRa());
+	    	adicionaParametroRelatorio("numeroConta", manifestacao.getNumeroConta());
+	    	adicionaParametroRelatorio("titularidade", manifestacao.getTitularidade());
+	    	
+	    	//transporte
+	    	adicionaParametroRelatorio("placaVeiculo", manifestacao.getPlacaVeiculo());
+	    	adicionaParametroRelatorio("numeroVeiculo", manifestacao.getNumeroVeiculo());
+	    	adicionaParametroRelatorio("horario", manifestacao.getHorario());
+	    	adicionaParametroRelatorio("motorista", manifestacao.getMotorista());
+
+	    	//energia
+	    	adicionaParametroRelatorio("unidadeConsumidora", manifestacao.getUnidadeConsumidora());
+	    	
+	    	adicionaParametroRelatorio("logoAGR", "logoagr.jpg");
+			baixarPDF("todosdialogosmanifestacao", tramites, "tramites");
+		} catch (InfrastructureException e) {
+			MensagemFaceUtil.erro("Erro!", e.getMessage());
+		}
+	}
+	
+	public List<TbTramite> converterTramitesExternosParaInternos(List<TbComunicacaoExterna> comunicacoes){
+		List<TbTramite> tramites = new ArrayList<>(0);
+		recuperarStringAnexosExterno(comunicacoes);
+		
+		TbUnidade unidadeManifestante = new TbUnidade();
+		unidadeManifestante.setNmUnidade("Ouvidoria AGR");
+		
+		for(TbComunicacaoExterna comunicacao : comunicacoes){
+			TbTramite tramite = new TbTramite();
+			tramite.setIdTramite(comunicacao.getIdComunicacaoExterna());
+			tramite.setDsDescricao(comunicacao.getDsComunicacao());
+			tramite.setIdUsuarioReceptor(comunicacao.getIdManifestacao().getIdUsuarioManifestante());
+			tramite.setDtTramite(comunicacao.getDtComunicacao());
+			tramite.setIdUsuarioEmissor(comunicacao.getIdUsuario());
+			tramite.setIdUnidadeEnvio(unidadeManifestante);
+			tramite.setStrAnexos(comunicacao.getStrAnexos());
+			tramites.add(tramite);
+		}
+		return tramites;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public void imprimirDialogoEncaminhamento(ManifestacaoTabView encaminhamento){
 		List<TbTramite> tramites = (List<TbTramite>) encaminhamento.getConteudo();
 		recuperarStringAnexosTramites(tramites);
@@ -175,6 +261,8 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 		adicionaParametroRelatorio("nomeManifestante", manifestacao.getNmPessoa());
 		baixarPDF("dialogomanifestante", comunicacoes, "tramites");
 	}
+	
+	
 
 	public void recuperarStringAnexosTramites(List<TbTramite> tramites){
 		for(TbTramite t : tramites){
@@ -441,6 +529,37 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 			}
 		}
 		return className;
+	}
+	
+	@SuppressWarnings("all")
+    public String getClassificacaoNome(){
+    	List<TbClassificacao> classificacao = (List<TbClassificacao>) manifestacao.getTbClassificacaoCollection();
+		List<TbSubClassificacao> tbSubClassificacoes = (List<TbSubClassificacao>) manifestacao.getTbSubClassificacaoCollection();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		if(!classificacao.isEmpty()){
+			sb.append(classificacao.get(0).getDsClassificacao());
+		}
+		
+		return sb.toString();
+    }
+	
+    public String getClassificaoESubClassificacao() {
+		List<TbClassificacao> classificacao = (List<TbClassificacao>) manifestacao.getTbClassificacaoCollection();
+		List<TbSubClassificacao> tbSubClassificacoes = (List<TbSubClassificacao>) manifestacao.getTbSubClassificacaoCollection();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		if(!classificacao.isEmpty()){
+			sb.append(classificacao.get(0).getDsClassificacao());
+		}
+		
+		if(!tbSubClassificacoes.isEmpty()){
+			sb.append(" - ").append(tbSubClassificacoes.get(0).getDsSubClassificacao());
+		}
+		
+		return sb.toString();
 	}
 	
 	public boolean disableSendMessageButton() {

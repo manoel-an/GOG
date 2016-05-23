@@ -1,6 +1,5 @@
 package br.com.xti.ouvidoria.controller;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;

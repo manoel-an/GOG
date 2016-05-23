@@ -358,7 +358,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	adicionaParametroRelatorio("dataManifestacao", manifestacao.getDtCadastro());
     	adicionaParametroRelatorio("atendente", manifestacao.getIdUsuarioAnalisador().getNmUsuario());
     	adicionaParametroRelatorio("prestadoraServico", manifestacao.getPrestadoraServico());
-    	adicionaParametroRelatorio("titulo", getClassificacaoNome());
+    	adicionaParametroRelatorio("titulo", super.getClassificacaoNome());
     	adicionaParametroRelatorio("tipoSolicitacao", manifestacao.getTipoSolicitacao());
     	adicionaParametroRelatorio("nomeManifestante", manifestacao.getNmPessoa());
     	adicionaParametroRelatorio("telefoneUm", manifestacao.getNrTelefone());
@@ -385,37 +385,6 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	adicionaParametroRelatorio("logoAGR", "logoagr.jpg");
     }
     
-    private String getClassificaoESubClassificacao() {
-		List<TbClassificacao> classificacao = (List<TbClassificacao>) manifestacao.getTbClassificacaoCollection();
-		List<TbSubClassificacao> tbSubClassificacoes = (List<TbSubClassificacao>) manifestacao.getTbSubClassificacaoCollection();
-		
-		StringBuilder sb = new StringBuilder();
-		
-		if(!classificacao.isEmpty()){
-			sb.append(classificacao.get(0).getDsClassificacao());
-		}
-		
-		if(!tbSubClassificacoes.isEmpty()){
-			sb.append(" - ").append(tbSubClassificacoes.get(0).getDsSubClassificacao());
-		}
-		
-		return sb.toString();
-	}
-    
-    @SuppressWarnings("all")
-    private String getClassificacaoNome(){
-    	List<TbClassificacao> classificacao = (List<TbClassificacao>) manifestacao.getTbClassificacaoCollection();
-		List<TbSubClassificacao> tbSubClassificacoes = (List<TbSubClassificacao>) manifestacao.getTbSubClassificacaoCollection();
-		
-		StringBuilder sb = new StringBuilder();
-		
-		if(!classificacao.isEmpty()){
-			sb.append(classificacao.get(0).getDsClassificacao());
-		}
-		
-		return sb.toString();
-    }
-
 	public boolean showTakeUpManifestation() {
 		return (isManifestacaoNova() || hasUsuarioAnalisador())
 				&& (!isManifestacaoEmAnalise())

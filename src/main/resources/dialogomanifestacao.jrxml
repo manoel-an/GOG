@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dialogomanifestacao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a9ebccaf-9a63-4118-b9ef-02b284bce460">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="18"/>
+	<property name="ireport.y" value="108"/>
 	<parameter name="numeroManifestacao" class="java.lang.Integer"/>
 	<parameter name="logoAGR" class="java.lang.String"/>
 	<parameter name="dataInicioDialogo" class="java.util.Date"/>
@@ -15,6 +15,7 @@
 	<field name="idUsuarioEmissor.nmUsuario" class="java.lang.String"/>
 	<field name="idUnidadeEnvio.nmUnidade" class="java.lang.String"/>
 	<field name="strAnexos" class="java.lang.String"/>
+	<field name="idUsuarioEmissor.idUnidade.sgUnidade" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -120,55 +121,46 @@ Sistema de Ouvidoria]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="94" splitType="Stretch">
-			<line>
-				<reportElement positionType="Float" x="9" y="90" width="543" height="1" uuid="5f541cac-c9b5-4dc3-894f-8388c4399bb1"/>
-			</line>
+		<band height="92" splitType="Stretch">
 			<textField>
-				<reportElement x="8" y="19" width="543" height="20" uuid="10ed1c98-2c61-4e9c-ba29-e6021cf4da52"/>
+				<reportElement x="8" y="14" width="543" height="15" uuid="10ed1c98-2c61-4e9c-ba29-e6021cf4da52"/>
 				<textElement verticalAlignment="Middle" markup="html">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<b>"+$F{idUsuarioEmissor.nmUsuario}+ "</b> disse para <b>" + $F{idUnidadeEnvio.nmUnidade}+ "</b>" + ($F{idUsuarioReceptor.nmUsuario} != null ? " ("+$F{idUsuarioReceptor.nmUsuario}+") " : " ") + ":"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<b>"+$F{idUsuarioEmissor.nmUsuario}+ " (" + $F{idUsuarioEmissor.idUnidade.sgUnidade} + ")</b> disse para <b>" + $F{idUnidadeEnvio.nmUnidade}+ "</b>" + ($F{idUsuarioReceptor.nmUsuario} != null ? " ("+$F{idUsuarioReceptor.nmUsuario}+") " : " ") + ":"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement stretchType="RelativeToTallestObject" x="8" y="39" width="543" height="20" isPrintWhenDetailOverflows="true" uuid="6be86cc4-75dd-4c61-9719-cdd0881de9f6"/>
+				<reportElement stretchType="RelativeToTallestObject" x="8" y="28" width="543" height="20" isPrintWhenDetailOverflows="true" uuid="6be86cc4-75dd-4c61-9719-cdd0881de9f6"/>
 				<box bottomPadding="0">
 					<bottomPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle" markup="html"/>
-				<textFieldExpression><![CDATA[($F{dsDescricao}.replaceAll("13.3333px;", "8px;")).replaceAll("monospace", "'Arial'").replaceAll("14.16px;", "8px;").replaceAll("arial", "Arial")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{dsDescricao}.replaceAll("13.3333px;", "7px;")).replaceAll("monospace", "'Arial'").replaceAll("14.16px;", "7px;").replaceAll("arial", "Arial").replaceAll("Times New Roman", "Arial")
+.replaceAll("10px", "7px")]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH:mm">
-				<reportElement x="114" y="0" width="71" height="20" uuid="68934905-824c-4851-a30b-edf576541214"/>
+				<reportElement x="104" y="0" width="60" height="15" uuid="68934905-824c-4851-a30b-edf576541214"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dtTramite}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="100" y="0" width="14" height="20" uuid="13994b52-5b27-43af-bc81-5fd9648caa4d"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true" pdfFontName="Helvetica-Bold"/>
-				</textElement>
-				<text><![CDATA[ás]]></text>
-			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="30" y="0" width="70" height="19" uuid="708f29f9-d251-45ce-8e5c-5dd72149a26a"/>
+				<reportElement x="30" y="0" width="60" height="15" uuid="708f29f9-d251-45ce-8e5c-5dd72149a26a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dtTramite}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="8" y="0" width="22" height="20" uuid="b259c4d0-6c8c-4e0c-bb91-45ab489332f4"/>
+				<reportElement x="8" y="0" width="22" height="15" uuid="b259c4d0-6c8c-4e0c-bb91-45ab489332f4"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Em:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement positionType="Float" x="8" y="59" width="543" height="30" uuid="1f5cf3e9-8d37-4306-9550-4fb613e5997a"/>
+				<reportElement positionType="Float" x="8" y="55" width="543" height="30" uuid="1f5cf3e9-8d37-4306-9550-4fb613e5997a"/>
 				<box bottomPadding="0">
 					<bottomPen lineWidth="0.0"/>
 				</box>
@@ -176,8 +168,21 @@ Sistema de Ouvidoria]]></text>
 				<textFieldExpression><![CDATA[$F{strAnexos}.isEmpty() ? "Sem anexos" : $F{strAnexos}.replaceAll("13.3333px;", "8px;")]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="8" y="59" width="102" height="20" uuid="acb872c5-c622-4625-a9b9-2fb6b9340641"/>
+				<reportElement positionType="Float" x="8" y="55" width="102" height="20" uuid="acb872c5-c622-4625-a9b9-2fb6b9340641"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
 				<text><![CDATA[Anexos:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="8" y="88" width="543" height="1" uuid="5f541cac-c9b5-4dc3-894f-8388c4399bb1"/>
+			</line>
+			<staticText>
+				<reportElement x="90" y="0" width="14" height="15" uuid="13994b52-5b27-43af-bc81-5fd9648caa4d"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ás]]></text>
 			</staticText>
 		</band>
 	</detail>

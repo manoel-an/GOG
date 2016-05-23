@@ -185,7 +185,19 @@
 				</p:commandButton>
 			</p:tab>
 		</p:accordionPanel>
-	</h:form>
+		<br />
+		<br />
+		<p:commandButton
+			ajax="false"
+			actionListener="#{bean.imprimirTodosDadosManifestacao()}"
+			value="Imprimir todos os Trâmites" icon="ui-icon-print"
+			action="#{bean.deletaArquivo()}"
+			style="margin-top: -20px; color: black;">
+			<p:fileDownload value="#{bean.filePDF}" />
+		</p:commandButton>
+		<br />
+		<br />
+		</h:form>
 </ui:composition>
 </h:body>
 </html>

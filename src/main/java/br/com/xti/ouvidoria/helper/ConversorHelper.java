@@ -49,6 +49,7 @@ public class ConversorHelper {
             filtro.setManCidade(texto);
             filtro.setManNumProcesso(texto);
             filtro.setManNumPronac(texto);
+            filtro.setManManifestante(texto);
             
             // Status
             for (StatusManifestacaoEnum status : StatusManifestacaoEnum.values()) {
