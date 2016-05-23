@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dialogomanifestacao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a9ebccaf-9a63-4118-b9ef-02b284bce460">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="16"/>
+	<property name="ireport.y" value="179"/>
+	<parameter name="numeroManifestacao" class="java.lang.String"/>
+	<parameter name="logoAGR" class="java.lang.String"/>
+	<parameter name="dataInicioDialogo" class="java.util.Date"/>
+	<parameter name="origemTramite" class="java.lang.String"/>
+	<parameter name="destinoTramite" class="java.lang.String"/>
+	<parameter name="texto" class="java.lang.String"/>
+	<parameter name="dataManifestacao" class="java.util.Date"/>
+	<parameter name="endereco" class="java.lang.String"/>
+	<parameter name="tipoSolicitacao" class="java.lang.String"/>
+	<parameter name="ra" class="java.lang.String"/>
+	<parameter name="placaVeiculo" class="java.lang.String"/>
+	<parameter name="atendente" class="java.lang.String"/>
+	<parameter name="classificacao" class="java.lang.String"/>
+	<parameter name="tipoManifestante" class="java.lang.String"/>
+	<parameter name="nomeManifestante" class="java.lang.String"/>
+	<parameter name="tipoManifestacao" class="java.lang.String"/>
+	<field name="idTramite" class="java.lang.Integer"/>
+	<field name="dsDescricao" class="java.lang.String"/>
+	<field name="idUsuarioReceptor.nmUsuario" class="java.lang.String"/>
+	<field name="dtTramite" class="java.util.Date"/>
+	<field name="idUsuarioEmissor.nmUsuario" class="java.lang.String"/>
+	<field name="idUnidadeEnvio.nmUnidade" class="java.lang.String"/>
+	<field name="strAnexos" class="java.lang.String"/>
+	<field name="idUsuarioEmissor.idUnidade.sgUnidade" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="309" splitType="Stretch">
+			<textField>
+				<reportElement x="297" y="68" width="190" height="20" uuid="91cd73a0-fcf2-42a7-a1f8-452fe347abc1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Manifestação Nº "+$P{numeroManifestacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="234" y="10" width="317" height="49" uuid="23da9775-5cc9-4493-be5e-d989f593c23d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="16" isBold="true" isItalic="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<text><![CDATA[Trâmite de Manifestação
+Sistema de Ouvidoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="62" width="317" height="33" uuid="4ce51294-c136-4416-85c3-85e0820d2866"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="26" width="210" height="82" uuid="b909a4d5-e4ae-4bd8-bfa5-270414a8eeb0"/>
+				<imageExpression><![CDATA[$P{logoAGR}]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="96" y="147" width="176" height="20" uuid="cb270b3b-fe5e-43f0-9259-816da9241d9e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataManifestacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="127" width="176" height="20" uuid="67ee7be3-3fc2-4bf9-9698-1c28b88b809f"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{numeroManifestacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="147" width="86" height="20" uuid="6d6bef63-2d8c-4623-a8b2-803caf5db4ef"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="147" width="86" height="20" uuid="e38f3c52-62fe-4fdd-8881-8a68cbf2dd3a">
+					<printWhenExpression><![CDATA[!$P{tipoSolicitacao}.equals("transporte")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Manifestante:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="127" width="87" height="20" uuid="44daf0f3-d4d4-44fd-b8f1-4e0472dff1e3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Atendente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="127" width="86" height="20" uuid="6737fa30-704d-4035-8d82-00852f5366dc"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nº Manifestação:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="96" y="127" width="176" height="20" uuid="24f055ca-529a-4a25-aa63-bd7d47f89ad5">
+					<printWhenExpression><![CDATA[$P{atendente} != null && $P{atendente} != ""]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{atendente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="147" width="176" height="20" uuid="eb9d6e06-f5d6-4437-bd71-acf981d48880">
+					<printWhenExpression><![CDATA[!$P{tipoSolicitacao}.equals("transporte")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomeManifestante}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="8" y="279" width="115" height="20" isPrintWhenDetailOverflows="true" uuid="3e2418f8-8151-4fa9-a461-23256b43a02c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Trâmites]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="9" y="298" width="545" height="1" isPrintWhenDetailOverflows="true" uuid="d658a549-d361-4d51-bcef-40725d42556d"/>
+			</line>
+			<staticText>
+				<reportElement x="8" y="178" width="146" height="20" uuid="00ca1752-0d17-42b1-9e2e-0885dcc72574"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Texto da Manifestação]]></text>
+			</staticText>
+			<line>
+				<reportElement x="9" y="197" width="545" height="1" uuid="3b2ed7ed-d80b-4c67-8c52-ac98484e8866"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="8" y="249" width="547" height="20" isPrintWhenDetailOverflows="true" uuid="bff150d5-974f-4c48-b15a-424404b93928"/>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font pdfFontName="Helvetica" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{texto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="8" y="223" width="399" height="15" isPrintWhenDetailOverflows="true" uuid="5bafecdc-d2fc-4bfd-bcb7-d651e97a968b"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{classificacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="8" y="208" width="146" height="15" isPrintWhenDetailOverflows="true" uuid="3eaf0e0f-1d64-45ab-bb73-5178e5580605"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipoManifestacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="87" splitType="Prevent">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="8" y="14" width="543" height="15" isPrintWhenDetailOverflows="true" uuid="10ed1c98-2c61-4e9c-ba29-e6021cf4da52"/>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>"+ ($F{idUsuarioEmissor.nmUsuario} != null ? $F{idUsuarioEmissor.nmUsuario} : "Manifestante") + ($F{idUsuarioEmissor.idUnidade.sgUnidade} != null ? " (" + $F{idUsuarioEmissor.idUnidade.sgUnidade} + ")" : "") + "</b> disse para <b>" + $F{idUnidadeEnvio.nmUnidade}+ "</b>" + ($F{idUsuarioReceptor.nmUsuario} != null ? " ("+$F{idUsuarioReceptor.nmUsuario}+") " : " ") + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement positionType="Float" x="8" y="33" width="543" height="15" isPrintWhenDetailOverflows="true" uuid="6be86cc4-75dd-4c61-9719-cdd0881de9f6"/>
+				<box bottomPadding="0">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="html"/>
+				<textFieldExpression><![CDATA[($F{dsDescricao}.replaceAll("13.3333px;", "7px;")).replaceAll("monospace", "'Arial'").replaceAll("14.16px;", "7px;").replaceAll("arial", "Arial").replaceAll("Times New Roman", "Arial")
+.replaceAll("10px", "7px")]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement positionType="Float" x="104" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="68934905-824c-4851-a30b-edf576541214"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtTramite}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement positionType="Float" x="30" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="708f29f9-d251-45ce-8e5c-5dd72149a26a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtTramite}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="8" y="0" width="22" height="15" isPrintWhenDetailOverflows="true" uuid="b259c4d0-6c8c-4e0c-bb91-45ab489332f4"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Em:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement positionType="Float" x="8" y="52" width="543" height="26" uuid="1f5cf3e9-8d37-4306-9550-4fb613e5997a"/>
+				<box bottomPadding="0">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom" markup="html"/>
+				<textFieldExpression><![CDATA[$F{strAnexos}.isEmpty() ? "Sem anexos" : $F{strAnexos}.replaceAll("13.3333px;", "8px;")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="8" y="52" width="102" height="15" uuid="acb872c5-c622-4625-a9b9-2fb6b9340641"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Anexos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="90" y="0" width="14" height="15" isPrintWhenDetailOverflows="true" uuid="13994b52-5b27-43af-bc81-5fd9648caa4d"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ás]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="8" y="77" width="543" height="10" uuid="c3247277-8f4d-4e81-9423-38ef2ddb2776"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="408" y="5" width="90" height="20" uuid="10316bb2-1489-4420-b6fb-936c3c3cd693"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="497" y="5" width="40" height="20" uuid="e7585c4d-5e88-4c59-9c35-72539d3af0cf"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
