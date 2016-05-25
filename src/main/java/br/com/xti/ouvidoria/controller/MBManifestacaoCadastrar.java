@@ -164,7 +164,7 @@ public class MBManifestacaoCadastrar implements Serializable {
         manifestacao.setIdMeioResposta(meioRespostaDAO.find(MeioRespostaEnum.EMAIL_ELETRONICO.getId()));
         manifestacao.setTpManifestante(TipoManifestanteEnum.CIDADAO.getId());
         preencherDadosUsuarioLogado();
-        TbClassificacao transporte = classificacaoDAO.getClassificacaoPorNome("Transporte");
+        TbClassificacao transporte = classificacaoDAO.getClassificacaoPorNome("Transporte Intermunicipal");
         idUf = 9;
         municipios = localidadeBean.getMunicipios();
         classificacoes = classificacaoDAO.findAll();
@@ -185,8 +185,8 @@ public class MBManifestacaoCadastrar implements Serializable {
 		});
 		System.out.println(respostasManifestacao.get(0));
         
-        if(transporte != null)
-        	unidadesTransporte = unidadeDAO.getPorClassificacao(transporte.getIdClassificacao());
+        //if(transporte != null)
+        unidadesTransporte = unidadeDAO.getPorClassificacao(transporte.getIdClassificacao());
         
     }
     
