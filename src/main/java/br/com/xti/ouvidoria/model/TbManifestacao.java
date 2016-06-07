@@ -170,6 +170,9 @@ public class TbManifestacao implements Serializable {
     @Column(name = "dtUltimaAtualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dtUltimaAtualizacao;
+    @Column(name = "dtUltimaVisualizacao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dtUltimaVisualizacao;
     @Column(name = "tpRaca")
     private String tpRaca;
     @Size(max = 13)
@@ -583,7 +586,15 @@ public class TbManifestacao implements Serializable {
         this.dtUltimaAtualizacao = dtUltimaAtualizacao;
     }
 
-    public String getTpRaca() {
+    public Date getDtUltimaVisualizacao() {
+		return dtUltimaVisualizacao;
+	}
+
+	public void setDtUltimaVisualizacao(Date dtUltimaVisualizacao) {
+		this.dtUltimaVisualizacao = dtUltimaVisualizacao;
+	}
+
+	public String getTpRaca() {
         return tpRaca;
     }
 

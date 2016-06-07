@@ -229,7 +229,7 @@
 					<p:column style="vertical-align: top; ">
 						<p:dataTable id="tabelaManifestacoes"
 							value="#{mBListarManifestacoes.listaManifestacoes}"
-							paginator="true" rows="10" paginatorPosition="bottom"
+							paginator="false" rows="10" paginatorPosition="bottom"
 							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 							emptyMessage="Nenhuma manifestação foi encontrada"
 							var="manifestacao"
@@ -238,7 +238,7 @@
 
 							<f:facet name="header">
 								<h:outputText
-									value="#{mBListarManifestacoes.nomeFiltro} (#{mBListarManifestacoes.listaManifestacoes.size()})" />
+									value="#{mBListarManifestacoes.nomeFiltro}" />
 							</f:facet>
 							<!-- VERDE - style="color: #CFDBB9;" -->
 							<!-- VERMELHO - style="color: #fe0000;" -->
@@ -253,6 +253,7 @@
 								filterMatchMode="contains"
 								sortBy="#{manifestacao.nrManifestacao}">
 								<h:outputText value="#{manifestacao.nrManifestacao}" />
+								<p:button icon="ui-icon-mail-closed" disabled="true" style="opacity: 1; filter: alpha(opacity=100); color: green;"/>
 							</p:column>
 
 							<p:column style="width: 3%;" sortBy="#{manifestacao.dtUltimaAtualizacao}">
@@ -388,6 +389,32 @@
 								</div>
 							</p:rowExpansion>
 						</p:dataTable>
+						<br/>
+						<p:commandButton id="btnPrimeiraPagina" value="Primeira Página"
+							style="width: 130px; margin-bottom: 10px;"
+							actionListener="#{mBListarManifestacoes.getPrimeiraPagina}"
+							update="tabelaManifestacoes,btnCaixaEntrada,
+								btnSolicitadaInformacao,btnDevolvidas,
+								btnComAOuvidoria,btnEmAndamento,
+								btnRetornadas,btnFechadas, btnProximos10, btnAnteriores10"
+								icon="ui-icon-seek-prev"/>
+						<p:commandButton id="btnAnteriores10" value="Página Anterior"
+							style="width: 130px; margin-bottom: 10px;"
+							actionListener="#{mBListarManifestacoes.getDezAnterioresRegistros}"
+							update="tabelaManifestacoes,btnCaixaEntrada,
+								btnSolicitadaInformacao,btnDevolvidas,
+								btnComAOuvidoria,btnEmAndamento,
+								btnRetornadas,btnFechadas, btnProximos10" 
+							icon="ui-icon-arrowthick-1-w"
+							disabled="#{mBListarManifestacoes.inicioPaginacao == 0}"/>
+						<p:commandButton id="btnProximos10" value="Próxima Página"
+							style="width: 130px; margin-bottom: 10px; float: right;"
+							actionListener="#{mBListarManifestacoes.getDezProximosRegistros}"
+							update="tabelaManifestacoes,btnCaixaEntrada,
+								btnSolicitadaInformacao,btnDevolvidas,
+								btnComAOuvidoria,btnEmAndamento,
+								btnRetornadas,btnFechadas, btnAnteriores10" 
+							icon="ui-icon-arrowthick-1-e"/>
 					</p:column>
 				</p:row>
 			</p:panelGrid>

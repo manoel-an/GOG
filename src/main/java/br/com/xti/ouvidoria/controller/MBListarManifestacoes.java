@@ -89,9 +89,12 @@ public class MBListarManifestacoes implements Serializable {
     private String textoBuscaManifestacao;
     private String textoBuscaEncaminhamento;
     
+    private Integer inicioPaginacao;
+    private Integer tamanhoPagina;
     
     @PostConstruct
     public void init() {
+    	resetarIndicesPaginacao();
     	if(securityService.getUser() != null) {
     		getCaixaEntrada(null);
     	} else {
@@ -104,12 +107,32 @@ public class MBListarManifestacoes implements Serializable {
     	}
     }
     
+    public void getPrimeiraPagina(){
+    	resetarIndicesPaginacao();
+    	recarregarManifestacoes();
+    }
+    
+    public void getDezProximosRegistros(){
+    	inicioPaginacao = inicioPaginacao + tamanhoPagina;
+    	recarregarManifestacoes();
+    }
+    
+    public void getDezAnterioresRegistros(){
+    	inicioPaginacao = inicioPaginacao - tamanhoPagina;
+    	recarregarManifestacoes();
+    }
+    
+    private void resetarIndicesPaginacao() {
+		inicioPaginacao = 0;
+		tamanhoPagina = 10;
+	}
+    
     /**
      * Recarrega as manifestações que estavam abertas anteriormente
      */
     public void recarregarManifestacoes() {
     	if(filtroAtual != null) {
-    		List<TbManifestacao> list = manifestacaoDAO.getManifestacoes(filtroAtual);
+    		List<TbManifestacao> list = manifestacaoDAO.getManifestacoesPaginado(inicioPaginacao, tamanhoPagina, filtroAtual);
     		switch (nomeFiltro) {
 				case CAIXA_ENTRADA:
 					ajustarCaixaEntrada(list);
@@ -138,20 +161,24 @@ public class MBListarManifestacoes implements Serializable {
         filtro.addManIdStatus(StatusManifestacaoEnum.SOLICITADA_INFORMACAO.getId());
         
         filtroAtual = filtro;
+        if(nomeFiltro != SOLICITADA_INFORMACAO){
+        	resetarIndicesPaginacao();
+        	List<TbManifestacao> list = manifestacaoDAO.getManifestacoesPaginado(inicioPaginacao, tamanhoPagina, filtroAtual);
+        	setListaManifestacoes(list);
+        }
         nomeFiltro = SOLICITADA_INFORMACAO;
-        
-        List<TbManifestacao> list = manifestacaoDAO.getManifestacoes(filtroAtual);
-        setListaManifestacoes(list);
     }
     
     public void getCaixaEntrada(ActionEvent actionEvent) {
         filtroEscolhido = new TbFiltroPersonalizado();
-        nomeFiltro = CAIXA_ENTRADA;
         filtroAtual = manifestacaoDAO.getFiltroCaixaEntrada(securityService.getUser());
-        List<TbManifestacao> list = manifestacaoDAO.getManifestacoes(filtroAtual);
-        
-        ajustarCaixaEntrada(list);
-        setListaManifestacoes(list);
+        if(nomeFiltro != CAIXA_ENTRADA){
+        	resetarIndicesPaginacao();
+        	List<TbManifestacao> list = manifestacaoDAO.getManifestacoesPaginado(inicioPaginacao, tamanhoPagina, filtroAtual);
+        	ajustarCaixaEntrada(list);
+        	setListaManifestacoes(list);
+        }
+        nomeFiltro = CAIXA_ENTRADA;
     }
     
     private void ajustarCaixaEntrada(List<TbManifestacao> list) {
@@ -205,10 +232,7 @@ public class MBListarManifestacoes implements Serializable {
         } else if(securityService.isInterlocutor()) {
         	filtro = FiltroHelper.getFiltrosPadrao(securityService.getUser());
         }
-
-        nomeFiltro = EM_ANDAMENTO;
-        filtroAtual = filtro;
-        List<TbManifestacao> list = manifestacaoDAO.getManifestacoes(filtroAtual);
+        
         if(securityService.isInterlocutor()) {
         	FiltroPersonalizado filtro2 = new FiltroPersonalizado();
         	filtro2.addManIdStatus(StatusManifestacaoEnum.EM_ANDAMENTO.getId());
@@ -216,9 +240,15 @@ public class MBListarManifestacoes implements Serializable {
         	filtro2.addEncIdUnidadeEnviou(securityService.getUser().getIdUnidade().getIdUnidade());
         	//list.addAll(manifestacaoDAO.getManifestacoes(filtro2));
         }
-        
-        ajustarEmAndamento(list);
-        setListaManifestacoes(list);
+
+        filtroAtual = filtro;
+        if(nomeFiltro != EM_ANDAMENTO){
+        	resetarIndicesPaginacao();
+        	List<TbManifestacao> list = manifestacaoDAO.getManifestacoesPaginado(inicioPaginacao, tamanhoPagina, filtroAtual);
+        	ajustarEmAndamento(list);
+        	setListaManifestacoes(list);
+        }
+        nomeFiltro = EM_ANDAMENTO;
     }
     
     private void ajustarEmAndamento(List<TbManifestacao> list) {
@@ -272,12 +302,15 @@ public class MBListarManifestacoes implements Serializable {
         	filtro = FiltroHelper.getFiltrosPadrao(securityService.getUser());
         }
         
-        nomeFiltro = RETORNADAS;
         filtroAtual = filtro;
-        List<TbManifestacao> list = manifestacaoDAO.getManifestacoes(filtroAtual);
-        
-        ajustarRetornadas(list);
-        setListaManifestacoes(list);
+        if(nomeFiltro != RETORNADAS){
+        	resetarIndicesPaginacao();
+        	List<TbManifestacao> list = manifestacaoDAO.getManifestacoesPaginado(inicioPaginacao, tamanhoPagina, filtroAtual);
+        	ajustarRetornadas(list);
+        	setListaManifestacoes(list);
+        }
+
+        nomeFiltro = RETORNADAS;
     }
     
     private void ajustarRetornadas(List<TbManifestacao> list) {
@@ -345,12 +378,17 @@ public class MBListarManifestacoes implements Serializable {
 			default: break;
 		}
 
-        nomeFiltro = SOLUCIONADA;
         filtroAtual = filtro;
-        setListaManifestacoes(manifestacaoDAO.getManifestacoes(filtroAtual));
+        
+        if(nomeFiltro != SOLUCIONADA){
+        	resetarIndicesPaginacao();
+        	setListaManifestacoes(manifestacaoDAO.getManifestacoesPaginado(inicioPaginacao, tamanhoPagina, filtroAtual));
+        }
+
+        nomeFiltro = SOLUCIONADA;
     }
     
-    public void getDevolvidas(ActionEvent actionEvent) {
+	public void getDevolvidas(ActionEvent actionEvent) {
     	filtroEscolhido = new TbFiltroPersonalizado();
     	FiltroPersonalizado filtro = new FiltroPersonalizado();
     	filtro.setMetodoBusca("and");
@@ -360,12 +398,14 @@ public class MBListarManifestacoes implements Serializable {
         filtro.addEncIdOperador(securityService.getUser().getIdUsuario());
         filtro.setEncTramiteNaoRetornado(false);
     	
-    	nomeFiltro = DEVOLVIDAS;
     	filtroAtual = filtro;
-    	List<TbManifestacao> list = manifestacaoDAO.getManifestacoes(filtroAtual);
-        
-    	ajustarDevolvidas(list);
-        setListaManifestacoes(list);
+    	if(nomeFiltro != DEVOLVIDAS){
+    		resetarIndicesPaginacao();
+    		List<TbManifestacao> list = manifestacaoDAO.getManifestacoesPaginado(inicioPaginacao, tamanhoPagina, filtroAtual);
+    		ajustarDevolvidas(list);
+    		setListaManifestacoes(list);
+    	}
+        nomeFiltro = DEVOLVIDAS;
     }
     
     private void ajustarDevolvidas(List<TbManifestacao> list) {
@@ -403,11 +443,15 @@ public class MBListarManifestacoes implements Serializable {
         filtro.setEncStatus(StatusEncaminhamentoEnum.RETORNADA.getId());
         filtro.addEncIdUnidadeRecebeu(securityService.getUser().getIdUnidade().getIdUnidade());
     	
-    	nomeFiltro = COM_OUVIDORIA;
     	filtroAtual = filtro;
-    	List<TbManifestacao> list = manifestacaoDAO.getManifestacoes(filtroAtual);
+
+    	if(nomeFiltro != COM_OUVIDORIA){
+    		resetarIndicesPaginacao();
+    		List<TbManifestacao> list = manifestacaoDAO.getManifestacoesPaginado(inicioPaginacao, tamanhoPagina, filtroAtual);
+    		setListaManifestacoes(list);
+    	}
         
-        setListaManifestacoes(list);
+        nomeFiltro = COM_OUVIDORIA;
     }
     
     public void getFiltroPersonalizado(AjaxBehaviorEvent ajaxBehaviorEvent) {
@@ -426,7 +470,8 @@ public class MBListarManifestacoes implements Serializable {
         filtroAtual = (FiltroPersonalizado) xs.fromXML(filtroEscolhido.getDsParticao());
 
         nomeFiltro = filtroEscolhido.getNmFiltroPersonalizado();
-        setListaManifestacoes(manifestacaoDAO.getManifestacoes(filtroPadrao, filtroAtual));
+        resetarIndicesPaginacao();
+        setListaManifestacoes(manifestacaoDAO.getManifestacoesPaginado(inicioPaginacao, tamanhoPagina, filtroPadrao, filtroAtual));
     }
     
     public void buscarManifestacao(ActionEvent actionEvent) {
@@ -439,7 +484,8 @@ public class MBListarManifestacoes implements Serializable {
     		}
     		
     		filtroAtual = ConversorHelper.converterTextoEmFiltroManifestacao(textoBuscaManifestacao);
-    		setListaManifestacoes(manifestacaoDAO.getManifestacoes(filtroPadrao, filtroAtual));
+    		resetarIndicesPaginacao();
+    		setListaManifestacoes(manifestacaoDAO.getManifestacoesPaginado(inicioPaginacao, tamanhoPagina, filtroPadrao, filtroAtual));
     		nomeFiltro = "Busca em manifestação por: " + textoBuscaManifestacao;
     		textoBuscaManifestacao = "";
     		textoBuscaEncaminhamento = "";
@@ -459,7 +505,8 @@ public class MBListarManifestacoes implements Serializable {
         		filtroPadrao = FiltroHelper.getFiltrosPadrao(securityService.getUser());
         	
         	filtroAtual = ConversorHelper.converterTextoEmFiltroEncaminhamento(textoBuscaEncaminhamento);
-            setListaManifestacoes(manifestacaoDAO.getManifestacoes(filtroPadrao, filtroAtual));
+        	resetarIndicesPaginacao();
+        	setListaManifestacoes(manifestacaoDAO.getManifestacoesPaginado(inicioPaginacao, tamanhoPagina, filtroPadrao, filtroAtual));
             nomeFiltro = "Busca em encaminhamentos por: " + textoBuscaEncaminhamento;
             textoBuscaManifestacao = "";
             textoBuscaEncaminhamento = "";
@@ -885,6 +932,14 @@ public class MBListarManifestacoes implements Serializable {
 
 	public void setSelectedManifestation(TbManifestacao selectedManifestation) {
 		this.selectedManifestation = selectedManifestation;
+	}
+
+	public Integer getInicioPaginacao() {
+		return inicioPaginacao;
+	}
+
+	public void setInicioPaginacao(Integer inicioPaginacao) {
+		this.inicioPaginacao = inicioPaginacao;
 	}
     
 }

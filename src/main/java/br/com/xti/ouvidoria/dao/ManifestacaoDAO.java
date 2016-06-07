@@ -166,6 +166,44 @@ public class ManifestacaoDAO extends AbstractDAO<TbManifestacao> {
             return new ArrayList<>();
         }
     }
+    
+    public List<TbManifestacao> getManifestacoesPaginado(Integer inicioPaginacao, Integer tamanhoPagina, FiltroPersonalizado... filtrosPersonalizados) {
+        try {
+            // Criando Query para filtro
+            CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<TbManifestacao> query = cb.createQuery(TbManifestacao.class);
+            Root<TbManifestacao> m = query.from(TbManifestacao.class);
+            query.select(m);
+            query.distinct(true);
+            query.orderBy(cb.desc(m.get(TbManifestacao_.nrManifestacao)));
+
+            List<Predicate> restricoesLista = new ArrayList<>();
+            for (FiltroPersonalizado filtro : filtrosPersonalizados) {
+                Predicate[] predicates = getFiltros(cb, m, filtro);
+                if (predicates.length > 0) {
+                    if ("or".equals(filtro.getMetodoBusca())) {
+                        restricoesLista.add(cb.or(predicates));
+                    } else if ("not".equals(filtro.getMetodoBusca())) {
+                        for (Predicate predicate : predicates) {
+                            restricoesLista.add(predicate.not());
+                        }
+                    } else {
+                        restricoesLista.add(cb.and(predicates));
+                    }
+                }
+            }
+            query.where(restricoesLista.toArray(new Predicate[restricoesLista.size()]));
+
+            // Retorna as manifestações encontradas
+            TypedQuery<TbManifestacao> selectQuery = getEntityManager().createQuery(query);
+            selectQuery.setFirstResult(inicioPaginacao);
+            selectQuery.setMaxResults(tamanhoPagina);
+            return selectQuery.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 
     private Predicate[] getFiltros(CriteriaBuilder cb, Root<TbManifestacao> m, FiltroPersonalizado filtro) {
         // Lista que recebe todas as restrições do filtro escolhido
