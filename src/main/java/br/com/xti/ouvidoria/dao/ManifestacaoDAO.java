@@ -361,7 +361,11 @@ public class ManifestacaoDAO extends AbstractDAO<TbManifestacao> {
             restricoesLista.add(cb.equal(joinManifestante.get(TbUsuario_.idUsuario), filtro.getManIdManifestante()));
         } // Usuário Criador
         if (ValidacaoHelper.isNotEmpty(filtro.getManUsuarioCriador())) {
-            restricoesLista.add(m.get(TbManifestacao_.idUsuarioCriador).in(filtro.getManUsuarioCriador()));
+        	if(filtro.getManUsuarioCriador().get(0).equals(-1)){
+        		restricoesLista.add(m.get(TbManifestacao_.idUsuarioCriador).isNull());
+        	}else{
+        		restricoesLista.add(m.get(TbManifestacao_.idUsuarioCriador).in(filtro.getManUsuarioCriador()));
+        	}
         } // Usuário Reativou
         if (ValidacaoHelper.isNotEmpty(filtro.getManUsuarioReativou())) {
             restricoesLista.add(m.get(TbManifestacao_.idUsuarioReativou).in(filtro.getManUsuarioReativou()));
