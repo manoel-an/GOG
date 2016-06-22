@@ -252,8 +252,13 @@
 								filterBy="#{manifestacao.nrManifestacao}"
 								filterMatchMode="contains"
 								sortBy="#{manifestacao.nrManifestacao}">
-								<h:outputText value="#{manifestacao.nrManifestacao}" />
-								<p:button icon="ui-icon-mail-closed" disabled="true" style="opacity: 1; filter: alpha(opacity=100); color: green;"/>
+								<h:panelGroup rendered="#{mBManifestacao.verificarExistenciaNovoTramite(manifestacao)}">
+									<h:outputText value="#{manifestacao.nrManifestacao}" style="font-weight:bold;"/>
+										<p:graphicImage value="/img/new_message.png" width="20" style="margin-left: 5px; vertical-align: middle;"/>
+								</h:panelGroup>
+								<h:panelGroup rendered="#{not mBManifestacao.verificarExistenciaNovoTramite(manifestacao)}">
+									<h:outputText value="#{manifestacao.nrManifestacao}" />
+								</h:panelGroup>
 							</p:column>
 
 							<p:column style="width: 3%;" sortBy="#{manifestacao.dtUltimaAtualizacao}">
@@ -415,6 +420,13 @@
 								btnComAOuvidoria,btnEmAndamento,
 								btnRetornadas,btnFechadas, btnAnteriores10" 
 							icon="ui-icon-arrowthick-1-e"/>
+						<br/>
+						<br/>
+						<p:separator/>
+						<h:panelGroup>
+							<p:graphicImage value="/img/new_message.png" width="20" style="margin-left: 5px; vertical-align: middle;"/>
+							= Há um novo trâmite não visualizado na manifestação.
+						</h:panelGroup>
 					</p:column>
 				</p:row>
 			</p:panelGrid>

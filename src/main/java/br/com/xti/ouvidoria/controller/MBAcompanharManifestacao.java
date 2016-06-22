@@ -7,6 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import br.com.xti.ouvidoria.helper.CdiHelper;
+
 /**
  * 
  * @author Guthierrez Gregório de Souza
@@ -23,8 +25,9 @@ public class MBAcompanharManifestacao implements Serializable {
 	private String senhaManifestacao;
 	
 	public void abrirManifestacao() throws IOException{
+		DominioCDIBean dominioBean = CdiHelper.getFacadeWithJNDI(DominioCDIBean.class);
 		FacesContext.getCurrentInstance().getExternalContext()
-			.redirect("http://10.243.1.29:8088/ouvidoria/pages/manifestacao/administrar.xhtml?num="+numeroManifestacao+"&pass="+senhaManifestacao);
+			.redirect(dominioBean.getUrlBase() + "/pages/manifestacao/administrar.xhtml?num="+numeroManifestacao+"&pass="+senhaManifestacao);
 	}
 	
 	public void setNumeroManifestacao(Integer numeroManifestacao) {

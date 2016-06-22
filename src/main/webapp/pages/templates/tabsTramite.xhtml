@@ -192,7 +192,8 @@
 			actionListener="#{bean.imprimirTodosDadosManifestacao()}"
 			value="Imprimir todos os Trâmites" icon="ui-icon-print"
 			action="#{bean.deletaArquivo()}"
-			style="margin-top: -20px; color: black;">
+			style="margin-top: -20px; color: black;"
+			rendered="#{security.loggedIn() and not security.manifestante}">
 			<p:fileDownload value="#{bean.filePDF}" />
 		</p:commandButton>
 		<br />

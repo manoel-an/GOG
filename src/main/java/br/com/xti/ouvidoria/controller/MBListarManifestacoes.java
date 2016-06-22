@@ -353,7 +353,10 @@ public class MBListarManifestacoes implements Serializable {
 								}
 							}
 							if(deletar)
-								listIterator.remove();
+								try{
+									listIterator.remove();
+								}catch (Exception e2) {
+								}
 						}
 					}
 	        	}

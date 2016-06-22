@@ -282,6 +282,7 @@ public class MBManifestacaoCadastrar implements Serializable {
             manifestacao.setStStatusManifestacao(StatusManifestacaoEnum.NOVA.getId());
             manifestacao.setDtCadastro(new Date());
             manifestacao.setDtUltimaAtualizacao(new Date());
+            manifestacao.setDtUltimaVisualizacao(new Date());
 
             //----- gravando manifestacao -------//
             manifestacaoDAO.create(manifestacao);

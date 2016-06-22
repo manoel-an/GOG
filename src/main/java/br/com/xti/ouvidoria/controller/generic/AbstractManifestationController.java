@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -114,6 +115,32 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 	    		List<TbManifestacao> lista = dao.getManifestacoes(filtroNumeroManifestacao);
 	    		if(ValidacaoHelper.isNotEmpty(lista)) {
 	    			manifestacao = lista.get(0);
+	    			
+	    			//Verifica ultimo trâmite da atualização e atualiza data e visulização para exibir ou não icone de nova mensagem na manifestação
+	    			if(securityService.loggedIn() && !securityService.isManifestante() && manifestacao != null){
+	    				TbTramite ultimoTramite = getUltimoTramiteManifestacao(manifestacao);
+	    				if(ultimoTramite != null){
+	    					try {
+	    						if(ultimoTramite.getIdUsuarioEmissor() == null){
+	    							manifestacao.setDtUltimaVisualizacao(new Date());
+	    							dao.edit(manifestacao);
+	    						}else{
+	    							if(ultimoTramite.getIdUsuarioEmissor().getIdUnidade() == null){
+	    								manifestacao.setDtUltimaVisualizacao(new Date());
+		    							dao.edit(manifestacao);
+	    							}else{
+	    								if(ultimoTramite.getIdUsuarioEmissor().getIdUnidade().getIdUnidade() != securityService.getUser().getIdUnidade().getIdUnidade()){
+	    									manifestacao.setDtUltimaVisualizacao(new Date());
+			    							dao.edit(manifestacao);
+	    								}
+	    							}
+	    						}
+	    					} catch (InfrastructureException e) {
+	    							e.printStackTrace();
+	    					}
+	    				}
+	    			}
+
 	    			if(ValidacaoHelper.isEmpty(oldManifestation)) {
 	    				JSFUtils.setSessionAttribute("manifestation", manifestacao);
 	    			}
@@ -127,8 +154,11 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 						redirectToHomePage = true;
 					}
 				}
+				
 			}
 		}
+		
+		// Seta última visualização da manifestação
 		
 		if(redirectToHomePage) {
 			redirectToHomePage();
@@ -152,19 +182,69 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	public void imprimirTodosDadosManifestacao(){
-		List<ManifestacaoTabView> tabs = getTabs();
+	public Boolean verificarExistenciaNovoTramite(TbManifestacao manifestacao){
+    	if(manifestacao.getDtUltimaVisualizacao() != null && securityService.loggedIn() && !securityService.isManifestante()){
+    			TbTramite ultimoTramite = getUltimoTramiteManifestacao(manifestacao);
+    			if(ultimoTramite == null)
+    				return false;
+    			if(ultimoTramite.getIdUsuarioEmissor() != null){
+    				if(ultimoTramite.getIdUsuarioEmissor().getIdUnidade() != null){
+    					if(ultimoTramite.getDtTramite().getTime() > manifestacao.getDtUltimaVisualizacao().getTime()
+    						&& ultimoTramite.getIdUsuarioEmissor().getIdUnidade().getIdUnidade() != securityService.getUser().getIdUnidade().getIdUnidade())
+    						return true;
+    					else
+    						return false;
+    				}else{
+    					return false;
+    				}
+    			}else{
+    				if(ultimoTramite.getDtTramite().getTime() > manifestacao.getDtUltimaVisualizacao().getTime()){
+    					return true;
+    				}else{
+    					return false;
+    				}
+    			}
+    	}else{
+    		return false;
+    	}
+    }
+	
+	public TbTramite getUltimoTramiteManifestacao(TbManifestacao manifestacao){
 		List<TbTramite> tramites = new ArrayList<>(0);
-		List<TbComunicacaoExterna> comunicacoes = (List<TbComunicacaoExterna>) tabs.get(0).getConteudo();
-		tabs.remove(0);
-		for(ManifestacaoTabView encaminhamento : tabs){
-			List<TbTramite> aux = (List<TbTramite>) encaminhamento.getConteudo();
-			recuperarStringAnexosTramites(aux);
-			tramites.addAll(aux);
-		}
-		tramites.addAll(converterTramitesExternosParaInternos(comunicacoes));
 		
+		if(!securityService.isInterlocutor() && !securityService.isOperador())
+			tramites.addAll(converterTramitesExternosParaInternos((List<TbComunicacaoExterna>) manifestacao.getTbComunicacaoExternaCollection()));
+
+		for (TbEncaminhamento enc : manifestacao.getTbEncaminhamentoCollection()){
+			tramites.addAll(enc.getTbTramiteCollection());
+		}
+		Collections.sort(tramites, new Comparator<TbTramite>() {
+			@Override
+			public int compare(TbTramite t1, TbTramite t2) {
+				return Long.valueOf(t1.getDtTramite().getTime()).compareTo(Long.valueOf(t2.getDtTramite().getTime()));
+			}
+		});
+		if(!tramites.isEmpty()){
+			TbTramite ultimoTramite = tramites.get(tramites.size() -1);
+			return ultimoTramite;
+		}else{
+			return null;
+		}
+		
+	}
+	
+	public void imprimirTodosDadosManifestacao(){
+		List<TbTramite> tramites = new ArrayList<>(0);
+		
+		if(!securityService.isInterlocutor() && !securityService.isOperador())
+			tramites.addAll(converterTramitesExternosParaInternos((List<TbComunicacaoExterna>) manifestacao.getTbComunicacaoExternaCollection()));
+
+		for (TbEncaminhamento enc : manifestacao.getTbEncaminhamentoCollection()){
+			tramites.addAll(enc.getTbTramiteCollection());
+		}
+		
+		recuperarStringAnexosTramites(tramites);
+
 		for(TbTramite tramite : tramites){
 			tramite.setDsDescricao(Jsoup.parse(tramite.getDsDescricao()).text());
 		}
@@ -218,6 +298,7 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 		
 		TbUnidade unidadeManifestante = new TbUnidade();
 		unidadeManifestante.setNmUnidade("Ouvidoria AGR");
+		unidadeManifestante.setIdUnidade(0);
 		
 		for(TbComunicacaoExterna comunicacao : comunicacoes){
 			TbTramite tramite = new TbTramite();
