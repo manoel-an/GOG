@@ -2410,14 +2410,13 @@ public class MBManifestacao extends AbstractManifestationController implements S
 	private String getTextoTramiteAtraso() {
 		return new StringBuilder()
 		.append("<p>Prezado (a) colaborador (a),</p>")
-		.append("<p>Verificamos que a presente mensagem permanece inconclusa.</p>")
+		.append("<p>Verificamos que a presente manifestação permanece inconclusa.</p>")
 		.append("<p>Solicitamos que seja dada resposta, com brevidade, à mensagem em tela, tendo em vista que o prazo regimental de resposta a esta Ouvidoria já está expirado.</p>")
-		.append("<p>Reiteramos que enviem a resposta com a maior brevidade possível, visto que o prazo estabelecido pela Ouvidoria para atendimento ao interessado já se esgotou (vide art. 57, § 1º, I, II e III, da Portaria n. 40 - Regimento Interno do MinC)</p>") 
-		.append("<p>Solicitamos que a resposta seja encaminhada à Ouvidoria, diretamente por meio deste sistema, para que possamos retransmiti-la ao interessado.</p>")
-		.append("<p>Em caso de dúvidas, a Ouvidoria está à disposição, pelos ramais 2498 ou 2439.</p>")
+		.append("<p>Solicitamos que a resposta seja encaminhada à Ouvidoria da AGR, diretamente por meio deste sistema, para que possamos retransmiti-la ao interessado.</p>")
+		.append("<p>Em caso de dúvidas, a Ouvidoria está à disposição, pelos ramais 3201-7552 e 3201-7579.</p>")
 		.append("<p>Atenciosamente,<br />") 
-		.append("Ouvidoria<br />")
-		.append("Ministério da Cultura</p>").toString();
+		.append("Gerência de Ouvidoria<br />")
+		.append("Agência Goiana de Regulação, Controle e Fiscalização de Serviços Públicos.</p>").toString();
 	}
 	
 	@Override
