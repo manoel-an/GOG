@@ -1079,185 +1079,190 @@
 			<!-- ======================================== -->
 			<!-- DIALOG de Enviar Mensagem a AREA TECNICA -->
 			<!-- ======================================== -->
-				<p:dialog id="dlgEnviarMensagemTramite" widgetVar="dlgEnviarMensagemTramiteW" width="900"
-					header="Nova Mensagem" resizable="false" appendToBody="true" minimizable="true" onShow="atualizarFormEnviarMsgTramite();">
-					<p:ajax event="close" listener="#{mBManifestacao.zerarValoresTramite}" />
-					<h:form id="frmEnviarMensagemTramite">
-					<p:remoteCommand name="atualizarFormEnviarMsgTramite" process="@this" update="frmEnviarMensagemTramite"/>
-						<p:messages id="meAreaTecnicaMessages" redisplay="false" closable="true" />
-						<!-- ============================== -->
-						<!-- ENVIAR MENSAGEM A AREA TECNICA -->
-						<p:panelGrid id="gridMsgTramite" style="width: 100%">
-							<p:row>
-								<p:column styleClass="bold" style="width: 50%">Unidade</p:column>
-								<p:column>
-									<p:selectOneMenu value="#{mBManifestacao.idUnidadeTramite}"
-										id="slcUnidadeTramite" required="true"
-										requiredMessage="Informe a unidade de envio da mensagem"
-										disabled="#{mBManifestacao.desabilitaUnidadeTramite()}">
-										<f:selectItem itemLabel="- Selecione -" itemValue="" />
-										<f:selectItems value="#{mBManifestacao.listaUnidadesTramite}"
-											var="item" itemLabel="#{item.sgUnidade} - #{item.nmUnidade}"
-											itemValue="#{item.idUnidade}" />
-	
-										<p:ajax update="slcUsuarioTramite,pnlBtnsTramite" event="change" />
-									</p:selectOneMenu>
-								</p:column>
-								
-								<p:column styleClass="bold">Operador</p:column>
-								<p:column>
-									<p:selectOneMenu value="#{mBManifestacao.idUsuarioTramite}"
-										id="slcUsuarioTramite"
-										disabled="#{mBManifestacao.desabilitaUsuarioTramite()}">
-										<f:selectItem itemLabel="- Selecione -" itemValue="" />
-										<f:selectItems value="#{mBManifestacao.usuarios}" var="item"
-											itemLabel="#{item.nmUsuario}" itemValue="#{item.idUsuario}" />
-											
-										<p:ajax update="pnlBtnsTramite" event="change" />
-									</p:selectOneMenu>
-								</p:column>
-							</p:row>
-							<p:row>
-								<p:column style="width: 50%;vertical-align: top"
-									colspan="#{security.ouvidor || security.administrador ? '2' : '4'}">
-									<p:panelGrid
-										style="width: 100%; margin: 0 auto; vertical-align: top;">
+			<p:dialog id="dlgEnviarMensagemTramite" widgetVar="dlgEnviarMensagemTramiteW" width="900"
+				header="Nova Mensagem" resizable="false" appendToBody="true" minimizable="true">
+				<p:ajax event="close" listener="#{mBManifestacao.zerarValoresTramite}" />
+				<h:form id="frmEnviarMensagemTramite">
+					<p:messages id="meAreaTecnicaMessages" redisplay="false" closable="true" />
+					<!-- ============================== -->
+					<!-- ENVIAR MENSAGEM A AREA TECNICA -->
+					<p:panelGrid style="width: 100%">
+						<p:row>
+							<p:column styleClass="bold" style="width: 50%">Unidade</p:column>
+							<p:column>
+								<p:selectOneMenu value="#{mBManifestacao.idUnidadeTramite}"
+									id="slcUnidadeTramite" required="true"
+									requiredMessage="Informe a unidade de envio da mensagem"
+									disabled="#{mBManifestacao.desabilitaUnidadeTramite()}">
+									<f:selectItem itemLabel="- Selecione -" itemValue="" />
+									<f:selectItems value="#{mBManifestacao.listaUnidadesTramite}"
+										var="item" itemLabel="#{item.sgUnidade} - #{item.nmUnidade}"
+										itemValue="#{item.idUnidade}" />
+
+									<p:ajax update="slcUsuarioTramite,pnlBtnsTramite" event="change" />
+								</p:selectOneMenu>
+							</p:column>
+							
+							<p:column styleClass="bold">Operador</p:column>
+							<p:column>
+								<p:selectOneMenu value="#{mBManifestacao.idUsuarioTramite}"
+									id="slcUsuarioTramite"
+									disabled="#{mBManifestacao.desabilitaUsuarioTramite()}">
+									<f:selectItem itemLabel="- Selecione -" itemValue="" />
+									<f:selectItems value="#{mBManifestacao.usuarios}" var="item"
+										itemLabel="#{item.nmUsuario}" itemValue="#{item.idUsuario}" />
+										
+									<p:ajax update="pnlBtnsTramite" event="change" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width: 50%;vertical-align: top"
+								colspan="#{security.ouvidor || security.administrador ? '2' : '4'}">
+								<p:panelGrid
+									style="width: 100%; margin: 0 auto; vertical-align: top;">
+									<p:row>
+										<p:column style="width: 15%"
+											styleClass="ui-widget-header centro">
+											<h:outputText
+												value="#{security.ouvidor || security.administrador ? 'Mensagem à Unidade' : 'Mensagem' }" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<p:editor rendered="true"
+												value="#{mBManifestacao.dsMensagemAreaTecnica}"
+												id="textoMensagemAreaTecnica"
+												width="#{security.ouvidor || security.administrador ? '330' : '600'}"
+												height="390"
+												styleClass="classIdCampo_textoMensagemAreaTecnica"
+												required="true"
+												requiredMessage="Informe o texto da mensagem." />
+										</p:column>
+									</p:row>
+
+								</p:panelGrid>
+							</p:column>
+							<p:column style="width: 50%; vertical-align: top;" colspan="2" rendered="#{security.ouvidor || security.administrador}">
+								<p:panelGrid style="width: 100%; margin: 0 auto; vertical-align: central;">
+									<p:row>
+										<p:column styleClass="ui-widget-header centro"
+											style="vertical-align: top">  
+                                            Encaminhamentos padronizados
+                                        </p:column>
+									</p:row>
+									<p:row>
+										<p:column style="width: 85%;">
+											<p:selectOneMenu
+												value="#{mBManifestacao.idEncaminhamentoPadronizadoTramite}"
+												id="slcEncaminhamentoPadronizadoTramite" style="width: 98%;">
+												<f:selectItem itemLabel="- Selecionar encaminhamento -"
+													itemValue="" />
+												<f:selectItems
+													value="#{mBManifestacao.encaminhamentosPadronizados}"
+													var="item" itemLabel="#{item.dsTitulo}"
+													itemValue="#{item.idEncaminhamentoPadronizado}" />
+												<p:ajax update="modeloEncaminhamentoPadronizadoTramite"
+													event="change"
+													listener="#{mBManifestacao.ajustaDescricaoMensagemAreaTecnica()}" />
+											</p:selectOneMenu>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column colspan="2">
+
+											<p:editor id="modeloEncaminhamentoPadronizadoTramite"
+												width="300" height="334"
+												styleClass="classIdCampo_modeloEncaminhamentoPadronizadoTramite"
+												value="#{mBManifestacao.encaminhamentoPadronizadoTramite.dsConteudo}"
+												disabled="true" />
+											<p:panelGrid style="width: 100%">
+												<p:row>
+													<p:column style="text-align: center; width: 100%"
+														styleClass="ui-widget-header">
+														<center>
+															<p:commandButton value="Utilizar este encaminhamento"
+																process="@this" update="textoMensagemAreaTecnica" />
+														</center>
+													</p:column>
+												</p:row>
+											</p:panelGrid>
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="4">
+								<p:fileUpload id="fileTramite"
+									fileUploadListener="#{mBManifestacao.handleFileUpload}"
+									mode="advanced" update="filesEnviadosTramite" multiple="true"
+									label="Adicionar arquivo"
+									invalidFileMessage="Tipo de arquivo inválido (permitidos: gif, jpeg, jpg, png, doc, docx, pdf, xls, xlsx, zip, rar, rtf, ppt, pptx)"
+									invalidSizeMessage="Tamanho do arquivo inválido (máximo 10 megabytes)"
+									sizeLimit="10485760"
+									allowTypes="/(\.|\/)(gif|jpe?g|png|doc|docx|ppt|pptx|pdf|xls|xlsx|zip|rar|rtf)$/"
+									auto="true" />
+								<p:outputPanel id="filesEnviadosTramite" autoUpdate="true">
+									<table>
+										<ui:repeat value="#{mBManifestacao.arquivosTramite}"
+											var="arquivo" varStatus="x">
+											<tr bgcolor="#CCCCCC">
+												<td>
+													<h:outputText style="font-size: 10px;" value="#{x.index + 1}" /> -
+													<p:commandLink value="#{arquivo.nmAnexo}" action="#{mBManifestacao.baixarArquivo(arquivo)}" immediate="true" ajax="false" /> 
+												</td>
+												<td><p:commandButton icon="ui-icon-close"
+														title="Excluir"
+														actionListener="#{mBManifestacao.removerArquivo(arquivo, mBManifestacao.arquivosTramite)}"
+														process="@this" immediate="true">
+													</p:commandButton></td>
+											</tr>
+										</ui:repeat>
+									</table>
+								</p:outputPanel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="4">
+								<center>
+									<p:panelGrid style="width: 100%" id="pnlBtnsTramite">
 										<p:row>
-											<p:column style="width: 15%"
-												styleClass="ui-widget-header centro">
-												<h:outputText
-													value="#{security.ouvidor || security.administrador ? 'Mensagem à Unidade' : 'Mensagem' }" />
+											<p:column style="text-align: center; width: 100%" styleClass="ui-widget-header">
+												<p:commandButton
+													disabled="#{mBManifestacao.desabilitarBotaoVisualizarTramite()}"
+													update=":frmVisualizarTramite"
+													process="@this,slcUnidadeTramite,textoMensagemAreaTecnica,slcUsuarioTramite"
+													value="Visualizar" id="visualizarTramite"
+													onclick="statusDialog.show()"
+													oncomplete="dlgVisualizarTramite.show()">
+												</p:commandButton>
+												<p:spacer width="20px" />
+												<p:commandButton value="Enviar mensagem"
+													process="@this,slcUnidadeTramite,textoMensagemAreaTecnica,slcUsuarioTramite"
+													update="frmEnviarMensagemTramite"
+													actionListener="#{mBManifestacao.salvaTramite}"
+													oncomplete="if (!args.validationFailed){dlgEnviarMensagemTramiteW.hide()} 
+																else {alert($('.ui-messages-error-summary').html())};">
+													<p:resetInput target="frmEnviarMensagemTramite" />
+												</p:commandButton>
+												<p:spacer width="20px" />
+												<p:commandButton value="Fechar" immediate="true"
+													update="frmEnviarMensagemTramite"
+													style="width: 100px; margin: 10px"
+													onclick="dlgEnviarMensagemTramiteW.hide()">
+													<p:resetInput target="frmEnviarMensagemTramite" />
+												</p:commandButton>
 											</p:column>
 										</p:row>
-										<p:row>
-											<p:column>
-												<p:editor rendered="true"
-													value="#{mBManifestacao.dsMensagemAreaTecnica}"
-													id="textoMensagemAreaTecnica"
-													width="#{security.ouvidor || security.administrador ? '330' : '600'}"
-													height="390"
-													styleClass="classIdCampo_textoMensagemAreaTecnica"
-													required="true"
-													requiredMessage="Informe o texto da mensagem." />
-											</p:column>
-										</p:row>
-	
 									</p:panelGrid>
-								</p:column>
-								<p:column style="width: 50%; vertical-align: top;" colspan="2" rendered="#{security.ouvidor || security.administrador}">
-									<p:panelGrid style="width: 100%; margin: 0 auto; vertical-align: central;">
-										<p:row>
-											<p:column styleClass="ui-widget-header centro"
-												style="vertical-align: top">  
-	                                            Encaminhamentos padronizados
-	                                        </p:column>
-										</p:row>
-										<p:row>
-											<p:column style="width: 85%;">
-												<p:selectOneMenu
-													value="#{mBManifestacao.idEncaminhamentoPadronizadoTramite}"
-													id="slcEncaminhamentoPadronizadoTramite" style="width: 98%;">
-													<f:selectItem itemLabel="- Selecionar encaminhamento -"
-														itemValue="" />
-													<f:selectItems
-														value="#{mBManifestacao.encaminhamentosPadronizados}"
-														var="item" itemLabel="#{item.dsTitulo}"
-														itemValue="#{item.idEncaminhamentoPadronizado}" />
-													<p:ajax update="modeloEncaminhamentoPadronizadoTramite"
-														event="change"
-														listener="#{mBManifestacao.ajustaDescricaoMensagemAreaTecnica()}" />
-												</p:selectOneMenu>
-											</p:column>
-										</p:row>
-										<p:row>
-											<p:column colspan="2">
-	
-												<p:panelGrid style="width: 100%">
-													<p:row>
-														<p:column style="text-align: center; width: 100%"
-															styleClass="ui-widget-header">
-															<center>
-																<p:commandButton value="Utilizar este encaminhamento"
-																	process="@this" update="textoMensagemAreaTecnica" />
-															</center>
-														</p:column>
-													</p:row>
-												</p:panelGrid>
-											</p:column>
-										</p:row>
-									</p:panelGrid>
-								</p:column>
-							</p:row>
-							<p:row>
-								<p:column colspan="4">
-									<p:fileUpload id="fileTramite"
-										fileUploadListener="#{mBManifestacao.handleFileUpload}"
-										mode="advanced" update="filesEnviadosTramite" multiple="true"
-										label="Adicionar arquivo"
-										invalidFileMessage="Tipo de arquivo inválido (permitidos: gif, jpeg, jpg, png, doc, docx, pdf, xls, xlsx, zip, rar, rtf, ppt, pptx)"
-										invalidSizeMessage="Tamanho do arquivo inválido (máximo 10 megabytes)"
-										sizeLimit="10485760"
-										allowTypes="/(\.|\/)(gif|jpe?g|png|doc|docx|ppt|pptx|pdf|xls|xlsx|zip|rar|rtf)$/"
-										auto="true" />
-									<p:outputPanel id="filesEnviadosTramite" autoUpdate="true">
-										<table>
-											<ui:repeat value="#{mBManifestacao.arquivosTramite}"
-												var="arquivo" varStatus="x">
-												<tr bgcolor="#CCCCCC">
-													<td>
-														<h:outputText style="font-size: 10px;" value="#{x.index + 1}" /> -
-														<p:commandLink value="#{arquivo.nmAnexo}" action="#{mBManifestacao.baixarArquivo(arquivo)}" immediate="true" ajax="false" /> 
-													</td>
-													<td><p:commandButton icon="ui-icon-close"
-															title="Excluir"
-															actionListener="#{mBManifestacao.removerArquivo(arquivo, mBManifestacao.arquivosTramite)}"
-															process="@this" immediate="true">
-														</p:commandButton></td>
-												</tr>
-											</ui:repeat>
-										</table>
-									</p:outputPanel>
-								</p:column>
-							</p:row>
-							<p:row>
-								<p:column colspan="4">
-									<center>
-										<p:panelGrid style="width: 100%" id="pnlBtnsTramite">
-											<p:row>
-												<p:column style="text-align: center; width: 100%" styleClass="ui-widget-header">
-													<p:commandButton
-														disabled="#{mBManifestacao.desabilitarBotaoVisualizarTramite()}"
-														update=":frmVisualizarTramite"
-														process="@this,slcUnidadeTramite,textoMensagemAreaTecnica,slcUsuarioTramite"
-														value="Visualizar" id="visualizarTramite"
-														onclick="statusDialog.show()"
-														oncomplete="dlgVisualizarTramite.show()">
-													</p:commandButton>
-													<p:spacer width="20px" />
-													<p:commandButton value="Enviar mensagem"
-														process="@this,slcUnidadeTramite,textoMensagemAreaTecnica,slcUsuarioTramite"
-														update="frmEnviarMensagemTramite"
-														actionListener="#{mBManifestacao.salvaTramite}"
-														oncomplete="if (!args.validationFailed){dlgEnviarMensagemTramiteW.hide()} 
-																	else {alert($('.ui-messages-error-summary').html())};">
-														<p:resetInput target="frmEnviarMensagemTramite" />
-													</p:commandButton>
-													<p:spacer width="20px" />
-													<p:commandButton value="Fechar" immediate="true"
-														update="frmEnviarMensagemTramite"
-														style="width: 100px; margin: 10px"
-														onclick="dlgEnviarMensagemTramiteW.hide()">
-														<p:resetInput target="frmEnviarMensagemTramite" />
-													</p:commandButton>
-												</p:column>
-											</p:row>
-										</p:panelGrid>
-									</center>
-								</p:column>
-							</p:row>
-						</p:panelGrid>
-					</h:form>
-				</p:dialog>
+								</center>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+
 
 			<!-- ===================================================== -->
 			<!-- DIALOG de Confirmação de Encerramento de MANIFESTAÇÃO -->

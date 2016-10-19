@@ -131,6 +131,7 @@ public class MBManifestacaoCadastrar implements Serializable {
     private Integer idPais;
     private boolean emailCadastrado;
     private boolean emailFicticio;
+    private boolean telefonePrincipalFicticio;
     private boolean enderecoNaoInformado;
     private String prestadoraServicoAux;
     
@@ -554,6 +555,20 @@ public class MBManifestacaoCadastrar implements Serializable {
     	}
     }
     
+    public void atualizarInformacoesEndereco(){
+    	if(isEnderecoNaoInformado()){
+    		manifestacao.setNrCEP("00000-000");
+			manifestacao.setEnEndereco("Não informado");
+			manifestacao.setDsBairro("Não informado");
+			manifestacao.setDsComplemento("Não informado");
+		}else{
+			manifestacao.setNrCEP("");
+			manifestacao.setEnEndereco("");
+			manifestacao.setDsBairro("");
+			manifestacao.setDsComplemento("");
+		}
+    }
+    
     /**
      * Efetua o upload do arquivo selecionado e salva em disco
      * 
@@ -855,7 +870,19 @@ public class MBManifestacaoCadastrar implements Serializable {
 	public void setEmailFicticio(boolean emailFicticio) {
 		if(emailFicticio)
 			manifestacao.setEeEmailUsuario("anonimo@agr.go.gov.br");
+		else
+			manifestacao.setEeEmailUsuario("");
 		this.emailFicticio = emailFicticio;
+	}
+
+	public boolean isTelefonePrincipalFicticio() {
+		return telefonePrincipalFicticio;
+	}
+
+	public void setTelefonePrincipalFicticio(boolean telefonePrincipalFicticio) {
+		if(telefonePrincipalFicticio)
+			manifestacao.setNrTelefone("Não informado");;
+		this.telefonePrincipalFicticio = telefonePrincipalFicticio;
 	}
 
 	public boolean isEnderecoNaoInformado() {
@@ -863,8 +890,6 @@ public class MBManifestacaoCadastrar implements Serializable {
 	}
 
 	public void setEnderecoNaoInformado(boolean enderecoNaoInformado) {
-		if(enderecoNaoInformado)
-			manifestacao.setEnEndereco("Não informado");
 		this.enderecoNaoInformado = enderecoNaoInformado;
 	}
 

@@ -456,8 +456,12 @@ Fonte: <a href="www.aneel.gov.br">www.aneel.gov.br</a>
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia()}">
                         <p:column style="font-weight: bold;">Telefone 1: *</p:column>  
                         <p:column style="font-weight: bold;">
-							<p:inputMask required="true" requiredMessage="Informe pelo menos um telefone para contato" id="nrTelefone" value="#{mBManifestacaoCadastrar.manifestacao.nrTelefone}" mask="(99)99999999?9"  maxlength="13" title="Informe um Telefone para contato" style="width: 250px" />  
-							<p:watermark for="nrTelefone" value="(99)99999999" />  
+							<p:inputMask required="true" requiredMessage="Informe pelo menos um telefone para contato" id="nrTelefone" value="#{mBManifestacaoCadastrar.manifestacao.nrTelefone}" mask="#{mBManifestacaoCadastrar.telefonePrincipalFicticio ? '' : '(99)99999999?9'}"  maxlength="13" title="Informe um Telefone para contato" style="width: 250px"
+								 readonly="#{mBManifestacaoCadastrar.telefonePrincipalFicticio}"/>  
+							<p:watermark for="nrTelefone" value="(99)99999999" /> 
+							<p:selectBooleanCheckbox value="#{mBManifestacaoCadastrar.telefonePrincipalFicticio}" itemLabel=" Utilizar telefone anônimo" style="margin-left: 10px; height: 13px;">
+	                            <p:ajax process="@this" update="nrTelefone"/>
+	                        </p:selectBooleanCheckbox> 
                         </p:column>
                     </p:row>
                    
@@ -501,7 +505,7 @@ Fonte: <a href="www.aneel.gov.br">www.aneel.gov.br</a>
             	                    <f:validator binding="#{emailValidator}" />
         	                        <p:ajax event="blur" process="@this"/>
     	                        </p:inputText>
-	                            <p:selectBooleanCheckbox value="#{mBManifestacaoCadastrar.emailFicticio}" itemLabel=" Utilizar e-mail fictício" style="margin-left: 10px; height: 13px;">
+	                            <p:selectBooleanCheckbox value="#{mBManifestacaoCadastrar.emailFicticio}" itemLabel=" Utilizar e-mail anônimo" style="margin-left: 10px; height: 13px;">
 	                            	<p:ajax process="@this" update="emailOb"/>
 	                            </p:selectBooleanCheckbox>
                         	</h:panelGroup>
@@ -589,7 +593,8 @@ Fonte: <a href="www.aneel.gov.br">www.aneel.gov.br</a>
                         </p:column>
                     </p:row>
                     
-                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia() and security.manifestante}">
+                    <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia() and security.manifestante} 
+                    	and not mBManifestacaoCadastrar.manifestacao.tipoSolicitacao == 'saneamento'">
                         <p:column style="font-weight: bold;">Nº Protocolo Prestadora de Serviço: </p:column>  
                         <p:column style="font-weight: bold;">
                         	<p:inputText id="nrPronac" value="#{mBManifestacaoCadastrar.manifestacao.nrPronac}" maxlength="50" title="Informe o número do Protocolo" style="width: 250px;">
@@ -608,9 +613,13 @@ Fonte: <a href="www.aneel.gov.br">www.aneel.gov.br</a>
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia()}">
                         <p:column style="font-weight: bold;">CEP: *</p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:inputMask required="true" requiredMessage="Informe um CEP" value="#{mBManifestacaoCadastrar.manifestacao.nrCEP}" mask="99999-999" maxlength="9" style="width:250px;" title="Informe o seu CEP" >
+                            <p:inputMask id="cep" required="true" requiredMessage="Informe um CEP" value="#{mBManifestacaoCadastrar.manifestacao.nrCEP}" mask="99999-999" maxlength="9" style="width:250px;" 
+                            	title="Informe o seu CEP" readonly="#{mBManifestacaoCadastrar.enderecoNaoInformado}">
                                 <p:ajax event="blur" listener="#{mBManifestacaoCadastrar.ajustaCep()}" update="endereco,bairro,pais,slcEstado,localidade" />
                             </p:inputMask>
+                            <p:selectBooleanCheckbox value="#{mBManifestacaoCadastrar.enderecoNaoInformado}" itemLabel=" Utilizar endereço anônimo" style="margin-left: 10px; height: 13px;">
+	                        	<p:ajax event="change" process="@this" update="cep, endereco, bairro, numero, complemento" listener="#{mBManifestacaoCadastrar.atualizarInformacoesEndereco}"/>
+	                        </p:selectBooleanCheckbox>
                         </p:column>
                     </p:row>
                     
@@ -619,30 +628,30 @@ Fonte: <a href="www.aneel.gov.br">www.aneel.gov.br</a>
                         <p:column style="font-weight: bold;">
                             <p:inputText required="true" requiredMessage="Informe o endereço" id="endereco" value="#{mBManifestacaoCadastrar.manifestacao.enEndereco}" style="width:250px;" title="Informe seu Endereço" 
                             	readonly="#{mBManifestacaoCadastrar.enderecoNaoInformado}"/>
-                            <p:selectBooleanCheckbox value="#{mBManifestacaoCadastrar.enderecoNaoInformado}" itemLabel="Endereço não informado" style="margin-left: 10px; height: 13px;">
-	                        	<p:ajax process="@this" update="endereco"/>
-	                        </p:selectBooleanCheckbox>
                         </p:column>
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia()}">
                         <p:column style="font-weight: bold;">Número: *</p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:inputText id="numero" value="#{mBManifestacaoCadastrar.manifestacao.nrEndereco}" style="width:50px;" title="Informe o número do endereço" converterMessage="Campo número só aceita digitos numéricos" />
+                            <p:inputText id="numero" value="#{mBManifestacaoCadastrar.manifestacao.nrEndereco}" style="width:50px;" title="Informe o número do endereço" converterMessage="Campo número só aceita digitos numéricos"
+                            	readonly="#{mBManifestacaoCadastrar.enderecoNaoInformado}" />
                         </p:column>
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia()}">
                         <p:column style="font-weight: bold;">Bairro: *</p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:inputText required="true" requiredMessage="Informe o bairro" id="bairro" value="#{mBManifestacaoCadastrar.manifestacao.dsBairro}" style="width:250px;" title="Informe o seu bairro" />
+                            <p:inputText id="bairro" required="true" requiredMessage="Informe o bairro" value="#{mBManifestacaoCadastrar.manifestacao.dsBairro}" style="width:250px;" 
+                            title="Informe o seu bairro" readonly="#{mBManifestacaoCadastrar.enderecoNaoInformado}"/>
                         </p:column>
                     </p:row>
                     
                     <p:row rendered="#{not mBManifestacaoCadastrar.anonimo and mBManifestacaoCadastrar.renderizaCamposCasoSolicitacaoEnergia()}">
                         <p:column style="font-weight: bold;">Complemento: </p:column>  
                         <p:column style="font-weight: bold;">
-                            <p:inputText value="#{mBManifestacaoCadastrar.manifestacao.dsComplemento}" style="width:250px;" title="Informe o complemento do endereço" />
+                            <p:inputText id="complemento" value="#{mBManifestacaoCadastrar.manifestacao.dsComplemento}" style="width:250px;" 
+                            	title="Informe o complemento do endereço" readonly="#{mBManifestacaoCadastrar.enderecoNaoInformado}" />
                         </p:column>
                     </p:row>
                     
