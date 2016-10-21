@@ -3,6 +3,8 @@ package br.com.xti.ouvidoria.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
@@ -183,37 +185,33 @@ public class MBListarManifestacoes implements Serializable {
     
     private void ajustarCaixaEntrada(List<TbManifestacao> list) {
     	switch (securityService.getUserProfile()) {
-			case INTERLOCUTOR: // remover as manifestações que ele já encaminhou para um operador.
-	        	TbUnidade unidadeInterlocutor = securityService.getUser().getIdUnidade();
-	        	
-	        	ListIterator<TbManifestacao> listIterator = list.listIterator();
-	        	for( ; listIterator.hasNext() ; ) {
-	        		enc: for (TbEncaminhamento e : listIterator.next().getTbEncaminhamentoCollection()) {
-	        			if(e.getIdUnidadeEnviou().equals(unidadeInterlocutor)) {
-	        				listIterator.remove();
-	        				break enc;
-	        			} else if(e.getIdUnidadeRecebeu().equals(unidadeInterlocutor)) {
-							// Verifica o último trâmite para determinar se deve estar ou não na caixa de entrada
-							List<TbTramite> listTramites = new ArrayList<TbTramite>(e.getTbTramiteCollection());
-							TbTramite ultimoTramite = listTramites.get(listTramites.size() -1);
-							if(!UnidadeEnum.OUVIDORIA.getId().equals(ultimoTramite.getIdUsuarioEmissor().getIdUnidade().getIdUnidade())) {
-								if(!securityService.getUser().getIdUnidade().equals(ultimoTramite.getIdUnidadeEnvio())) {
-									listIterator.remove();
-									break enc;
-								}
-							}
-							
-							for (TbTramite t : listTramites) {
-								if(t.getIdUsuarioReceptor() != null 
-										&& FuncaoUsuarioEnum.OPERADOR.getId().equals(t.getIdUsuarioReceptor().getTpFuncao())
-										&& BooleanEnum.NAO.getId().equals(t.getStRetornada())) {
-									listIterator.remove();
-									break enc;
-								}
-							}
-						}
+    	case INTERLOCUTOR: // remover as manifestações que ele já encaminhou para um operador.
+        	TbUnidade unidadeInterlocutor = securityService.getUser().getIdUnidade();
+        	ListIterator<TbManifestacao> listIterator = list.listIterator();
+        	while(listIterator.hasNext()){
+        		TbManifestacao corrente = listIterator.next();
+        	    List<TbEncaminhamento> encaminhamentos = (List<TbEncaminhamento>) corrente.getTbEncaminhamentoCollection();
+        	    List<TbTramite> listTramites = new ArrayList<TbTramite>();
+        	    
+        	    //Reunir todos os tramites da manifestação
+        	    for(TbEncaminhamento encaminhamento : encaminhamentos){
+        	    	listTramites.addAll(encaminhamento.getTbTramiteCollection());
+        	    }
+        	    
+        	    //Ordenação dos trâmites
+        	    Collections.sort(listTramites, new Comparator<TbTramite>() {
+					public int compare(TbTramite o1, TbTramite o2) {
+						return Long.valueOf(o1.getDtTramite().getTime()).compareTo(Long.valueOf(o2.getDtTramite().getTime()));
 					}
-	        	}
+				});
+        	    
+        	    TbTramite ultimoTramite = listTramites.get(listTramites.size() -1);
+        	    
+        	    if(!ultimoTramite.getIdUnidadeEnvio().equals(unidadeInterlocutor)){
+        	    	listIterator.remove();
+        	    }
+        	    
+        	}
 		        break;
 			default:
 				break;
