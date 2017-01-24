@@ -870,8 +870,6 @@ public class MBManifestacaoCadastrar implements Serializable {
 	public void setEmailFicticio(boolean emailFicticio) {
 		if(emailFicticio)
 			manifestacao.setEeEmailUsuario("anonimo@agr.go.gov.br");
-		else
-			manifestacao.setEeEmailUsuario("");
 		this.emailFicticio = emailFicticio;
 	}
 
