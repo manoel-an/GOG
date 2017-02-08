@@ -248,16 +248,14 @@
 								<p:rowToggler />
 							</p:column>
 
-							<p:column style="width: 2%;" headerText="Nº"
+							<p:column style="width: 200px;" headerText="Nº"
 								filterBy="#{manifestacao.nrManifestacao}"
 								filterMatchMode="contains"
 								sortBy="#{manifestacao.nrManifestacao}">
-								<h:panelGroup rendered="#{mBManifestacao.verificarExistenciaNovoTramite(manifestacao)}">
-									<h:outputText value="#{manifestacao.nrManifestacao}" style="font-weight:bold;"/>
-										<p:graphicImage value="/img/new_message.png" width="20" style="margin-left: 5px; vertical-align: middle;"/>
-								</h:panelGroup>
-								<h:panelGroup rendered="#{not mBManifestacao.verificarExistenciaNovoTramite(manifestacao)}">
-									<h:outputText value="#{manifestacao.nrManifestacao}" />
+								<h:panelGroup>
+									<h:outputText value="#{manifestacao.nrManifestacao}" style="#{(mBManifestacao.verificaExistenciaNovaComunicacaoExterna(manifestacao) or mBManifestacao.verificarExistenciaNovoTramite(manifestacao)) ? 'font-weight: bold; font-size: 9px;' : '' }"/>
+									<p:graphicImage value="/img/new_message_green.png" width="20" style="margin-left: 5px; vertical-align: middle;" rendered="#{mBManifestacao.verificaExistenciaNovaComunicacaoExterna(manifestacao)}"/>
+									<p:graphicImage value="/img/new_message.png" width="20" style="margin-left: 5px; vertical-align: middle;" rendered="#{mBManifestacao.verificarExistenciaNovoTramite(manifestacao)}"/>
 								</h:panelGroup>
 							</p:column>
 
@@ -426,6 +424,9 @@
 						<h:panelGroup>
 							<p:graphicImage value="/img/new_message.png" width="20" style="margin-left: 5px; vertical-align: middle;"/>
 							= Há um novo trâmite não visualizado na manifestação.
+							<br/>
+							<p:graphicImage value="/img/new_message_green.png" width="20" style="margin-left: 5px; vertical-align: middle;"/>
+							= Há um nova mensagem do manifestante não visualizada na manifestação.
 						</h:panelGroup>
 					</p:column>
 				</p:row>

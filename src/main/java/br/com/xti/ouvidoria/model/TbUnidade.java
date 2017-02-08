@@ -58,7 +58,6 @@ public class TbUnidade implements Serializable, Comparable<TbUnidade> {
     
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
     @Column(name = "sgUnidade")
     private String sgUnidade;
     

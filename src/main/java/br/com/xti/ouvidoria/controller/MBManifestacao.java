@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -238,7 +239,12 @@ public class MBManifestacao extends AbstractManifestationController implements S
         tiposManifestacao = tipomanifestacaoDAO.findAll();
         
         encaminhamentosPadronizados = encaminhamentoPadronizadoDAO.findAll();
-        Collections.sort(encaminhamentosPadronizados);
+        Collections.sort(encaminhamentosPadronizados, new Comparator<TbEncaminhamentoPadronizado>() {
+			@Override
+			public int compare(TbEncaminhamentoPadronizado o1, TbEncaminhamentoPadronizado o2) {
+				return o1.getDsTitulo().compareTo(o2.getDsTitulo());
+			}
+		});
         
         prioridades = prioridadeDAO.findAll();
         Collections.sort(prioridades);
@@ -977,7 +983,12 @@ public class MBManifestacao extends AbstractManifestationController implements S
     public Collection<TbRespostaManifestacao> getRespostasManifestacao() {
     	if(!ValidacaoHelper.isNotEmpty(respostasManifestacao)) {
     		respostasManifestacao = respostaManifestacaoDAO.findAll();
-    		Collections.sort(respostasManifestacao);
+    		Collections.sort(respostasManifestacao, new Comparator<TbRespostaManifestacao>() {
+				@Override
+				public int compare(TbRespostaManifestacao o1, TbRespostaManifestacao o2) {
+					return o1.getDsTituloResposta().compareTo(o2.getDsTituloResposta());
+				}
+			});
     	}
     	return respostasManifestacao;
     }
