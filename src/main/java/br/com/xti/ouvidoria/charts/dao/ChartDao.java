@@ -79,11 +79,26 @@ public class ChartDao extends AbstractDAO<TbManifestacao> {
 		return res;
 	}
 	
+	public Long getQuantidadeMensagensEncerradasScript(Date dataDe, Date dataAte) {
+		return dao.getEntityManager().createQuery("select count(m) from TbManifestacao m WHERE m.dtCadastro >= :datade and m.dtCadastro <= :dataAte and m.dsTextoEncerramentoScript is not null", Long.class)
+		.setParameter("datade", dataDe)
+		.setParameter("dataAte", dataAte)
+		.getSingleResult();
+	}
+	
+	public Long getQuantidadeMensagensAnalisadas(Date dataDe, Date dataAte) {
+		return dao.getEntityManager().createQuery("select count(m) from TbManifestacao m WHERE m.dtCadastro >= :datade and m.dtCadastro <= :dataAte and m.dsTextoEncerramentoScript is null", Long.class)
+		.setParameter("datade", dataDe)
+		.setParameter("dataAte", dataAte)
+		.getSingleResult();
+	}
+
 	private FiltroPersonalizado getFiltroPersonalizadoEntreDatas(Date dataDe, Date dataAte) {
 		FiltroPersonalizado filtroPersonalizado = new FiltroPersonalizado();
 		filtroPersonalizado.setManDataCadastroDe(DataHelper.getDataMin(dataDe));
 		filtroPersonalizado.setManDataCadastroAte(DataHelper.getDataMax(dataAte));
 		return filtroPersonalizado;
 	}
+
 
 }

@@ -24,6 +24,7 @@ import br.com.xti.ouvidoria.charts.pojo.MensagemRecebida;
 import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaClassificacao;
 import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaRegiaoEconomica;
 import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaTipo;
+import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaTipoEntrada;
 import br.com.xti.ouvidoria.charts.pojo.MensagemSolucionada;
 import br.com.xti.ouvidoria.charts.pojo.MensagemSolucionadaUnidadeSolucionadora;
 import br.com.xti.ouvidoria.charts.pojo.RespostaQuestionario;
@@ -117,6 +118,12 @@ public class MBCharts implements Serializable {
 		Collection<MensagemRecebidaTipo> itens = service.getTipoMensagensRecebidasEntreDatas(dataDe, dataAte, ChartUnidadeEnum.UNIDADES_INTERNAS);
 		inicializar(itens);
 		ChartHelper.getTotalMensagensRecebidasClassificacao(itens, dados);
+	}
+	
+	public void getTotalMensagensRecebidasScriptAnalisadas() {
+		Collection<MensagemRecebidaTipoEntrada> itens = service.getTipoMensagensRecebidasTipoEntradaEntreDatas(dataDe, dataAte);
+		inicializar(itens);
+		ChartHelper.getTotalMensagensRecebidasScriptAnalisadas(itens, dados);
 	}
 	
 	public void getTipoMensagensRecebidasUnidadesVinculadas() {

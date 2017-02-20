@@ -10,6 +10,7 @@ import br.com.xti.ouvidoria.charts.pojo.MensagemRecebida;
 import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaClassificacao;
 import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaRegiaoEconomica;
 import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaTipo;
+import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaTipoEntrada;
 import br.com.xti.ouvidoria.charts.pojo.MensagemSolucionada;
 import br.com.xti.ouvidoria.charts.pojo.MensagemSolucionadaUnidadeSolucionadora;
 import br.com.xti.ouvidoria.charts.pojo.RespostaQuestionario;
@@ -125,6 +126,15 @@ public class ChartHelper {
 			String name = nomeTipoManifestacao + " (" + mrt.getQuantidade() + ")";
 			dados.append(String.format(TEMPLATE_DATA_CHART, name, 
 					mrt.getPorcentagemString(), mrt.getIdManifestacoes()));
+		}
+	}
+	
+	public static void getTotalMensagensRecebidasScriptAnalisadas(final Collection<MensagemRecebidaTipoEntrada> itens, StringBuilder dados) {
+		for (MensagemRecebidaTipoEntrada mrt : itens) {
+			String nomeTipoManifestacao = mrt.getTipo();
+			String name = nomeTipoManifestacao + " (" + mrt.getQuantidadeMsgs() + ")";
+			dados.append(String.format(TEMPLATE_DATA_CHART, name, 
+					mrt.getPorcentagem().toString(), "1"));
 		}
 	}
 	

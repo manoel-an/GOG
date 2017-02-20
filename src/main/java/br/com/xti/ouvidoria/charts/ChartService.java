@@ -25,6 +25,7 @@ import br.com.xti.ouvidoria.charts.pojo.MensagemRecebida;
 import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaClassificacao;
 import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaRegiaoEconomica;
 import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaTipo;
+import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaTipoEntrada;
 import br.com.xti.ouvidoria.charts.pojo.MensagemSolucionada;
 import br.com.xti.ouvidoria.charts.pojo.MensagemSolucionadaUnidadeSolucionadora;
 import br.com.xti.ouvidoria.charts.pojo.RespostaQuestionario;
@@ -456,6 +457,29 @@ public class ChartService implements Serializable {
 		}
 		
 		return set;
+	}
+
+	public Collection<MensagemRecebidaTipoEntrada> getTipoMensagensRecebidasTipoEntradaEntreDatas(Date dataDe,
+			Date dataAte) {
+		
+		Long qtdsMensagensScript = dao.getQuantidadeMensagensEncerradasScript(dataDe, dataAte);
+		Long qtdsMensagensAnalisadas = dao.getQuantidadeMensagensAnalisadas(dataDe, dataAte);
+		Long total = qtdsMensagensScript + qtdsMensagensAnalisadas;
+		
+		MensagemRecebidaTipoEntrada script = new MensagemRecebidaTipoEntrada();
+		script.setTipo("Atendimentos Pontuais");
+		script.setQuantidadeMsgs(qtdsMensagensScript.intValue());
+		script.setPorcentagem(Double.valueOf(Double.valueOf(qtdsMensagensScript) / total));
+		
+		MensagemRecebidaTipoEntrada analisadas = new MensagemRecebidaTipoEntrada();
+		analisadas.setTipo("Manifestações Analisadas");
+		analisadas.setQuantidadeMsgs(qtdsMensagensAnalisadas.intValue());
+		analisadas.setPorcentagem(Double.valueOf(Double.valueOf(qtdsMensagensAnalisadas) / total));
+		
+		List<MensagemRecebidaTipoEntrada> list = new ArrayList<>();
+		list.add(script);
+		list.add(analisadas);
+		return list;
 	}
 	
 }
