@@ -279,8 +279,10 @@
 							<p:submenu label="Gráfico" rendered="#{security.enableChartMenu()}">
 								<p:menuitem value="Mensagens Recebidas por Mês" ajax="false"
 									action="/pages/grafico/totalMensagensRecebidasGeral.xhtml?faces-redirect=true" />
-								<p:menuitem value="Atendimentos Pontuais vs Manifestações Analisadas" ajax="false"
+								<p:menuitem value="Atendimentos Pontuais x Manifestações Analisadas" ajax="false"
 									action="/pages/grafico/totalMensagensRecebidasScriptEAnalisadas.xhtml?faces-redirect=true" />
+								<p:menuitem value="Manifestações Abertas x Manifestações Fechadas" ajax="false"
+									action="/pages/grafico/totalMensagensRecebidasAbertasEFechadas.xhtml?faces-redirect=true" />
 								<p:menuitem value="Total de Mensagens - Internas x Vinculadas" ajax="false"
 									action="/pages/grafico/totalMensagensRecebidasInternaVinculada.xhtml?faces-redirect=true" />
 								<p:menuitem value="Total de Mensagens Enviadas às Unidades da AGR" ajax="false"

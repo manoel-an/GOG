@@ -459,7 +459,7 @@ public class ChartService implements Serializable {
 		return set;
 	}
 
-	public Collection<MensagemRecebidaTipoEntrada> getTipoMensagensRecebidasTipoEntradaEntreDatas(Date dataDe,
+	public Collection<MensagemRecebidaTipoEntrada> getTotalMensagensRecebidasTipoEntradaEntreDatas(Date dataDe,
 			Date dataAte) {
 		
 		Long qtdsMensagensScript = dao.getQuantidadeMensagensEncerradasScript(dataDe, dataAte);
@@ -479,6 +479,29 @@ public class ChartService implements Serializable {
 		List<MensagemRecebidaTipoEntrada> list = new ArrayList<>();
 		list.add(script);
 		list.add(analisadas);
+		return list;
+	}
+	
+	public Collection<MensagemRecebidaTipoEntrada> getTotalMensagensRecebidasAbertasFechadas(Date dataDe,
+			Date dataAte) {
+		
+		Long qtdsMensagensAberta = dao.getQuantidadeMensagensAbertas(dataDe, dataAte);
+		Long qtdsMensagensFechada = dao.getQuantidadeMensagensFechadas(dataDe, dataAte);
+		Long total = qtdsMensagensAberta + qtdsMensagensFechada;
+		
+		MensagemRecebidaTipoEntrada abertas = new MensagemRecebidaTipoEntrada();
+		abertas.setTipo("Manifestações Abertas");
+		abertas.setQuantidadeMsgs(qtdsMensagensAberta.intValue());
+		abertas.setPorcentagem(Double.valueOf(Double.valueOf(qtdsMensagensAberta) / total));
+		
+		MensagemRecebidaTipoEntrada fechadas = new MensagemRecebidaTipoEntrada();
+		fechadas.setTipo("Manifestações Fechadas");
+		fechadas.setQuantidadeMsgs(qtdsMensagensFechada.intValue());
+		fechadas.setPorcentagem(Double.valueOf(Double.valueOf(qtdsMensagensFechada) / total));
+		
+		List<MensagemRecebidaTipoEntrada> list = new ArrayList<>();
+		list.add(abertas);
+		list.add(fechadas);
 		return list;
 	}
 	

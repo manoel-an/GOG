@@ -138,6 +138,15 @@ public class ChartHelper {
 		}
 	}
 	
+	public static void getTotalMensagensRecebidasAbertasFechadas(final Collection<MensagemRecebidaTipoEntrada> itens, StringBuilder dados) {
+		for (MensagemRecebidaTipoEntrada mrt : itens) {
+			String nomeTipoManifestacao = mrt.getTipo();
+			String name = nomeTipoManifestacao + " (" + mrt.getQuantidadeMsgs() + ")";
+			dados.append(String.format(TEMPLATE_DATA_CHART, name, 
+					mrt.getPorcentagem().toString(), "1"));
+		}
+	}
+	
 	/**
 	 * @param itens
 	 * @param dados
