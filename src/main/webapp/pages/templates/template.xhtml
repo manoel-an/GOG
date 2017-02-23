@@ -277,12 +277,21 @@
 								</p:submenu>
 							</p:submenu>
 							<p:submenu label="Gráfico" rendered="#{security.enableChartMenu()}">
-								<p:menuitem value="Mensagens Recebidas por Mês" ajax="false"
+								<p:menuitem value="Manifestações por Mês" ajax="false"
 									action="/pages/grafico/totalMensagensRecebidasGeral.xhtml?faces-redirect=true" />
-								<p:menuitem value="Atendimentos Pontuais x Manifestações Analisadas" ajax="false"
+								<p:menuitem value="Atendimentos Pontuais x Analisadas" ajax="false"
 									action="/pages/grafico/totalMensagensRecebidasScriptEAnalisadas.xhtml?faces-redirect=true" />
-								<p:menuitem value="Manifestações Abertas x Manifestações Fechadas" ajax="false"
+								<p:menuitem value="Manifestações Abertas x Fechadas" ajax="false"
 									action="/pages/grafico/totalMensagensRecebidasAbertasEFechadas.xhtml?faces-redirect=true" />
+								<p:menuitem value="Manifestações por Classificação" ajax="false"
+									action="/pages/grafico/classificacoesCincoMais.xhtml?faces-redirect=true" />
+								<p:menuitem value="Manifestações por Subclassificação" ajax="false"
+									action="/pages/grafico/totalMensagensPorSubClassificacao.xhtml?faces-redirect=true" />
+								<p:menuitem value="Manifestações por Tipo" ajax="false"
+									action="/pages/grafico/totalMensagensClassificacaoTipo.xhtml?faces-redirect=true" />
+								<p:menuitem value="Manifestações por Canal de Atendimento" ajax="false"
+									action="/pages/grafico/totalMensagensRecebidasMeioEntrada.xhtml?faces-redirect=true" />
+								<!-- 
 								<p:menuitem value="Total de Mensagens - Internas x Vinculadas" ajax="false"
 									action="/pages/grafico/totalMensagensRecebidasInternaVinculada.xhtml?faces-redirect=true" />
 								<p:menuitem value="Total de Mensagens Enviadas às Unidades da AGR" ajax="false"
@@ -299,14 +308,11 @@
 									action="/pages/grafico/totalMensagensSolucionadasGeral.xhtml?faces-redirect=true" />
 								<p:menuitem value="Questionários" ajax="false"
 									action="/pages/grafico/respostasQuestionarios.xhtml?faces-redirect=true" />
-								<p:menuitem value="Total de Mensagens - Classificação x Tipos" ajax="false"
-									action="/pages/grafico/totalMensagensClassificacaoTipo.xhtml?faces-redirect=true" />
-								<p:menuitem value="Classificações Mais Usadas" ajax="false"
-									action="/pages/grafico/classificacoesCincoMais.xhtml?faces-redirect=true" />
 								<p:menuitem value="Total de Mensagens Solucionadas - Geral" ajax="false"
 									action="/pages/grafico/totalMensagensSolucionadasUnidadeSolucionadora.xhtml?faces-redirect=true" />
 								<p:menuitem value="Média Dias Resposta à Ouvidoria" ajax="false"
 									action="/pages/grafico/mediaDiasRespostaOuvidoria.xhtml?faces-redirect=true" />
+								 -->
 							</p:submenu>
 							<p:submenu label="Comunicação" rendered="#{security.enableCommunicationMenu()}">
 								<p:menuitem value="E-mail de Notificação" ajax="false"

@@ -32,6 +32,7 @@ public abstract class TbManifestacao_ {
 	public static volatile SingularAttribute<TbManifestacao, String> tpSexo;
 	public static volatile SingularAttribute<TbManifestacao, String> dsLocalidade;
 	public static volatile SingularAttribute<TbManifestacao, String> dsTextoManifestacao;
+	public static volatile SingularAttribute<TbManifestacao, String> dsTextoEncerramentoScript;
 	public static volatile SingularAttribute<TbManifestacao, String> nrCEP;
 	public static volatile SingularAttribute<TbManifestacao, String> tpRaca;
 	public static volatile SingularAttribute<TbManifestacao, String> dsMotivoOcultacao;

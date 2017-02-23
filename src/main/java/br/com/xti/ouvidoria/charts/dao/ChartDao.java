@@ -38,6 +38,12 @@ public class ChartDao extends AbstractDAO<TbManifestacao> {
 		return dao.getManifestacoes(filtroPersonalizado);
 	}
 	
+	public List<TbManifestacao> getManifestacoesEntreDatas(Date dataDe, Date dataAte, Boolean encerradasScript) {
+		FiltroPersonalizado filtroPersonalizado = getFiltroPersonalizadoEntreDatas(dataDe, dataAte);
+		filtroPersonalizado.setManEncerradaScript(encerradasScript);
+		return dao.getManifestacoes(filtroPersonalizado);
+	}
+	
 	public List<TbManifestacao> getManifestacoesEntreDatas(Date dataDe,
 			Date dataAte, int idUnidadeEnviouEncaminhamento,
 			List<Integer> idUnidadesRecebeuEncaminhamento) {
@@ -49,9 +55,12 @@ public class ChartDao extends AbstractDAO<TbManifestacao> {
 	}
 	
 	public List<TbManifestacao> getManifestacoesEntreDatasPorClassificacao(
-			Date dataDe, Date dataAte, int idClassificacao) {
+			Date dataDe, Date dataAte, int idClassificacao, Boolean encerradaScript) {
 		FiltroPersonalizado filtroPersonalizado = getFiltroPersonalizadoEntreDatas(dataDe, dataAte);
-		filtroPersonalizado.addManIdClassificacao(idClassificacao);
+		filtroPersonalizado.setManEncerradaScript(encerradaScript);
+		if(idClassificacao != 0){
+			filtroPersonalizado.addManIdClassificacao(idClassificacao);
+		}
 		return dao.getManifestacoes(filtroPersonalizado);
 	}
 	

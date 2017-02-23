@@ -388,7 +388,16 @@ public class ManifestacaoDAO extends AbstractDAO<TbManifestacao> {
         if (ValidacaoHelper.isNotEmpty(filtro.getManDesc())) {
             restricoesLista.add(cb.like(cb.upper(m.get(TbManifestacao_.dsTextoManifestacao)), "%"
                     + filtro.getManDesc().toUpperCase() + "%"));
-        } // Número Pronac
+        }
+        // Manifestação analisada ou encerrada por script
+        if (ValidacaoHelper.isNotEmpty(filtro.getManEncerradaScript())) {
+        	if(filtro.getManEncerradaScript()){
+        		restricoesLista.add(cb.isNotNull(m.get(TbManifestacao_.dsTextoEncerramentoScript)));
+        	}else{
+        		restricoesLista.add(cb.isNull(m.get(TbManifestacao_.dsTextoEncerramentoScript)));
+        	}
+        }
+        // Número Pronac
         if (ValidacaoHelper.isNotEmpty(filtro.getManNumPronac())) {
             restricoesLista.add(cb.like(cb.upper(m.get(TbManifestacao_.nrPronac)), "%"
                     + filtro.getManNumPronac().toUpperCase() + "%"));

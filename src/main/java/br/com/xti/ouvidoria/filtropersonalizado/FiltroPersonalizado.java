@@ -73,6 +73,7 @@ public class FiltroPersonalizado {
     private Date encDataRespostaDe;
     private Date encDataRespostaAte;
     private String manLocalidade;
+    private Boolean manEncerradaScript;
 
     public String getManOculto() {
         return manOculto;
@@ -742,6 +743,14 @@ public class FiltroPersonalizado {
 			this.manIdTipoManifestante = new ArrayList<String>();
 		}
 		this.manIdTipoManifestante.add(idTipoManifestante);
+	}
+
+	public Boolean getManEncerradaScript() {
+		return manEncerradaScript;
+	}
+
+	public void setManEncerradaScript(Boolean manEncerradaScript) {
+		this.manEncerradaScript = manEncerradaScript;
 	}
 
 }

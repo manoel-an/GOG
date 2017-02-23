@@ -29,6 +29,8 @@ import br.com.xti.ouvidoria.charts.pojo.MensagemRecebidaTipoEntrada;
 import br.com.xti.ouvidoria.charts.pojo.MensagemSolucionada;
 import br.com.xti.ouvidoria.charts.pojo.MensagemSolucionadaUnidadeSolucionadora;
 import br.com.xti.ouvidoria.charts.pojo.RespostaQuestionario;
+import br.com.xti.ouvidoria.dao.ManifestacaoDAO;
+import br.com.xti.ouvidoria.filtropersonalizado.FiltroPersonalizado;
 import br.com.xti.ouvidoria.helper.DataHelper;
 import br.com.xti.ouvidoria.helper.EnumHelper;
 import br.com.xti.ouvidoria.helper.RegiaoHelper;
@@ -37,6 +39,7 @@ import br.com.xti.ouvidoria.model.TbClassificacao;
 import br.com.xti.ouvidoria.model.TbEncaminhamento;
 import br.com.xti.ouvidoria.model.TbManifestacao;
 import br.com.xti.ouvidoria.model.TbRespostaQuestionario;
+import br.com.xti.ouvidoria.model.TbSubClassificacao;
 import br.com.xti.ouvidoria.model.TbTipoManifestacao;
 import br.com.xti.ouvidoria.model.TbUF;
 import br.com.xti.ouvidoria.model.TbUnidade;
@@ -51,6 +54,9 @@ public class ChartService implements Serializable {
 	
 	@EJB
 	private ChartDao dao;
+	
+	@EJB
+	private ManifestacaoDAO manifestacaoDao;
 	
 	public Collection<MensagemRecebida> getMensagensRecebidasEntreDatas(Date dataDe, Date dataAte) {
 		Set<MensagemRecebida> set = new TreeSet<>();
@@ -290,6 +296,31 @@ public class ChartService implements Serializable {
 		return set;
 	}
 	
+	public Map<String, Long> getMensagensPorSubClassificacaoEntreDatas(Date dataDe, Date dataAte, Integer codigo, Boolean encerradasScript) {
+		FiltroPersonalizado filtro = new FiltroPersonalizado();
+		List<Integer> classificacaoId = new ArrayList<>();
+		classificacaoId.add(codigo);
+		filtro.setManIdClassificacao(classificacaoId);
+		filtro.setManDataCadastroDe(DataHelper.getDataMin(dataDe));
+		filtro.setManDataCadastroAte(DataHelper.getDataMax(dataAte));
+		filtro.setManEncerradaScript(encerradasScript);
+		List<TbManifestacao> manifestacoes = manifestacaoDao.getManifestacoes(filtro); 
+	    Map<String, Long> contadores = new HashMap<>();
+	    for(TbManifestacao manifestacao : manifestacoes){
+	    	List<TbSubClassificacao> subClassificacoes = (List<TbSubClassificacao>) manifestacao.getTbSubClassificacaoCollection();
+	    	if(!subClassificacoes.isEmpty()){
+	    		TbSubClassificacao subclassificacao = subClassificacoes.get(0);
+	    		String nomeSubClassificacao = subclassificacao.getDsSubClassificacao();
+	    		if(contadores.get(nomeSubClassificacao) != null){
+	    			contadores.put(nomeSubClassificacao, contadores.get(nomeSubClassificacao) + 1);
+	    		}else{
+	    			contadores.put(nomeSubClassificacao, 1L);
+	    		}
+	    	}
+	    }
+		return contadores;
+	}
+	
 	public Collection<RespostaQuestionario> getRespostaQuestionario(int idQuestionario) {
 		Map<Integer, RespostaQuestionario> map = new HashMap<>();
 		
@@ -337,10 +368,10 @@ public class ChartService implements Serializable {
 		return itens;
 	}
 	
-	public Collection<MensagemRecebidaTipo> getTipoMensagensRecebidasEntreDatasPorClassificacao(Date dataDe, Date dataAte, int idClassificacao) {
+	public Collection<MensagemRecebidaTipo> getTipoMensagensRecebidasEntreDatasPorClassificacao(Date dataDe, Date dataAte, int idClassificacao, Boolean encerradasScript) {
 		Set<MensagemRecebidaTipo> set = new LinkedHashSet<>();
 				
-		List<TbManifestacao> manifestacoes = dao.getManifestacoesEntreDatasPorClassificacao(dataDe, dataAte, idClassificacao);
+		List<TbManifestacao> manifestacoes = dao.getManifestacoesEntreDatasPorClassificacao(dataDe, dataAte, idClassificacao, encerradasScript);
 		if(ValidacaoHelper.isNotEmpty(manifestacoes)) {
 			Map<TbTipoManifestacao, MensagemRecebidaTipo> map = new HashMap<>();
 			for (TbManifestacao m : manifestacoes) {
@@ -361,10 +392,10 @@ public class ChartService implements Serializable {
 		return set;
 	}
 	
-	public Collection<MensagemRecebidaClassificacao> getClassificacaoMensagensRecebidasEntreDatas(Date dataDe, Date dataAte) {
+	public Collection<MensagemRecebidaClassificacao> getClassificacaoMensagensRecebidasEntreDatas(Date dataDe, Date dataAte, Boolean encerradasScript) {
 		List<MensagemRecebidaClassificacao> dados = new ArrayList<>();
 		
-		List<TbManifestacao> manifestacoes = dao.getManifestacoesEntreDatas(dataDe, dataAte);
+		List<TbManifestacao> manifestacoes = dao.getManifestacoesEntreDatas(dataDe, dataAte, encerradasScript);
 		if(ValidacaoHelper.isNotEmpty(manifestacoes)) {
 			int total = 0;
 			Map<TbClassificacao, MensagemRecebidaClassificacao> map = new HashMap<>();
@@ -482,6 +513,24 @@ public class ChartService implements Serializable {
 		return list;
 	}
 	
+	public Map<String, Long> getTotalMensagensMeioEntrada(Date dataDe, Date dataAte, Boolean encerradasScript){
+		FiltroPersonalizado filtroPersonalizado = new FiltroPersonalizado();
+		filtroPersonalizado.setManDataCadastroDe(DataHelper.getDataMin(dataDe));
+		filtroPersonalizado.setManDataCadastroAte(DataHelper.getDataMax(dataAte));
+		filtroPersonalizado.setManEncerradaScript(encerradasScript);
+		List<TbManifestacao> manifestacoes = manifestacaoDao.getManifestacoes(filtroPersonalizado);
+		Map<String, Long> contadores = new HashMap<>();
+		for(TbManifestacao manifestacao : manifestacoes){
+			String meioEntrada = manifestacao.getIdMeioEntrada().getNmMeioEntrada();
+			if(contadores.containsKey(meioEntrada)){
+				contadores.put(meioEntrada, contadores.get(meioEntrada) + 1L);
+			}else{
+				contadores.put(meioEntrada, 1L);
+			}
+		}
+		return contadores;
+	}
+	
 	public Collection<MensagemRecebidaTipoEntrada> getTotalMensagensRecebidasAbertasFechadas(Date dataDe,
 			Date dataAte) {
 		
@@ -504,5 +553,7 @@ public class ChartService implements Serializable {
 		list.add(fechadas);
 		return list;
 	}
+
+	
 	
 }

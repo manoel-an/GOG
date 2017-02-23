@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-	
+
 	<ui:define name="bread">
 		<h:form>
 			<p:breadCrumb>
@@ -28,7 +28,7 @@
 						plotShadow: false
 					},
 					title: {
-						text: 'Total de Mensagens por Classificação - #{mBCharts.total}'
+						text: 'Mensagens por Canal de Atendimento'
 					},
 					subtitle: {
 						text: #{mBCharts.subtitulo}
@@ -46,23 +46,23 @@
 							},
 							showInLegend: true
 						},
-						series: {
-							cursor: 'pointer',
-							point: {
-								events: {
-									click: function() {
-										var drilldown = this.drilldown;
-										if(drilldown) {
-											carregarManifestacoes([{name:'idManifestacoes', value:drilldown.name}]);
-										}
-									}
-								}
-							}
-						}
+						//series: {
+						//	cursor: 'pointer',
+						//	point: {
+						//		events: {
+						//			click: function() {
+						//				var drilldown = this.drilldown;
+						//				if(drilldown) {
+						//					carregarManifestacoes([{name:'idManifestacoes', value:drilldown.name}]);
+						//				}
+						//			}
+						//		}
+						//	}
+						//}
 					},
 					series: [{
 						type: 'pie',
-						name: 'Porcentagem de classificações',
+						name: 'Porcentagem de mensagens',
 						data: [#{mBCharts.dados}]
 					}]
 				});
@@ -71,26 +71,27 @@
 		
         <h:form style="max-width: 1190px; margin: 0 auto">
         	<div class="TituloGrafico" style="padding-bottom: 10px">Informe uma data para gerar o gráfico</div>
-        	<div class="pesquisaGrafico" style="background: #02364c; width: 1216px; margin-left:-10px; height: 40px; line-height: 20px; color: white">
-			<h:panelGrid border="0" columns="10" style="margin: 0 auto; max-width: 1190px">
-				<h:outputLabel value="De " />
-				<p:calendar value="#{mBCharts.dataDe}" pattern="dd/MM/yyyy" required="true" requiredMessage="Campo data é obrigatório" navigator="true" />
+        	<div class="pesquisaGrafico" style="background: #02364c; width: 1216px; margin-left:-10px; height: 50px; line-height: 40px; color: white">
+				<h:panelGrid border="0" columns="10" style="margin: 0 auto; max-width: 1190px">
 				
-				<h:outputLabel value=" à " />
-				<p:calendar value="#{mBCharts.dataAte}" pattern="dd/MM/yyyy" required="true" requiredMessage="Campo data é obrigatório" navigator="true" />
-				
-				<h:outputLabel value="Manifestações: "/>
-				<p:selectOneRadio id="tipoAndamento" value="#{mBCharts.encerradasScript}">
-					<f:selectItem itemLabel="Pontuais" itemValue="true" />
-					<f:selectItem itemLabel="Analisadas" itemValue="false" />
-				</p:selectOneRadio>
-				
-				<p:commandButton value="Consultar" action="#{mBCharts.getClassificacoesCincoMais()}" ajax="false" />
-			</h:panelGrid>
+					<h:outputLabel value="De " />
+					<p:calendar value="#{mBCharts.dataDe}" pattern="dd/MM/yyyy" required="true" requiredMessage="Campo data é obrigatório" navigator="true" />
+					
+					<h:outputLabel value=" à " />
+					<p:calendar value="#{mBCharts.dataAte}" pattern="dd/MM/yyyy" required="true" requiredMessage="Campo data é obrigatório" navigator="true" />
+					
+					<h:outputLabel value="Manifestações: "/>
+					<p:selectOneRadio id="tipoAndamento" value="#{mBCharts.encerradasScript}">
+						<f:selectItem itemLabel="Pontuais" itemValue="#{true}" />
+						<f:selectItem itemLabel="Analisadas" itemValue="#{false}" />
+					</p:selectOneRadio>
+
+					<p:commandButton value="Consultar" action="#{mBCharts.getTotalMensagensRecebidasMeioEntrada()}" ajax="false" />
+				</h:panelGrid>
 			</div>
 		</h:form>
-		
-        <div id="container" style="margin:0 auto!important; width: 1216px!important;"/>
+        
+        <div id="container" style="margin: 0 auto!important; width: 1216px!important;"/>
         
         <ui:include src="/pages/templates/listaManifestacaoGraficos.xhtml" />
 	</ui:define>

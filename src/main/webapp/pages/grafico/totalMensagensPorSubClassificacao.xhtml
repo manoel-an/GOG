@@ -23,12 +23,10 @@
 			$(document).ready(function () {
 				$('#container').highcharts({
 					chart: {
-						plotBackgroundColor: null,
-						plotBorderWidth: null,
-						plotShadow: false
+						type: 'column'
 					},
 					title: {
-						text: 'Total de Mensagens por Tipo - #{mBCharts.total}'
+						text: 'Total de Mensagens por Subclassificação'
 					},
 					subtitle: {
 						text: #{mBCharts.subtitulo}
@@ -39,17 +37,43 @@
 					tooltip: {
 						enabled: false
 					},
+					legend: {
+						enabled: false
+					},
 					plotOptions: {
-						pie: {
+						column: {
 							dataLabels: {
-								format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-							},
-							showInLegend: true
+								enabled: true,
+								formatter: function() {
+									return this.y;
+								}
+							}
 						},
+//						series: {
+//							cursor: 'pointer',
+//							point: {
+//								events: {
+//									click: function() {
+//										var drilldown = this.drilldown;
+//										if(drilldown) {
+//											carregarManifestacoes([{name:'idManifestacoes', value:drilldown.name}]);
+//										}
+//									}
+//								}
+//							}
+//						}
+					},
+					xAxis: {
+						categories: [#{mBCharts.labels}]
+					},
+					yAxis: {
+						min: 0,
+						title: {
+							text: 'Quantidade'
+						}
 					},
 					series: [{
-						type: 'pie',
-						name: 'Porcentagem de mensagens',
+						name: 'Mensagens',
 						data: [#{mBCharts.dados}]
 					}]
 				});
@@ -72,19 +96,19 @@
 					<f:selectItem itemLabel="Analisadas" itemValue="#{false}" />
 				</p:selectOneRadio>
 				
-				<h:outputLabel value="Classificação:" />
-				<p:selectOneMenu value="#{mBCharts.codigo}" required="false" requiredMessage="Campo classificação é obrigatório" style="width: 250px;">
+				<h:outputLabel value="Classificação: " />
+				<p:selectOneMenu value="#{mBCharts.codigo}" required="true" requiredMessage="Campo classificação é obrigatório" style="width: 250px;">
 					<f:selectItem itemLabel="Selecione" itemValue="" />
 					<f:selectItems value="#{mBClassificacao.todos}" var="c" itemLabel="#{c.dsClassificacao}" itemValue="#{c.idClassificacao}" />
 				</p:selectOneMenu>
 				
-				<p:commandButton value="Consultar" action="#{mBCharts.getTotalMensagensClassificacaoTipos()}" ajax="false" />
+				<p:commandButton value="Consultar" action="#{mBCharts.getTotalMensagensPorSubClassificacao()}" ajax="false" />
 			</h:panelGrid>
 			</div>
 		</h:form>
 		
-        <div id="container" style="margin:0 auto !important; width: 1216px !important;"/>
-        
-        <ui:include src="/pages/templates/listaManifestacaoGraficos.xhtml" />
+        <div id="container" style="margin: 0 auto !important; height:900; width: 1216px !important;" />
+		
+		<ui:include src="/pages/templates/listaManifestacaoGraficos.xhtml" />
 	</ui:define>
 </ui:composition>

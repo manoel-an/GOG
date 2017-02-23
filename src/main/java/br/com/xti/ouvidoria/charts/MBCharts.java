@@ -35,6 +35,7 @@ import br.com.xti.ouvidoria.dao.QuestionarioDAO;
 import br.com.xti.ouvidoria.filtropersonalizado.FiltroPersonalizado;
 import br.com.xti.ouvidoria.helper.DataHelper;
 import br.com.xti.ouvidoria.helper.ValidacaoHelper;
+import br.com.xti.ouvidoria.model.TbClassificacao;
 import br.com.xti.ouvidoria.model.TbManifestacao;
 import br.com.xti.ouvidoria.model.TbQuestionario;
 import br.com.xti.ouvidoria.util.JSFUtils;
@@ -73,7 +74,10 @@ public class MBCharts implements Serializable {
 	private List<TbManifestacao> listaManifestacoesFiltro = new ArrayList<>();
 	private List<Integer> idUnidades = new ArrayList<>();
 	private static Map<String,Object> meses = new LinkedHashMap<>();
-	
+	private TbClassificacao classificacao;
+	private Boolean encerradasScriptBool;
+	private String encerradasScript;
+	 
 	
 	private void inicializar(Collection<? extends IResultadoGrafico> itens) {
 		labels.setLength(0);
@@ -88,6 +92,16 @@ public class MBCharts implements Serializable {
 		for (IResultadoGrafico i : itens) {
 			total += i.getQuantidade();
 		}
+	}
+	
+	public void inicializar(){
+		labels.setLength(0);
+		dados.setLength(0);
+		titulo.setLength(0);
+		subtitulo = DataHelper.getNomeSubtitulo(dataDe, dataAte);
+		listaManifestacoes = new ArrayList<>();
+		listaManifestacoesFiltro = new ArrayList<>();
+		total = 0;
 	}
 
 	public void getTotalMensagensRecebidasGeral() {
@@ -126,6 +140,12 @@ public class MBCharts implements Serializable {
 		ChartHelper.getTotalMensagensRecebidasScriptAnalisadas(itens, dados);
 	}
 	
+	public void getTotalMensagensRecebidasMeioEntrada() {
+		Map<String, Long> itens = service.getTotalMensagensMeioEntrada(dataDe, dataAte, encerradasScriptBool);
+		inicializar();
+		ChartHelper.getTotalMensagensRecebidasMeioEntrada(itens, dados);
+	}
+	
 	public void getTotalMensagensRecebidasAbertasFechadas() {
 		Collection<MensagemRecebidaTipoEntrada> itens = service.getTotalMensagensRecebidasAbertasFechadas(dataDe, dataAte);
 		inicializar(itens);
@@ -150,6 +170,12 @@ public class MBCharts implements Serializable {
 		ChartHelper.getTotalMensagensSolucionadasGeral(itens, labels, dados);
 	}
 	
+	public void getTotalMensagensPorSubClassificacao() {
+		Map<String, Long> itens = service.getMensagensPorSubClassificacaoEntreDatas(dataDe, dataAte, codigo, encerradasScriptBool);
+		inicializar();
+		ChartHelper.getTotalMensagensPorSubClassificacao(itens, labels, dados);
+	}
+	
 	public void getRespostasQuestionarios() {
 		Collection<RespostaQuestionario> itens = service.getRespostaQuestionario(codigo);
 		inicializar(itens);
@@ -161,17 +187,13 @@ public class MBCharts implements Serializable {
 	}
 	
 	public void getTotalMensagensClassificacaoTipos() {
-		Collection<MensagemRecebidaTipo> itens = service.getTipoMensagensRecebidasEntreDatasPorClassificacao(dataDe, dataAte, codigo);
+		Collection<MensagemRecebidaTipo> itens = service.getTipoMensagensRecebidasEntreDatasPorClassificacao(dataDe, dataAte, codigo, encerradasScriptBool);
 		inicializar(itens);
-		subtitulo.deleteCharAt(subtitulo.length() - 1)
-		.append("<br />")
-		.append(classificacaoDAO.find(codigo).getDsClassificacao())
-		.append("'");
 		ChartHelper.getTotalMensagensRecebidasClassificacao(itens, dados);
 	}
 	
 	public void getClassificacoesCincoMais() {
-		Collection<MensagemRecebidaClassificacao> itens = service.getClassificacaoMensagensRecebidasEntreDatas(dataDe, dataAte);
+		Collection<MensagemRecebidaClassificacao> itens = service.getClassificacaoMensagensRecebidasEntreDatas(dataDe, dataAte, encerradasScriptBool);
 		inicializar(itens);
 		total = ChartHelper.getMensagensRecebidasClassificacaoCincoMais(itens, dados);
 	}
@@ -331,6 +353,39 @@ public class MBCharts implements Serializable {
 	
 	
 	
+	public TbClassificacao getClassificacao() {
+		return classificacao;
+	}
+
+	public void setClassificacao(TbClassificacao classificacao) {
+		this.classificacao = classificacao;
+	}
+
+
+
+	public Boolean getEncerradasScriptBool() {
+		return encerradasScriptBool;
+	}
+
+	public void setEncerradasScriptBool(Boolean encerradasScriptBool) {
+		this.encerradasScriptBool = encerradasScriptBool;
+	}
+
+	public void setEncerradasScript(String encerradasScript) {
+		if(!encerradasScript.isEmpty()){
+			setEncerradasScriptBool(Boolean.valueOf(encerradasScript));
+		}else{
+			setEncerradasScriptBool(null);
+		}
+		
+		this.encerradasScript = encerradasScript;
+	}
+	
+	public String getEncerradasScript() {
+		return encerradasScript;
+	}
+	
+
 	static {
 		meses.put("Janeiro", 1);
 		meses.put("Fevereiro", 2);

@@ -3,6 +3,7 @@ package br.com.xti.ouvidoria.charts;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import br.com.xti.ouvidoria.charts.pojo.DiasRespostaAOuvidoria;
 import br.com.xti.ouvidoria.charts.pojo.MensagemEnviadaUnidades;
@@ -138,6 +139,15 @@ public class ChartHelper {
 		}
 	}
 	
+	public static void getTotalMensagensRecebidasMeioEntrada(Map<String, Long> contadores, StringBuilder dados){
+		for (String key : contadores.keySet()) {
+			String nomeMeioEntrada = key.replace("'", "");
+			String name = nomeMeioEntrada + " (" + contadores.get(key) + ")";
+			dados.append(String.format(TEMPLATE_DATA_CHART, name, 
+					contadores.get(key), "1"));
+		}
+	}
+	
 	public static void getTotalMensagensRecebidasAbertasFechadas(final Collection<MensagemRecebidaTipoEntrada> itens, StringBuilder dados) {
 		for (MensagemRecebidaTipoEntrada mrt : itens) {
 			String nomeTipoManifestacao = mrt.getTipo();
@@ -155,12 +165,9 @@ public class ChartHelper {
 	public static int getMensagensRecebidasClassificacaoCincoMais(final Collection<MensagemRecebidaClassificacao> itens, StringBuilder dados) {
 		List<MensagemRecebidaClassificacao> cincoMais = new ArrayList<MensagemRecebidaClassificacao>();
 		// Pegando as 5 mais usadas
-		int contador = 1;
 		int total = 0;
 		for (MensagemRecebidaClassificacao mrc : itens) {
-			if(contador > 5) break;
 			cincoMais.add(mrc);
-			contador++;
 			total += mrc.getQuantidade();
 		}
 		
@@ -215,6 +222,15 @@ public class ChartHelper {
 			labels.append("'"+periodo+"',");
 			dados.append(String.format(TEMPLATE_DATA_CHART, periodo, 
 					mensagemSolucionada.getQuantidade(), mensagemSolucionada.getIdManifestacoes()));
+		}
+	}
+	
+	public static void getTotalMensagensPorSubClassificacao(Map<String, Long> contadores, StringBuilder labels, StringBuilder dados) {
+		for (String key : contadores.keySet()) {
+			String label = key.replace("'", "");
+			labels.append("'"+label+"',");
+			dados.append(String.format(TEMPLATE_DATA_CHART, label, 
+					contadores.get(key), "1"));
 		}
 	}
 	
