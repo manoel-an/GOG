@@ -78,7 +78,14 @@
 					
 					<h:outputLabel value=" à " />
 					<p:calendar value="#{mBCharts.dataAte}" pattern="dd/MM/yyyy" required="true" requiredMessage="Campo data é obrigatório" navigator="true" />
-					
+
+					<h:outputLabel value="Manifestações: " />
+					<p:selectOneRadio id="tipoAndamento"
+						value="#{mBCharts.encerradasScript}">
+						<f:selectItem itemLabel="Pontuais" itemValue="true" />
+						<f:selectItem itemLabel="Analisadas" itemValue="false" />
+					</p:selectOneRadio>
+
 					<p:commandButton value="Consultar" action="#{mBCharts.getTotalMensagensRecebidasAbertasFechadas()}" ajax="false" />
 				</h:panelGrid>
 			</div>

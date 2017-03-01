@@ -532,10 +532,10 @@ public class ChartService implements Serializable {
 	}
 	
 	public Collection<MensagemRecebidaTipoEntrada> getTotalMensagensRecebidasAbertasFechadas(Date dataDe,
-			Date dataAte) {
+			Date dataAte, Boolean encerradasScript) {
 		
-		Long qtdsMensagensAberta = dao.getQuantidadeMensagensAbertas(dataDe, dataAte);
-		Long qtdsMensagensFechada = dao.getQuantidadeMensagensFechadas(dataDe, dataAte);
+		Long qtdsMensagensAberta = dao.getQuantidadeMensagensAbertas(dataDe, dataAte, encerradasScript);
+		Long qtdsMensagensFechada = dao.getQuantidadeMensagensFechadas(dataDe, dataAte, encerradasScript);
 		Long total = qtdsMensagensAberta + qtdsMensagensFechada;
 		
 		MensagemRecebidaTipoEntrada abertas = new MensagemRecebidaTipoEntrada();

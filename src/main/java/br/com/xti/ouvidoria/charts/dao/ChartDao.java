@@ -102,20 +102,34 @@ public class ChartDao extends AbstractDAO<TbManifestacao> {
 		.getSingleResult();
 	}
 	
-	public Long getQuantidadeMensagensAbertas(Date dataDe, Date dataAte) {
-		return dao.getEntityManager().createQuery("select count(m) from TbManifestacao m WHERE m.dtCadastro >= :datade and m.dtCadastro <= :dataAte and m.stStatusManifestacao != :status", Long.class)
-			.setParameter("datade", DataHelper.getDataMin(dataDe))
-			.setParameter("dataAte", DataHelper.getDataMax(dataAte))
-			.setParameter("status", StatusManifestacaoEnum.SOLUCIONADA.getId())
-			.getSingleResult();
+	public Long getQuantidadeMensagensAbertas(Date dataDe, Date dataAte, Boolean encerradasScript) {
+		StringBuilder sql = new StringBuilder("select count(m) from TbManifestacao m WHERE m.dtCadastro >= :datade and m.dtCadastro <= :dataAte and m.stStatusManifestacao != :status");
+		if(encerradasScript != null){
+			if(encerradasScript)
+				sql.append(" and m.dsTextoEncerramentoScript is not null");
+			else
+				sql.append(" and m.dsTextoEncerramentoScript is null");
+		}
+		return dao.getEntityManager().createQuery(sql.toString(), Long.class)
+				.setParameter("datade", DataHelper.getDataMin(dataDe))
+				.setParameter("dataAte", DataHelper.getDataMax(dataAte))
+				.setParameter("status", StatusManifestacaoEnum.SOLUCIONADA.getId())
+				.getSingleResult();
 	}
 	
-	public Long getQuantidadeMensagensFechadas(Date dataDe, Date dataAte) {
-		return dao.getEntityManager().createQuery("select count(m) from TbManifestacao m WHERE m.dtCadastro >= :datade and m.dtCadastro <= :dataAte and m.stStatusManifestacao = :status", Long.class)
-			.setParameter("datade", DataHelper.getDataMin(dataDe))
-			.setParameter("dataAte", DataHelper.getDataMax(dataAte))
-			.setParameter("status", StatusManifestacaoEnum.SOLUCIONADA.getId())
-			.getSingleResult();
+	public Long getQuantidadeMensagensFechadas(Date dataDe, Date dataAte, Boolean encerradasScript) {
+		StringBuilder sql = new StringBuilder("select count(m) from TbManifestacao m WHERE m.dtCadastro >= :datade and m.dtCadastro <= :dataAte and m.stStatusManifestacao = :status");
+		if(encerradasScript != null){
+			if(encerradasScript)
+				sql.append(" and m.dsTextoEncerramentoScript is not null");
+			else
+				sql.append(" and m.dsTextoEncerramentoScript is null");
+		}
+		return dao.getEntityManager().createQuery(sql.toString(), Long.class)
+				.setParameter("datade", DataHelper.getDataMin(dataDe))
+				.setParameter("dataAte", DataHelper.getDataMax(dataAte))
+				.setParameter("status", StatusManifestacaoEnum.SOLUCIONADA.getId())
+				.getSingleResult();
 	}
 
 	private FiltroPersonalizado getFiltroPersonalizadoEntreDatas(Date dataDe, Date dataAte) {
