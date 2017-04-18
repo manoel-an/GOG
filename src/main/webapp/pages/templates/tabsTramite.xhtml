@@ -126,7 +126,7 @@
 										<p:outputPanel autoUpdate="true" rendered="#{security.ouvidor || security.administrador}" style="margin-left: 5px;">
 											<p:commandButton
 												action="#{bean.setTramitePublico(conteudoItem)}"
-												value="#{bean.nomeBotaoTramitePublico(conteudoItem)}"
+												value="#{conteudoItem.isTramitePublico() ? 'Tornar Privado' : 'Tornar Público'}"
 												immediate="true" update="@parent" />
 										</p:outputPanel>
 										

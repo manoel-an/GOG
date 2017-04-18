@@ -1337,7 +1337,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
 	            tramite.setIdUsuarioEmissor(usuario);
 	            tramite.setStRetornada(BooleanEnum.NAO.getId());
 	            tramite.setStNotificacao(BooleanEnum.NAO.getId());
-	            tramite.setStTramitePublico(BooleanEnum.NAO.getId());
+	            tramite.setStTramitePublico(BooleanEnum.SIM.getId());
 	
 	            TbUsuario usuarioReceptor = null;
 	            if (ValidacaoHelper.isNotEmpty(idUsuarioEncaminhamento)) {
@@ -1613,7 +1613,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
             tramite.setIdUsuarioEmissor(securityService.getUser());
             tramite.setStRetornada(BooleanEnum.NAO.getId());
             tramite.setStNotificacao(BooleanEnum.NAO.getId());
-            tramite.setStTramitePublico(BooleanEnum.NAO.getId());
+            tramite.setStTramitePublico(BooleanEnum.SIM.getId());
             
             // Envia Email
             if (ValidacaoHelper.isNotEmpty(idUsuarioTramite)) {
@@ -2222,10 +2222,10 @@ public class MBManifestacao extends AbstractManifestationController implements S
 	public void setTramitePublico(Object tramiteObj) throws Exception {
 		if(tramiteObj != null && tramiteObj instanceof TbTramite) {
 			TbTramite tramite = (TbTramite) tramiteObj;
-			if(tramite.isTramitePublico()) {
-				tramite.setStTramitePublico(BooleanEnum.NAO.getId());
-			} else {
+			if(!tramite.isTramitePublico()) {
 				tramite.setStTramitePublico(BooleanEnum.SIM.getId());
+			} else {
+				tramite.setStTramitePublico(BooleanEnum.NAO.getId());
 			}
 			
 			try {
@@ -2394,7 +2394,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
         tramite.setIdUsuarioEmissor(securityService.getUser());
         tramite.setStRetornada(BooleanEnum.NAO.getId());
         tramite.setStNotificacao(BooleanEnum.SIM.getId());
-        tramite.setStTramitePublico(BooleanEnum.NAO.getId());
+        tramite.setStTramitePublico(BooleanEnum.SIM.getId());
         tramiteDAO.create(tramite);
     }
 	
