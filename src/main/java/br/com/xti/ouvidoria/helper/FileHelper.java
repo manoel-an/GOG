@@ -1,5 +1,6 @@
 package br.com.xti.ouvidoria.helper;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.Normalizer;
@@ -39,6 +40,17 @@ public class FileHelper {
         // Abre o arquivo gerado
         File relatorio = new File(destFileName);
         response.getOutputStream().write(getFileBytes(relatorio));
+        facesContext.responseComplete();
+    }
+    
+    public static void download(ByteArrayOutputStream baos, String nomeArquivoDownload) throws IOException, ParsePropertyException, ParsePropertyException, InvalidFormatException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+        response.setContentType("application/force-download");
+        response.addHeader("Content-Disposition", "attachment; filename=\""+nomeArquivoDownload+"\"");
+
+        // Abre o arquivo gerado
+        response.getOutputStream().write(baos.toByteArray());
         facesContext.responseComplete();
     }
     

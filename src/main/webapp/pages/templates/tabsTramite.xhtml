@@ -196,6 +196,14 @@
 			rendered="#{security.loggedIn() and not security.manifestante}">
 			<p:fileDownload value="#{bean.filePDF}" />
 		</p:commandButton>
+		<p:commandButton
+			ajax="false"
+			actionListener="#{bean.baixarAnexosManifestacao()}"
+			value="Baixar todos os Anexos" icon="ui-icon-folder-collapsed"
+			style="margin-top: -20px; color: black;"
+			rendered="#{security.loggedIn() and not security.manifestante}">
+			<p:fileDownload value="#{bean.filePDF}" />
+		</p:commandButton>
 		<br />
 		<br />
 		</h:form>

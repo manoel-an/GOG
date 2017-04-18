@@ -131,26 +131,32 @@ public class TbAnexo implements Serializable {
         this.tbEncaminhamentoxAnexoCollection = tbEncaminhamentoxAnexoCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idAnexo != null ? idAnexo.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dsCaminhoAnexo == null) ? 0 : dsCaminhoAnexo.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof TbAnexo)) {
-            return false;
-        }
-        TbAnexo other = (TbAnexo) object;
-        if ((this.idAnexo == null && other.idAnexo != null) || (this.idAnexo != null && !this.idAnexo.equals(other.idAnexo))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TbAnexo other = (TbAnexo) obj;
+		if (dsCaminhoAnexo == null) {
+			if (other.dsCaminhoAnexo != null)
+				return false;
+		} else if (!dsCaminhoAnexo.equals(other.dsCaminhoAnexo))
+			return false;
+		return true;
+	}
 
-    @Override
+	@Override
     public String toString() {
         return String.format("%s > %s",getEntidade(),getDescricao());
     }

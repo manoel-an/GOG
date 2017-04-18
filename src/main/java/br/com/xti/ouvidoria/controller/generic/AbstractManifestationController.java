@@ -1,5 +1,8 @@
 package br.com.xti.ouvidoria.controller.generic;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -7,11 +10,14 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.jsoup.Jsoup;
 
 import br.com.agr.ouvidoria.report.GeradorRelatorio;
@@ -20,15 +26,18 @@ import br.com.xti.ouvidoria.dao.AnexoDAO;
 import br.com.xti.ouvidoria.dao.ComunicacaoExternaDAO;
 import br.com.xti.ouvidoria.dao.EncaminhamentoDAO;
 import br.com.xti.ouvidoria.dao.ManifestacaoDAO;
+import br.com.xti.ouvidoria.dao.ParametroDAO;
 import br.com.xti.ouvidoria.dao.PrioridadeDAO;
 import br.com.xti.ouvidoria.dao.TramiteDAO;
 import br.com.xti.ouvidoria.dao.UnidadeDAO;
 import br.com.xti.ouvidoria.exception.InfrastructureException;
 import br.com.xti.ouvidoria.filtropersonalizado.FiltroPersonalizado;
 import br.com.xti.ouvidoria.helper.EnumHelper;
+import br.com.xti.ouvidoria.helper.FileHelper;
 import br.com.xti.ouvidoria.helper.FiltroHelper;
 import br.com.xti.ouvidoria.helper.ValidacaoHelper;
 import br.com.xti.ouvidoria.manifestacao.view.ManifestacaoTabView;
+import br.com.xti.ouvidoria.model.TbAnexo;
 import br.com.xti.ouvidoria.model.TbClassificacao;
 import br.com.xti.ouvidoria.model.TbComunicacaoExterna;
 import br.com.xti.ouvidoria.model.TbComunicacaoExternaxAnexo;
@@ -44,6 +53,7 @@ import br.com.xti.ouvidoria.model.enums.StatusEncaminhamentoEnum;
 import br.com.xti.ouvidoria.model.enums.UnidadeEnum;
 import br.com.xti.ouvidoria.security.SecurityService;
 import br.com.xti.ouvidoria.util.JSFUtils;
+import net.sf.jxls.exception.ParsePropertyException;
 
 public abstract class AbstractManifestationController extends GeradorRelatorio {
 
@@ -70,6 +80,9 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 	
 	@EJB
 	protected PrioridadeDAO prioridadeDAO;
+	
+	@EJB
+	private ParametroDAO parametroDAO;
 	
 	/** Manifestação que está sendo gerenciada */
 	protected TbManifestacao manifestacao;
@@ -279,6 +292,40 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 		}else{
 			return null;
 		}
+	}
+	
+	public void baixarAnexosManifestacao() throws IOException, InfrastructureException, ParsePropertyException, InvalidFormatException {
+		List<TbTramite> tramites = new ArrayList<>(0);
+		List<TbAnexo> anexosZIP = new ArrayList<>(0);
+
+		if (!securityService.isInterlocutor() && !securityService.isOperador())
+			tramites.addAll(converterTramitesExternosParaInternos(
+					(List<TbComunicacaoExterna>) manifestacao.getTbComunicacaoExternaCollection()));
+
+		for (TbEncaminhamento enc : manifestacao.getTbEncaminhamentoCollection()) {
+			tramites.addAll(enc.getTbTramiteCollection());
+		}
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ZipOutputStream zipFile = new ZipOutputStream(baos);
+
+		for (TbTramite tramite : tramites) {
+			for(TbTramitexAnexo anexo : tramite.getTbTramitexAnexoCollection()){
+				if(!anexosZIP.contains(anexo.getIdAnexo())){
+					anexosZIP.add(anexo.getIdAnexo());
+				}
+			}
+		}
+		
+		for(TbAnexo anexo : anexosZIP){
+			File file = new File(parametroDAO.getDiretorioAnexo() + anexo.getDsCaminhoAnexo());
+			ZipEntry zipEntry = new ZipEntry(file.getName());
+			zipFile.putNextEntry(zipEntry);
+			zipFile.closeEntry();
+		}
+		
+		zipFile.finish();
+		FileHelper.download(baos, "anexos-manifestacao-"+manifestacao.getNrManifestacao()+".zip");
 	}
 	
 	public void imprimirTodosDadosManifestacao(){
