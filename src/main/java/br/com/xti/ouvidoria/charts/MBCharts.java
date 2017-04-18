@@ -146,6 +146,12 @@ public class MBCharts implements Serializable {
 		ChartHelper.getTotalMensagensRecebidasMeioEntrada(itens, dados);
 	}
 	
+	public void getTotalMensagensAbertasAtendente() {
+		Map<String, Long> itens = service.getTotalMensagensMeioEntrada(dataDe, dataAte, encerradasScriptBool);
+		inicializar();
+		ChartHelper.getTotalMensagensAbertasAtendente(itens, labels, dados);
+	}
+	
 	public void getTotalMensagensRecebidasAbertasFechadas() {
 		Collection<MensagemRecebidaTipoEntrada> itens = service.getTotalMensagensRecebidasAbertasFechadas(dataDe, dataAte, encerradasScriptBool);
 		inicializar(itens);

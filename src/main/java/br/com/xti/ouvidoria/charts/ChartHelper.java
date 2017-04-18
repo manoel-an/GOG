@@ -148,6 +148,15 @@ public class ChartHelper {
 		}
 	}
 	
+	public static void getTotalMensagensAbertasAtendente(Map<String, Long> contadores, StringBuilder labels, StringBuilder dados){
+		for (String key : contadores.keySet()) {
+			String label = key.replace("'", "");
+			labels.append("'"+label+"',");
+			dados.append(String.format(TEMPLATE_DATA_CHART, label, 
+					contadores.get(key), "1"));
+		}
+	}
+	
 	public static void getTotalMensagensRecebidasAbertasFechadas(final Collection<MensagemRecebidaTipoEntrada> itens, StringBuilder dados) {
 		for (MensagemRecebidaTipoEntrada mrt : itens) {
 			String nomeTipoManifestacao = mrt.getTipo();

@@ -521,12 +521,14 @@ public class ChartService implements Serializable {
 		List<TbManifestacao> manifestacoes = manifestacaoDao.getManifestacoes(filtroPersonalizado);
 		Map<String, Long> contadores = new HashMap<>();
 		for(TbManifestacao manifestacao : manifestacoes){
-			String meioEntrada = manifestacao.getIdMeioEntrada().getNmMeioEntrada();
-			if(contadores.containsKey(meioEntrada)){
-				contadores.put(meioEntrada, contadores.get(meioEntrada) + 1L);
-			}else{
-				contadores.put(meioEntrada, 1L);
-			}
+			if(manifestacao.getIdUsuarioCriador() != null){
+				String atendente = manifestacao.getIdUsuarioCriador().getNmUsuario() + " (" + manifestacao.getIdUsuarioCriador().getNmLogin() + ")";
+				if(contadores.containsKey(atendente)){
+					contadores.put(atendente, contadores.get(atendente) + 1L);
+				}else{
+					contadores.put(atendente, 1L);
+				}
+			}	
 		}
 		return contadores;
 	}
