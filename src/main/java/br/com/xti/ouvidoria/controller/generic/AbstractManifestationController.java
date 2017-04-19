@@ -1,7 +1,10 @@
 package br.com.xti.ouvidoria.controller.generic;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -321,6 +324,18 @@ public abstract class AbstractManifestationController extends GeradorRelatorio {
 			File file = new File(parametroDAO.getDiretorioAnexo() + anexo.getDsCaminhoAnexo());
 			ZipEntry zipEntry = new ZipEntry(file.getName());
 			zipFile.putNextEntry(zipEntry);
+			FileInputStream fis = null;
+			try {
+				fis = new FileInputStream(file);
+			} catch (FileNotFoundException fnfe) {
+				continue;
+			}
+			BufferedInputStream fif = new BufferedInputStream(fis);
+			int data = 0;
+			while ((data = fif.read()) != -1) {
+				zipFile.write(data);
+			}
+			fif.close();
 			zipFile.closeEntry();
 		}
 		
