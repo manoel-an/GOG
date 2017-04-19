@@ -190,36 +190,39 @@ public class MBListarManifestacoes implements Serializable {
         	ListIterator<TbManifestacao> listIterator = list.listIterator();
         	while(listIterator.hasNext()){
         		TbManifestacao corrente = listIterator.next();
-        		if( corrente.getTbEncaminhamentoCollection()!= null && !corrente.getTbEncaminhamentoCollection().isEmpty()){
-	        	    List<TbEncaminhamento> encaminhamentos = (List<TbEncaminhamento>) corrente.getTbEncaminhamentoCollection();
-	        	    List<TbTramite> listTramites = new ArrayList<TbTramite>();
-	        	    
-	        	    //Reunir todos os tramites da manifestação
-	        	    for(TbEncaminhamento encaminhamento : encaminhamentos){
-	        	    	listTramites.addAll(encaminhamento.getTbTramiteCollection());
-	        	    }
-	        	    
-	        	    //Ordenação dos trâmites
-	        	    Collections.sort(listTramites, new Comparator<TbTramite>() {
-						public int compare(TbTramite o1, TbTramite o2) {
-							return Long.valueOf(o1.getDtTramite().getTime()).compareTo(Long.valueOf(o2.getDtTramite().getTime()));
-						}
-					});
-	        	    
-	        	    TbTramite ultimoTramite = listTramites.get(listTramites.size() -1);
-	        	    
-	        	    if(!ultimoTramite.getIdUnidadeEnvio().equals(unidadeInterlocutor)){
-	        	    	listIterator.remove();
-	        	    
-	        	    }
+        		TbTramite ultimoTramite = recuperaUltimoTramiteManifestacao(corrente);
+        		if(ultimoTramite != null && !ultimoTramite.getIdUnidadeEnvio().equals(unidadeInterlocutor)){
+        			listIterator.remove();
         		}
-        	    
         	}
-		        break;
-			default:
-				break;
+		    break;
+		default:
+			break;
 		}
     }
+
+	public TbTramite recuperaUltimoTramiteManifestacao(TbManifestacao corrente) {
+		TbTramite ultimoTramite = null;
+		if( corrente.getTbEncaminhamentoCollection()!= null && !corrente.getTbEncaminhamentoCollection().isEmpty()){
+		    List<TbEncaminhamento> encaminhamentos = (List<TbEncaminhamento>) corrente.getTbEncaminhamentoCollection();
+		    List<TbTramite> listTramites = new ArrayList<TbTramite>();
+		    
+		    //Reunir todos os tramites da manifestação
+		    for(TbEncaminhamento encaminhamento : encaminhamentos){
+		    	listTramites.addAll(encaminhamento.getTbTramiteCollection());
+		    }
+		    
+		    //Ordenação dos trâmites
+		    Collections.sort(listTramites, new Comparator<TbTramite>() {
+				public int compare(TbTramite o1, TbTramite o2) {
+					return Long.valueOf(o1.getDtTramite().getTime()).compareTo(Long.valueOf(o2.getDtTramite().getTime()));
+				}
+			});
+		    
+		    ultimoTramite = listTramites.get(listTramites.size() -1);
+		}
+		return ultimoTramite;
+	}
 
     public void getEmAndamento(ActionEvent actionEvent) {
         filtroEscolhido = new TbFiltroPersonalizado();
