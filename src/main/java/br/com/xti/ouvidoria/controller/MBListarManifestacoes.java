@@ -318,14 +318,23 @@ public class MBListarManifestacoes implements Serializable {
     }
     
     private void ajustarRetornadas(List<TbManifestacao> list) {
+    	ListIterator<TbManifestacao> manifestacoes = list.listIterator();
+    	TbUnidade unidadeUsuario = securityService.getUser().getIdUnidade();
+
+    	for( ; manifestacoes.hasNext() ; ) {
+    		TbManifestacao corrente = manifestacoes.next();
+    		TbTramite ultimoTramite = recuperaUltimoTramiteManifestacao(corrente);
+    		if(ultimoTramite != null && !ultimoTramite.getIdUnidadeEnvio().equals(unidadeUsuario)){
+    			manifestacoes.remove();
+    		}
+    	}
+    	
     	switch (securityService.getUserProfile()) {
 			case INTERLOCUTOR: // remover as manifestações que não foram retornadas pelo operador.
-	        	TbUnidade unidadeInterlocutor = securityService.getUser().getIdUnidade();
-	        	
 	        	ListIterator<TbManifestacao> listIterator = list.listIterator();
 	        	for( ; listIterator.hasNext() ; ) {
 	        		enc: for (TbEncaminhamento e : listIterator.next().getTbEncaminhamentoCollection()) {
-						if(e.getIdUnidadeRecebeu().equals(unidadeInterlocutor)) {
+						if(e.getIdUnidadeRecebeu().equals(unidadeUsuario)) {
 							boolean deletar = Boolean.TRUE;
 							// Recupera o último trâmite da ouvidria para a área
 							Date dtUltimoTramiteDaOuvidoria = null;
