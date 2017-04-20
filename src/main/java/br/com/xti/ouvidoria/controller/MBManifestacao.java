@@ -253,7 +253,6 @@ public class MBManifestacao extends AbstractManifestationController implements S
         mountTabs();
         
         // Carrega as opções iniciais das "combos"
-        classificacoes = null;
         classificacoes = new ArrayList<TbClassificacao>();
         if(ValidacaoHelper.isNotEmpty(manifestacao.getTbClassificacaoCollection())) {
         	classificacoes.addAll(manifestacao.getTbClassificacaoCollection());

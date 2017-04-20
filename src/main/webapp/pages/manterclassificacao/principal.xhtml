@@ -42,6 +42,9 @@
                         </f:facet>
                         <h:outputText value="#{item.dsClassificacao}"/>
                     </p:column>
+                    <p:column headerText="Situação">
+                    	<h:outputText value="#{item.ativo ? 'Ativa' : 'Inativa'}" />
+                    </p:column>
                     <p:column >
                         <f:facet name="header">
                             <h:outputText value="Unidades"/>
@@ -108,7 +111,10 @@
                     <p:panelGrid columns="2">
                         <h:outputLabel value="Nome Classificação:*" style="font-weight: bold;" />
                         <p:inputText value="#{mBClassificacao.classificacaoNovo.dsClassificacao}" required="true" requiredMessage="Digite o nome da classificação" style="width:300px;" title="Informe o nome da Classificação " />
-
+						
+						<h:outputText value="Ativa: " />
+        				<p:selectBooleanCheckbox value="#{mBClassificacao.classificacaoNovo.ativo}" />
+						
                         <h:outputLabel value="Unidades:" style="font-weight: bold;" />
                         <p:pickList value="#{mBClassificacao.listaUnidades}" var="unidade" itemLabel="#{unidade.nmUnidade}" itemValue="#{unidade}" converter="#{conversorUnidade}"
                         			showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains">
@@ -150,6 +156,10 @@
                     <p:panelGrid columns="2" >
                         <h:outputLabel value="Nome Classificação*:" style="font-weight: bold;"  />
                         <p:inputText value="#{mBClassificacao.classificacao.dsClassificacao}" required="true" requiredMessage="Digite o nome da classificação"  style="width:300px;" title="Informe o nome da Classificação " />
+                        
+                        <h:outputText value="Ativa: " />
+        				<p:selectBooleanCheckbox value="#{mBClassificacao.classificacao.ativo}" />
+                        
                         <h:outputLabel value="Unidades:" style="font-weight: bold;" />
                         <p:pickList value="#{mBClassificacao.listaUnidades}" var="unidade" itemLabel="#{unidade.nmUnidade}" itemValue="#{unidade}" converter="#{conversorUnidade}"
                         			showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains">

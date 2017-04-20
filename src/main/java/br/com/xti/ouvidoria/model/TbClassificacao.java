@@ -57,7 +57,8 @@ public class TbClassificacao implements Serializable, Comparable<TbClassificacao
     @OneToMany
     @JoinTable(name = "tbClassificacao_tbManifestacao", joinColumns = @JoinColumn(name = "idClassificacao"), inverseJoinColumns = @JoinColumn(name = "idManifestacao"))    
     private Collection<TbManifestacao> tbManifestacaoCollection = new ArrayList<>();
-    
+   
+    private Boolean ativo;
     
     public Collection<TbUnidade> getTbUnidadeCollection() {
         return tbUnidadeCollection;
@@ -71,7 +72,18 @@ public class TbClassificacao implements Serializable, Comparable<TbClassificacao
         this.tbManifestacaoCollection = tbManifestacaoCollection;
     }
 
-    public void setTbUnidadeCollection(Collection<TbUnidade> tbUnidadeCollection) {
+    public Boolean getAtivo() {
+    	if(ativo == null){
+    		ativo = true;
+    	}
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public void setTbUnidadeCollection(Collection<TbUnidade> tbUnidadeCollection) {
         this.tbUnidadeCollection = tbUnidadeCollection;
     }
 

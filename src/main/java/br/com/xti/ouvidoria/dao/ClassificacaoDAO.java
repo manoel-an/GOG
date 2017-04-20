@@ -80,4 +80,9 @@ public class ClassificacaoDAO extends AbstractDAO<TbClassificacao> {
     		return null;
     	}
     }
+    
+    public List<TbClassificacao> getClassificacoesAtivas(){
+    	return this.getEntityManager().createQuery("SELECT c FROM TbClassificacao c WHERE c.ativo = true", TbClassificacao.class)
+				.getResultList();
+    }
 }

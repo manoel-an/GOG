@@ -168,7 +168,7 @@ public class MBManifestacaoCadastrar implements Serializable {
         TbClassificacao transporte = classificacaoDAO.getClassificacaoPorNome("Transporte Intermunicipal");
         idUf = 9;
         municipios = localidadeBean.getMunicipios();
-        classificacoes = classificacaoDAO.findAll();
+        classificacoes = classificacaoDAO.getClassificacoesAtivas();
         Collections.sort(classificacoes, new Comparator<TbClassificacao>() {
 			@Override
 			public int compare(TbClassificacao o1, TbClassificacao o2) {
