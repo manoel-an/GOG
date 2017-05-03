@@ -1093,7 +1093,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     		String textoPadraoComPalavrasChave = respostaManifestacao.getDsResposta();
     		String textoPadraoSemPalavrasChave = PalavrasChavesHelper.converterPalavrasChaves(textoPadraoComPalavrasChave, manifestacao, securityService.getUser(), false);
     		if(dsMensagemAoManifestante.equals(textoPadraoSemPalavrasChave)) {
-    			JSFUtils.executeJavaScript("dlgRespostaSemAlteracao.show()");
+    			gravaSolucionarManifestacaoREAL();
     		} else {
     			gravaSolucionarManifestacaoREAL();
     		}
