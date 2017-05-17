@@ -399,7 +399,13 @@ public class ChartService implements Serializable {
 		if(ValidacaoHelper.isNotEmpty(manifestacoes)) {
 			int total = 0;
 			Map<TbClassificacao, MensagemRecebidaClassificacao> map = new HashMap<>();
+			TbClassificacao semClassificacao = new TbClassificacao();
+			semClassificacao.setIdClassificacao(10000);
+			semClassificacao.setDsClassificacao("Não Classificadas");
 			for (TbManifestacao m : manifestacoes) {
+				if(m.getTbClassificacaoCollection().isEmpty()){
+					m.getTbClassificacaoCollection().add(semClassificacao);
+				}
 				for (TbClassificacao classificacao : m.getTbClassificacaoCollection()) {
 					if(map.containsKey(classificacao)) {
 						map.get(classificacao).addIdManifestacao(m.getIdManifestacao());
@@ -521,14 +527,12 @@ public class ChartService implements Serializable {
 		List<TbManifestacao> manifestacoes = manifestacaoDao.getManifestacoes(filtroPersonalizado);
 		Map<String, Long> contadores = new HashMap<>();
 		for(TbManifestacao manifestacao : manifestacoes){
-			if(manifestacao.getIdUsuarioCriador() != null){
-				String atendente = manifestacao.getIdUsuarioCriador().getNmUsuario() + " (" + manifestacao.getIdUsuarioCriador().getNmLogin() + ")";
-				if(contadores.containsKey(atendente)){
-					contadores.put(atendente, contadores.get(atendente) + 1L);
-				}else{
-					contadores.put(atendente, 1L);
-				}
-			}	
+			String meioEntrada = manifestacao.getIdMeioEntrada().getNmMeioEntrada();
+			if(contadores.containsKey(meioEntrada)){
+				contadores.put(meioEntrada, contadores.get(meioEntrada) + 1L);
+			}else{
+				contadores.put(meioEntrada, 1L);
+			}
 		}
 		return contadores;
 	}

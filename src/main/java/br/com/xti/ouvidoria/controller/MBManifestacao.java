@@ -528,7 +528,8 @@ public class MBManifestacao extends AbstractManifestationController implements S
     	if(securityService.isOuvidor() || securityService.isAdministrador()) {
     		boolean podeEditar = !desabilitaEdicaoManifestacao();
     		boolean temAreaSolucionadora = !idUnidadeAreaSolucionadora.isEmpty();
-    		return podeEditar && temAreaSolucionadora;
+    		boolean temClassificacao = !idClassificacao.isEmpty();
+    		return podeEditar && temAreaSolucionadora && temClassificacao;
     	}
     	
     	return false;
@@ -1790,7 +1791,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
 		listaUnidades = null;
         listaUnidades = unidadeDAO.findAll();
         //listaUnidades.removeAll(unidadeDAO.getPorEncaminhamentoManifestacao(manifestacao));
-        listaUnidades.remove(new TbUnidade(UnidadeEnum.OUVIDORIA.getId()));
+        //listaUnidades.remove(new TbUnidade(UnidadeEnum.OUVIDORIA.getId()));
         Collections.sort(listaUnidades, new UnidadeSiglaComparator());
         listaUnidadesCompleta = new ArrayList<TbUnidade>(listaUnidades);
     }
