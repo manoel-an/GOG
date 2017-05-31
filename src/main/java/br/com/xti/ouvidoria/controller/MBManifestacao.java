@@ -889,7 +889,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
     }
     
     public void mostraTodasClassificacoes() {
-    	classificacoes = classificacaoDAO.findAll();
+    	classificacoes = classificacaoDAO.getClassificacoesAtivas();
     	Collections.sort(classificacoes);
     	classificacoesCompleta = new ArrayList<TbClassificacao>(classificacoes);
     }
@@ -922,7 +922,7 @@ public class MBManifestacao extends AbstractManifestationController implements S
                 	classificacoes = new ArrayList<>();
                 }
     		} else {
-    			classificacoes = classificacaoDAO.findAll();
+    			classificacoes = classificacaoDAO.getClassificacoesAtivas();
     		}
     	} else {
     		classificacoes = new ArrayList<>();

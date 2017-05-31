@@ -33,7 +33,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "TbClassificacao.findAll", query = "SELECT t FROM TbClassificacao t"),
     @NamedQuery(name = "TbClassificacao.findByIdClassificacao", query = "SELECT t FROM TbClassificacao t WHERE t.idClassificacao = :idClassificacao"),
-    @NamedQuery(name = "TbClassificacao.findByUnidade", query = "SELECT t FROM TbClassificacao t WHERE :idUnidade MEMBER OF t.tbUnidadeCollection"),
+    @NamedQuery(name = "TbClassificacao.findByUnidade", query = "SELECT t FROM TbClassificacao t WHERE :idUnidade MEMBER OF t.tbUnidadeCollection and t.ativo = :ativo"),
     @NamedQuery(name = "TbClassificacao.findByDsClassificacao", query = "SELECT t FROM TbClassificacao t WHERE t.dsClassificacao = :dsClassificacao")})
 public class TbClassificacao implements Serializable, Comparable<TbClassificacao> {
 

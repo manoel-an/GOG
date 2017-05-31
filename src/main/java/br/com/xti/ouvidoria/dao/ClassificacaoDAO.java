@@ -26,8 +26,9 @@ public class ClassificacaoDAO extends AbstractDAO<TbClassificacao> {
     }
 
     public List<TbClassificacao> findByUnidade(TbUnidade tbUnidade) throws Exception {
-        HashMap<String, TbUnidade> map = new HashMap<String, TbUnidade>();
+        HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("idUnidade", tbUnidade);
+        map.put("ativo", Boolean.TRUE);
         List<TbClassificacao> res = getList("findByUnidade", map);
         return res;
     }
