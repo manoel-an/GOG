@@ -537,6 +537,26 @@ public class ChartService implements Serializable {
 		return contadores;
 	}
 	
+	public Map<String, Long> getTotalMensagensAbertasPorAtendente(Date dataDe, Date dataAte, Boolean encerradasScript){
+		FiltroPersonalizado filtroPersonalizado = new FiltroPersonalizado();
+		filtroPersonalizado.setManDataCadastroDe(DataHelper.getDataMin(dataDe));
+		filtroPersonalizado.setManDataCadastroAte(DataHelper.getDataMax(dataAte));
+		filtroPersonalizado.setManEncerradaScript(encerradasScript);
+		List<TbManifestacao> manifestacoes = manifestacaoDao.getManifestacoes(filtroPersonalizado);
+		Map<String, Long> contadores = new HashMap<>();
+		for(TbManifestacao manifestacao : manifestacoes){
+			if(manifestacao.getIdUsuarioCriador() != null){
+				String atendente = manifestacao.getIdUsuarioCriador().getNmUsuario() + " (" + manifestacao.getIdUsuarioCriador().getNmLogin() + ")";
+				if(contadores.containsKey(atendente)){
+					contadores.put(atendente, contadores.get(atendente) + 1L);
+				}else{
+					contadores.put(atendente, 1L);
+				}
+			}	
+		}
+		return contadores;
+	}
+	
 	public Collection<MensagemRecebidaTipoEntrada> getTotalMensagensRecebidasAbertasFechadas(Date dataDe,
 			Date dataAte, Boolean encerradasScript) {
 		
